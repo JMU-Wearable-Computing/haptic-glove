@@ -7,7 +7,14 @@ TCP_PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
  
-commands = {'up':'/buz2/118', 'down':'/buz0/118', 'left':'/buz1/118', 'right':'/buz3/118'}
+mode = "push"
+
+pattern = '118'
+if mode == "pull":
+    commands = {'up':f'/buz2/{pattern}', 'down':f'/buz0/{pattern}', 'left':f'/buz1/{pattern}', 'right':f'/buz3/{pattern}key'}
+
+if mode == "push":    
+    commands = {'up':f'/buz0/{pattern}', 'down':f'/buz2/{pattern}', 'left':f'/buz3/{pattern}', 'right':f'/buz1/{pattern}'}
 board = keyboard.Controller()
  
 def on_press(key):
