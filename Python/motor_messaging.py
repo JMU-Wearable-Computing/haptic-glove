@@ -1,5 +1,6 @@
 import socket
 from pynput import keyboard
+import time
 
 TCP_IP = "172.16.1.2"
 
@@ -11,13 +12,21 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
  
 mode = "pull"
+MIN_VIBE = 100
+MAX_VIBE = 200
+
+def make_message(index):
+    command_array = [MIN_VIBE, MIN_VIBE, MIN_VIBE, MIN_VIBE]
+    command_array[index] = MAX_VIBE
+    return f'/{command_array[0]}/{command_array[1]}/{command_array[2]}/{command_array[3]}'
+
 
 pattern = '118'
 if mode == "push":
-    commands = {'up':f'/buz2/{pattern}', 'down':f'/buz0/{pattern}', 'left':f'/buz1/{pattern}', 'right':f'/buz3/{pattern}key'}
+    commands = {'up':make_message(1), 'down':make_message(0), 'left':make_message(3), 'right':make_message(2)}
 
 if mode == "pull":    
-    commands = {'up':f'/buz0/{pattern}', 'down':f'/buz2/{pattern}', 'left':f'/buz3/{pattern}', 'right':f'/buz1/{pattern}'}
+    commands = {'up':make_message(0), 'down':make_message(1), 'left':make_message(2), 'right':make_message(3)}
 board = keyboard.Controller()
  
 def on_press(key):
@@ -30,13 +39,14 @@ def on_press(key):
  
     if k in ['up', 'down', 'left', 'right']:  # keys of interest
         print(commands[k])
-        for i in range(0,1):
+        for i in range(0,10):
             s.send(f'{commands[k]}\n'.encode('ascii'))
             #recieved = s.recv(64).decode('ASCII')
             #print(recieved)
+            #time.sleep(0.001)
     if k == 'space':
         for i in range(0,1):
-            s.send(f'/buz4/118\n'.encode('ascii'))
+            s.send(f'/150/150/150/150\n'.encode('ascii'))
 
             
  
