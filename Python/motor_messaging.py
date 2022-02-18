@@ -2,9 +2,9 @@ import socket
 from pynput import keyboard
 import time
 
-TCP_IP = "172.16.1.2"
+#TCP_IP = "172.16.1.2"
 
-#TCP_IP = "192.168.50.170"
+TCP_IP = "192.168.50.170"
 
 TCP_PORT = 8888
 
