@@ -33,8 +33,6 @@ When booted, the ESP32 establishes a user definable static ip.
 |GREEN|TCP client connected and ready for messages|
 
 ### Message format
-Messages follows the format: /keyx/val  
-keyx is an alphanumeric of length 4  
-val is a three digit number (must include leading 0's if shorter than three digits)  
-
-
+Messages follows the format: /n01/n02/n03/n04  
+nXX is a number of length 3 between 0 and 255
+The each segment of the message correspondes to the strength of a specific motor.
