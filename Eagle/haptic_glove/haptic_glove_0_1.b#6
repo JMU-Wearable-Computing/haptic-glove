@@ -164,6 +164,11 @@ Dr. Jason Forsyth</text>
 <text x="27.94" y="19.05" size="1.27" layer="122" rot="MR90">Gnd</text>
 <text x="92.837" y="37.846" size="0.508" layer="121">THERM</text>
 <text x="84.074" y="34.036" size="0.508" layer="121">PROG</text>
+<<<<<<< HEAD
+=======
+<dimension x1="19.05" y1="15.24" x2="19.05" y2="59.68" x3="15.24" y3="37.46" textsize="1.778" layer="1"/>
+<dimension x1="19.05" y1="59.68" x2="100" y2="59.68" x3="59.525" y3="62.23" textsize="1.778" layer="1"/>
+>>>>>>> d5b879ace9fd9b36f4729d394b95bb9bb7ada8db
 </plain>
 <libraries>
 <library name="SparkFun-Capacitors">
@@ -2198,7 +2203,13 @@ Note, that not all DRC settings must be set by the manufacturer. Several can be 
 <wire x1="51.36" y1="33.065" x2="51.36" y2="32.3667125" width="0.1524" layer="1"/>
 <wire x1="51.36" y1="32.3667125" x2="51.6153125" y2="32.1114" width="0.1524" layer="1"/>
 <wire x1="45.1894" y1="30.6997875" x2="45.1894" y2="30.48" width="0.1524" layer="16"/>
+<<<<<<< HEAD
 <wire x1="48.0402125" y1="33.5506" x2="45.1894" y2="30.6997875" width="0.1524" layer="16"/>
+=======
+<wire x1="52.07" y1="31.75" x2="50.8" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="48.4797875" y1="32.2806" x2="46.7702125" y2="32.2806" width="0.1524" layer="16"/>
+<wire x1="46.7702125" y1="32.2806" x2="45.1894" y2="30.6997875" width="0.1524" layer="16"/>
+>>>>>>> d5b879ace9fd9b36f4729d394b95bb9bb7ada8db
 <wire x1="45.1894" y1="30.48" x2="44.823675" y2="30.48" width="0.1524" layer="16"/>
 <via x="44.823675" y="30.48" extent="1-16" drill="0.35"/>
 <wire x1="87.14603125" y1="17.8816" x2="88.11396875" y2="17.8816" width="0.1524" layer="1"/>
@@ -2211,8 +2222,13 @@ Note, that not all DRC settings must be set by the manufacturer. Several can be 
 <wire x1="58.42" y1="27.94" x2="59.69" y2="26.67" width="0.1524" layer="1"/>
 <wire x1="59.69" y1="21.2986" x2="60.96" y2="20.0286" width="0.1524" layer="1"/>
 <wire x1="59.69" y1="26.67" x2="59.69" y2="21.2986" width="0.1524" layer="1"/>
+<<<<<<< HEAD
 <wire x1="52.07" y1="31.75" x2="50.2694" y2="33.5506" width="0.1524" layer="16"/>
 <wire x1="50.2694" y1="33.5506" x2="48.0402125" y2="33.5506" width="0.1524" layer="16"/>
+=======
+<wire x1="50.8" y1="30.48" x2="50.2803875" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="50.2803875" y1="30.48" x2="48.4797875" y2="32.2806" width="0.1524" layer="16"/>
+>>>>>>> d5b879ace9fd9b36f4729d394b95bb9bb7ada8db
 </signal>
 <signal name="N$14">
 <contactref element="U2" pad="P$7"/>
