@@ -3,6 +3,11 @@
 ## Wiring diagram
 TODO
 
+## Circuit board
+
+<img src = "img/board_top.png" />
+<img src = "img/board_bottom.png" />
+
 ## ESP32 Arduino IDE setup 
 
 ### Guide:
