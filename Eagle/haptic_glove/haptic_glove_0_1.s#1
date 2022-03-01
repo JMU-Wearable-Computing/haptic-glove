@@ -5371,89 +5371,273 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 </classes>
 <parts>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="MTR4" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="U1" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
-<part name="C3" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
+<part name="MTR4" library="SparkFun-Connectors" deviceset="M02" device="PTH">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="U1" library="SparkFun-PowerIC" deviceset="DRV2605L" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C3" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="MTR3" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="U2" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
-<part name="C2" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
+<part name="MTR3" library="SparkFun-Connectors" deviceset="M02" device="PTH">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="U2" library="SparkFun-PowerIC" deviceset="DRV2605L" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C2" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="MTR2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="U3" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
-<part name="C5" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
+<part name="MTR2" library="SparkFun-Connectors" deviceset="M02" device="PTH">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="U3" library="SparkFun-PowerIC" deviceset="DRV2605L" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C5" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
 <part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="MTR1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="U4" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
-<part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
+<part name="MTR1" library="SparkFun-Connectors" deviceset="M02" device="PTH">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="U4" library="SparkFun-PowerIC" deviceset="DRV2605L" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
 <part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="C8" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
+<part name="C8" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
 <part name="SUPPLY16" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND17" library="SparkFun" deviceset="GND" device=""/>
-<part name="C9" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C10" library="SparkFun" deviceset="CAP" device="0603-CAP" value="2.2nF"/>
-<part name="C12" library="SparkFun" deviceset="CAP" device="0603-CAP" value="10nF"/>
+<part name="C9" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C10" library="SparkFun" deviceset="CAP" device="0603-CAP" value="2.2nF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C12" library="SparkFun" deviceset="CAP" device="0603-CAP" value="10nF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
 <part name="P+3" library="SparkFun" deviceset="VCC" device=""/>
-<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k"/>
-<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k"/>
+<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="P+4" library="SparkFun" deviceset="VCC" device=""/>
-<part name="U5" library="Testing" deviceset="MPU-6050" device="-1"/>
+<part name="U5" library="Testing" deviceset="MPU-6050" device="-1">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND20" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND21" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND22" library="SparkFun" deviceset="GND" device=""/>
-<part name="SJ1" library="SparkFun" deviceset="SOLDERJUMPER_2WAY" device="PASTE2&amp;3"/>
+<part name="SJ1" library="SparkFun" deviceset="SOLDERJUMPER_2WAY" device="PASTE2&amp;3">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="P+2" library="SparkFun" deviceset="VCC" device=""/>
 <part name="GND23" library="SparkFun" deviceset="GND" device=""/>
 <part name="P+5" library="SparkFun" deviceset="VCC" device=""/>
 <part name="GND24" library="SparkFun" deviceset="GND" device=""/>
-<part name="SJ3" library="SparkFun" deviceset="SOLDERJUMPER" device="TRACE" value=""/>
-<part name="SJ2" library="SparkFun" deviceset="SOLDERJUMPER" device="TRACE" value=""/>
-<part name="X1" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07"/>
-<part name="X2" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07"/>
+<part name="SJ3" library="SparkFun" deviceset="SOLDERJUMPER" device="TRACE" value="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="SJ2" library="SparkFun" deviceset="SOLDERJUMPER" device="TRACE" value="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="X1" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="X2" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="X3" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07"/>
-<part name="X4" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07"/>
-<part name="U6" library="SparkFun-IC-Power" deviceset="MCP73833" device="" value="MCP73833"/>
-<part name="R11" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k"/>
-<part name="R12" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k"/>
-<part name="R13" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k"/>
-<part name="D1" library="SparkFun-LED" deviceset="LED-RED" device="0603" value="RED"/>
-<part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="0603" value="GREEN"/>
-<part name="D3" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow"/>
-<part name="C13" library="SparkFun-Capacitors" deviceset="10UF" device="-0603-6.3V-20%" value="10uF"/>
-<part name="R14" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="1k"/>
-<part name="C14" library="SparkFun-Capacitors" deviceset="10UF" device="-0603-6.3V-20%" value="10uF"/>
+<part name="X3" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="X4" library="con-samtec" library_urn="urn:adsk.eagle:library:184" deviceset="TSW-121-*-G-S" device="" technology="07">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="U6" library="SparkFun-IC-Power" deviceset="MCP73833" device="" value="MCP73833">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R11" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R12" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R13" library="SparkFun-Resistors" deviceset="1.5KOHM" device="-0603-1/10W-1%" value="1.5k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="D1" library="SparkFun-LED" deviceset="LED-RED" device="0603" value="RED">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="0603" value="GREEN">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="D3" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C13" library="SparkFun-Capacitors" deviceset="10UF" device="-0603-6.3V-20%" value="10uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R14" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="1k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C14" library="SparkFun-Capacitors" deviceset="10UF" device="-0603-6.3V-20%" value="10uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND10" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND14" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND25" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value="THERM"/>
-<part name="R16" library="SparkFun-Resistors" deviceset="10KOHM" device="-0603-1/10W-1%" value="10k"/>
+<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value="THERM">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="R16" library="SparkFun-Resistors" deviceset="10KOHM" device="-0603-1/10W-1%" value="10k">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND26" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND27" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="J1" library="SparkFun-Connectors" deviceset="JST_2MM_MALE" device=""/>
+<part name="J1" library="SparkFun-Connectors" deviceset="JST_2MM_MALE" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND28" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="J3" library="SparkFun-Connectors" deviceset="CONN_02" device="1X02_NO_SILK"/>
+<part name="J3" library="SparkFun-Connectors" deviceset="CONN_02" device="1X02_NO_SILK">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND29" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value="PROG"/>
+<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value="PROG">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="GND30" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND31" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="S1" library="switch" library_urn="urn:adsk.eagle:library:380" deviceset="TL32PO" device="" package3d_urn="urn:adsk.eagle:package:27745/1"/>
+<part name="S1" library="switch" library_urn="urn:adsk.eagle:library:380" deviceset="TL32PO" device="" package3d_urn="urn:adsk.eagle:package:27745/1">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND32" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND33" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="C1" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
-<part name="C4" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
-<part name="C6" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
-<part name="C11" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="0.1uF"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
+<part name="C4" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
+<part name="C6" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF">
+<attribute name="MF" value="MURATA"/>
+<attribute name="MPN" value="GRM155R61E105KA12D"/>
+<attribute name="OC_NEWARK" value="03AC2571"/>
+</part>
+<part name="C11" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="0.1uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -5490,14 +5674,23 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="MTR4" gate="G$1" x="617.22" y="152.4" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="157.48" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="146.558" size="1.778" layer="95" rot="R180"/>
+<attribute name="OC_NEWARK" x="617.22" y="152.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="617.22" y="152.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="617.22" y="152.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U1" gate="DRV2605" x="574.04" y="149.86" smashed="yes">
 <attribute name="NAME" x="571.5" y="158.242" size="1.27" layer="95"/>
 <attribute name="VALUE" x="570.992" y="140.208" size="1.27" layer="96"/>
+<attribute name="OC_NEWARK" x="574.04" y="149.86" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="574.04" y="149.86" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="574.04" y="149.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C3" gate="G$1" x="548.64" y="137.16" smashed="yes">
 <attribute name="NAME" x="550.164" y="140.081" size="1.778" layer="95"/>
 <attribute name="VALUE" x="550.164" y="135.001" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="548.64" y="137.16" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="548.64" y="137.16" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="548.64" y="137.16" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND1" gate="1" x="594.36" y="132.08" smashed="yes">
 <attribute name="VALUE" x="591.82" y="129.54" size="1.778" layer="96"/>
@@ -5511,14 +5704,23 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="MTR3" gate="G$1" x="617.22" y="210.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="215.9" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="204.978" size="1.778" layer="95" rot="R180"/>
+<attribute name="OC_NEWARK" x="617.22" y="210.82" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="617.22" y="210.82" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="617.22" y="210.82" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U2" gate="DRV2605" x="574.04" y="208.28" smashed="yes">
 <attribute name="NAME" x="571.5" y="216.662" size="1.27" layer="95"/>
 <attribute name="VALUE" x="570.992" y="198.628" size="1.27" layer="96"/>
+<attribute name="OC_NEWARK" x="574.04" y="208.28" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="574.04" y="208.28" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="574.04" y="208.28" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C2" gate="G$1" x="548.64" y="195.58" smashed="yes">
 <attribute name="NAME" x="550.164" y="198.501" size="1.778" layer="95"/>
 <attribute name="VALUE" x="550.164" y="193.421" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="548.64" y="195.58" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="548.64" y="195.58" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="548.64" y="195.58" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND7" gate="1" x="594.36" y="190.5" smashed="yes">
 <attribute name="VALUE" x="591.82" y="187.96" size="1.778" layer="96"/>
@@ -5532,14 +5734,23 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="MTR2" gate="G$1" x="617.22" y="269.24" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="274.32" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="263.398" size="1.778" layer="95" rot="R180"/>
+<attribute name="OC_NEWARK" x="617.22" y="269.24" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="617.22" y="269.24" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="617.22" y="269.24" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U3" gate="DRV2605" x="574.04" y="266.7" smashed="yes">
 <attribute name="NAME" x="571.5" y="275.082" size="1.27" layer="95"/>
 <attribute name="VALUE" x="570.992" y="257.048" size="1.27" layer="96"/>
+<attribute name="OC_NEWARK" x="574.04" y="266.7" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="574.04" y="266.7" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="574.04" y="266.7" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C5" gate="G$1" x="548.64" y="254" smashed="yes">
 <attribute name="NAME" x="550.164" y="256.921" size="1.778" layer="95"/>
 <attribute name="VALUE" x="550.164" y="251.841" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="548.64" y="254" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="548.64" y="254" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="548.64" y="254" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND11" gate="1" x="594.36" y="248.92" smashed="yes">
 <attribute name="VALUE" x="591.82" y="246.38" size="1.778" layer="96"/>
@@ -5553,14 +5764,23 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="MTR1" gate="G$1" x="617.22" y="327.66" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="332.74" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="321.818" size="1.778" layer="95" rot="R180"/>
+<attribute name="OC_NEWARK" x="617.22" y="327.66" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="617.22" y="327.66" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="617.22" y="327.66" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U4" gate="DRV2605" x="574.04" y="325.12" smashed="yes">
 <attribute name="NAME" x="571.5" y="333.502" size="1.27" layer="95"/>
 <attribute name="VALUE" x="570.992" y="315.468" size="1.27" layer="96"/>
+<attribute name="OC_NEWARK" x="574.04" y="325.12" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="574.04" y="325.12" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="574.04" y="325.12" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C7" gate="G$1" x="548.64" y="312.42" smashed="yes">
 <attribute name="NAME" x="550.164" y="315.341" size="1.778" layer="95"/>
 <attribute name="VALUE" x="550.164" y="310.261" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="548.64" y="312.42" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="548.64" y="312.42" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="548.64" y="312.42" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND15" gate="1" x="594.36" y="307.34" smashed="yes">
 <attribute name="VALUE" x="591.82" y="304.8" size="1.778" layer="96"/>
@@ -5568,6 +5788,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="C8" gate="G$1" x="632.46" y="325.12" smashed="yes">
 <attribute name="NAME" x="633.984" y="328.041" size="1.778" layer="95"/>
 <attribute name="VALUE" x="633.984" y="322.961" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="632.46" y="325.12" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="632.46" y="325.12" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="632.46" y="325.12" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY16" gate="G$1" x="591.82" y="332.74" smashed="yes">
 <attribute name="VALUE" x="590.804" y="336.296" size="1.778" layer="96"/>
@@ -5578,14 +5801,23 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="C9" gate="G$1" x="528.32" y="375.92" smashed="yes">
 <attribute name="NAME" x="529.844" y="378.841" size="1.778" layer="95"/>
 <attribute name="VALUE" x="529.844" y="373.761" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="528.32" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="528.32" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="528.32" y="375.92" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C10" gate="G$1" x="535.94" y="375.92" smashed="yes">
 <attribute name="NAME" x="537.464" y="378.841" size="1.778" layer="95"/>
 <attribute name="VALUE" x="537.464" y="373.761" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="535.94" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="535.94" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="535.94" y="375.92" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C12" gate="G$1" x="591.82" y="375.92" smashed="yes">
 <attribute name="NAME" x="593.344" y="378.841" size="1.778" layer="95"/>
 <attribute name="VALUE" x="593.344" y="373.761" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="591.82" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="591.82" y="375.92" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="591.82" y="375.92" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND18" gate="1" x="591.82" y="368.3" smashed="yes">
 <attribute name="VALUE" x="589.28" y="365.76" size="1.778" layer="96"/>
@@ -5596,10 +5828,16 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="R9" gate="G$1" x="601.98" y="406.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="600.4814" y="402.59" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="605.282" y="402.59" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="601.98" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="601.98" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="601.98" y="406.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R10" gate="G$1" x="609.6" y="406.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="608.1014" y="402.59" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="612.902" y="402.59" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="609.6" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="609.6" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="609.6" y="406.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="P+4" gate="1" x="609.6" y="416.56" smashed="yes">
 <attribute name="VALUE" x="608.584" y="420.116" size="1.778" layer="96"/>
@@ -5607,6 +5845,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="U5" gate="G$1" x="563.88" y="388.62" smashed="yes">
 <attribute name="NAME" x="551.18" y="398.78" size="1.778" layer="95"/>
 <attribute name="VALUE" x="551.18" y="375.92" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="563.88" y="388.62" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="563.88" y="388.62" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="563.88" y="388.62" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND20" gate="1" x="535.94" y="368.3" smashed="yes">
 <attribute name="VALUE" x="533.4" y="365.76" size="1.778" layer="96"/>
@@ -5620,6 +5861,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="SJ1" gate="G$1" x="617.22" y="386.08" smashed="yes">
 <attribute name="NAME" x="619.76" y="386.461" size="1.778" layer="95"/>
 <attribute name="VALUE" x="619.76" y="384.175" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="617.22" y="386.08" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="617.22" y="386.08" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="617.22" y="386.08" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="P+2" gate="1" x="617.22" y="416.56" smashed="yes">
 <attribute name="VALUE" x="616.204" y="420.116" size="1.778" layer="96"/>
@@ -5636,10 +5880,16 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="SJ3" gate="1" x="513.08" y="378.46" smashed="yes" rot="R90">
 <attribute name="NAME" x="510.54" y="375.92" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="518.16" y="375.92" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="513.08" y="378.46" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="513.08" y="378.46" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="513.08" y="378.46" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SJ2" gate="1" x="520.7" y="378.46" smashed="yes" rot="R90">
 <attribute name="NAME" x="518.16" y="375.92" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="525.78" y="375.92" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="520.7" y="378.46" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="520.7" y="378.46" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="520.7" y="378.46" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="X1" gate="-1" x="448.31" y="373.38" smashed="yes">
 <attribute name="VALUE" x="447.04" y="374.65" size="1.778" layer="96"/>
@@ -5906,42 +6156,72 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="U6" gate="G$1" x="332.74" y="287.02" smashed="yes">
 <attribute name="NAME" x="322.58" y="300.736" size="1.778" layer="95"/>
 <attribute name="VALUE" x="322.58" y="274.32" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="332.74" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="332.74" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="332.74" y="287.02" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R11" gate="G$1" x="312.42" y="289.56" smashed="yes">
 <attribute name="NAME" x="309.88" y="291.084" size="1.778" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="314.96" y="291.084" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<attribute name="OC_NEWARK" x="312.42" y="289.56" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="312.42" y="289.56" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="312.42" y="289.56" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R12" gate="G$1" x="312.42" y="284.48" smashed="yes">
 <attribute name="NAME" x="309.88" y="286.004" size="1.778" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="314.96" y="286.004" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<attribute name="OC_NEWARK" x="312.42" y="284.48" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="312.42" y="284.48" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="312.42" y="284.48" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R13" gate="G$1" x="312.42" y="279.4" smashed="yes">
 <attribute name="NAME" x="309.88" y="280.924" size="1.778" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="314.96" y="280.924" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<attribute name="OC_NEWARK" x="312.42" y="279.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="312.42" y="279.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="312.42" y="279.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D1" gate="G$1" x="281.94" y="287.02" smashed="yes">
 <attribute name="NAME" x="278.511" y="282.448" size="1.778" layer="95" font="vector" rot="R90"/>
 <attribute name="VALUE" x="283.845" y="282.448" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
+<attribute name="OC_NEWARK" x="281.94" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="281.94" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="281.94" y="287.02" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D2" gate="G$1" x="292.1" y="292.1" smashed="yes">
 <attribute name="NAME" x="288.671" y="287.528" size="1.778" layer="95" font="vector" rot="R90"/>
 <attribute name="VALUE" x="294.005" y="287.528" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
+<attribute name="OC_NEWARK" x="292.1" y="292.1" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="292.1" y="292.1" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="292.1" y="292.1" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D3" gate="G$1" x="302.26" y="297.18" smashed="yes">
 <attribute name="NAME" x="298.831" y="292.608" size="1.778" layer="95" font="vector" rot="R90"/>
 <attribute name="VALUE" x="304.165" y="292.608" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
+<attribute name="OC_NEWARK" x="302.26" y="297.18" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="302.26" y="297.18" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="302.26" y="297.18" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C13" gate="G$1" x="274.32" y="289.56" smashed="yes" rot="MR0">
 <attribute name="NAME" x="272.796" y="292.481" size="1.778" layer="95" font="vector" rot="MR0"/>
 <attribute name="VALUE" x="272.796" y="287.401" size="1.778" layer="96" font="vector" rot="MR0"/>
+<attribute name="OC_NEWARK" x="274.32" y="289.56" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="274.32" y="289.56" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="274.32" y="289.56" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R14" gate="G$1" x="355.6" y="276.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="354.076" y="276.86" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="357.124" y="276.86" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+<attribute name="OC_NEWARK" x="355.6" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="355.6" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="355.6" y="276.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C14" gate="G$1" x="388.62" y="279.4" smashed="yes">
 <attribute name="NAME" x="390.144" y="282.321" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="390.144" y="277.241" size="1.778" layer="96" font="vector"/>
+<attribute name="OC_NEWARK" x="388.62" y="279.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="388.62" y="279.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="388.62" y="279.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND6" gate="1" x="388.62" y="264.16" smashed="yes">
 <attribute name="VALUE" x="388.62" y="263.906" size="1.778" layer="96" align="top-center"/>
@@ -5958,10 +6238,16 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="R15" gate="G$1" x="381" y="276.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="379.476" y="276.86" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="382.524" y="276.86" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+<attribute name="OC_NEWARK" x="381" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="381" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="381" y="276.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R16" gate="G$1" x="373.38" y="276.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="371.856" y="276.86" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="374.904" y="276.86" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+<attribute name="OC_NEWARK" x="373.38" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="373.38" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="373.38" y="276.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND26" gate="1" x="381" y="264.16" smashed="yes">
 <attribute name="VALUE" x="381" y="263.906" size="1.778" layer="96" align="top-center"/>
@@ -5971,6 +6257,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 </instance>
 <instance part="J1" gate="G$1" x="411.48" y="294.64" smashed="yes" rot="MR90">
 <attribute name="NAME" x="417.322" y="292.1" size="1.778" layer="95" rot="MR90"/>
+<attribute name="OC_NEWARK" x="411.48" y="294.64" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="411.48" y="294.64" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="411.48" y="294.64" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND28" gate="1" x="396.24" y="264.16" smashed="yes">
 <attribute name="VALUE" x="396.24" y="263.906" size="1.778" layer="96" align="top-center"/>
@@ -5978,6 +6267,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="J3" gate="G$1" x="414.02" y="287.02" smashed="yes" rot="R180">
 <attribute name="VALUE" x="416.56" y="291.846" size="1.778" layer="96" font="vector" rot="R180"/>
 <attribute name="NAME" x="416.56" y="281.432" size="1.778" layer="95" font="vector" rot="R180"/>
+<attribute name="OC_NEWARK" x="414.02" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="414.02" y="287.02" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="414.02" y="287.02" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND29" gate="1" x="403.86" y="264.16" smashed="yes">
 <attribute name="VALUE" x="403.86" y="263.906" size="1.778" layer="96" align="top-center"/>
@@ -5985,6 +6277,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="R17" gate="G$1" x="363.22" y="276.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="361.696" y="276.86" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="364.744" y="276.86" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+<attribute name="OC_NEWARK" x="363.22" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="363.22" y="276.86" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="363.22" y="276.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND30" gate="1" x="363.22" y="264.16" smashed="yes">
 <attribute name="VALUE" x="363.22" y="263.906" size="1.778" layer="96" align="top-center"/>
@@ -5995,6 +6290,9 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="S1" gate="BEF1" x="375.92" y="312.42" smashed="yes">
 <attribute name="NAME" x="381" y="309.88" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="383.54" y="309.88" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="375.92" y="312.42" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="375.92" y="312.42" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="375.92" y="312.42" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY3" gate="G$1" x="373.38" y="322.58" smashed="yes">
 <attribute name="VALUE" x="373.38" y="327.66" size="1.778" layer="96"/>
@@ -6008,18 +6306,30 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="C1" gate="G$1" x="632.46" y="266.7" smashed="yes">
 <attribute name="NAME" x="633.984" y="269.621" size="1.778" layer="95"/>
 <attribute name="VALUE" x="633.984" y="264.541" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="632.46" y="266.7" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="632.46" y="266.7" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="632.46" y="266.7" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C4" gate="G$1" x="632.46" y="205.74" smashed="yes">
 <attribute name="NAME" x="633.984" y="208.661" size="1.778" layer="95"/>
 <attribute name="VALUE" x="633.984" y="203.581" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="632.46" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="632.46" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="632.46" y="205.74" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C6" gate="G$1" x="632.46" y="147.32" smashed="yes">
 <attribute name="NAME" x="633.984" y="150.241" size="1.778" layer="95"/>
 <attribute name="VALUE" x="633.984" y="145.161" size="1.778" layer="96"/>
+<attribute name="OC_NEWARK" x="632.46" y="147.32" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="632.46" y="147.32" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="632.46" y="147.32" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C11" gate="G$1" x="515.62" y="406.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="512.699" y="407.924" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="517.779" y="407.924" size="1.778" layer="96" rot="R90"/>
+<attribute name="OC_NEWARK" x="515.62" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="515.62" y="406.4" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="515.62" y="406.4" size="1.778" layer="96" display="off"/>
 </instance>
 </instances>
 <busses>
