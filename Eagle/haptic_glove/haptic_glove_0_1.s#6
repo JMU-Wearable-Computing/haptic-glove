@@ -5371,25 +5371,25 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 </classes>
 <parts>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="MTR4" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="U1" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
 <part name="C3" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP3" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="MTR3" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="U2" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
 <part name="C2" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP5" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="MTR2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="U3" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
 <part name="C5" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
 <part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP7" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="MTR1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="U4" library="SparkFun-PowerIC" deviceset="DRV2605L" device=""/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0402)" device="" value="1.0uF"/>
 <part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
@@ -5485,7 +5485,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="GND2" gate="1" x="548.64" y="129.54" smashed="yes">
 <attribute name="VALUE" x="546.1" y="127" size="1.778" layer="96"/>
 </instance>
-<instance part="JP2" gate="G$1" x="617.22" y="152.4" smashed="yes" rot="R180">
+<instance part="MTR4" gate="G$1" x="617.22" y="152.4" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="157.48" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="146.558" size="1.778" layer="95" rot="R180"/>
 </instance>
@@ -5506,7 +5506,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="GND4" gate="1" x="548.64" y="187.96" smashed="yes">
 <attribute name="VALUE" x="546.1" y="185.42" size="1.778" layer="96"/>
 </instance>
-<instance part="JP3" gate="G$1" x="617.22" y="210.82" smashed="yes" rot="R180">
+<instance part="MTR3" gate="G$1" x="617.22" y="210.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="215.9" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="204.978" size="1.778" layer="95" rot="R180"/>
 </instance>
@@ -5527,7 +5527,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="GND9" gate="1" x="548.64" y="246.38" smashed="yes">
 <attribute name="VALUE" x="546.1" y="243.84" size="1.778" layer="96"/>
 </instance>
-<instance part="JP5" gate="G$1" x="617.22" y="269.24" smashed="yes" rot="R180">
+<instance part="MTR2" gate="G$1" x="617.22" y="269.24" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="274.32" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="263.398" size="1.778" layer="95" rot="R180"/>
 </instance>
@@ -5548,7 +5548,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <instance part="GND13" gate="1" x="548.64" y="304.8" smashed="yes">
 <attribute name="VALUE" x="546.1" y="302.26" size="1.778" layer="96"/>
 </instance>
-<instance part="JP7" gate="G$1" x="617.22" y="327.66" smashed="yes" rot="R180">
+<instance part="MTR1" gate="G$1" x="617.22" y="327.66" smashed="yes" rot="R180">
 <attribute name="VALUE" x="619.76" y="332.74" size="1.778" layer="96" rot="R180"/>
 <attribute name="NAME" x="619.76" y="321.818" size="1.778" layer="95" rot="R180"/>
 </instance>
@@ -6294,7 +6294,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <net name="N$6" class="0">
 <segment>
 <pinref part="U1" gate="DRV2605" pin="OUT-"/>
-<pinref part="JP2" gate="G$1" pin="1"/>
+<pinref part="MTR4" gate="G$1" pin="1"/>
 <wire x1="589.28" y1="152.4" x2="609.6" y2="152.4" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6303,7 +6303,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <pinref part="U1" gate="DRV2605" pin="OUT+"/>
 <wire x1="589.28" y1="147.32" x2="607.06" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="607.06" y1="147.32" x2="607.06" y2="149.86" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="2"/>
+<pinref part="MTR4" gate="G$1" pin="2"/>
 <wire x1="607.06" y1="149.86" x2="609.6" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6342,7 +6342,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <net name="N$13" class="0">
 <segment>
 <pinref part="U2" gate="DRV2605" pin="OUT-"/>
-<pinref part="JP3" gate="G$1" pin="1"/>
+<pinref part="MTR3" gate="G$1" pin="1"/>
 <wire x1="589.28" y1="210.82" x2="609.6" y2="210.82" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6351,7 +6351,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <pinref part="U2" gate="DRV2605" pin="OUT+"/>
 <wire x1="589.28" y1="205.74" x2="607.06" y2="205.74" width="0.1524" layer="91"/>
 <wire x1="607.06" y1="205.74" x2="607.06" y2="208.28" width="0.1524" layer="91"/>
-<pinref part="JP3" gate="G$1" pin="2"/>
+<pinref part="MTR3" gate="G$1" pin="2"/>
 <wire x1="607.06" y1="208.28" x2="609.6" y2="208.28" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6390,7 +6390,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <net name="N$22" class="0">
 <segment>
 <pinref part="U3" gate="DRV2605" pin="OUT-"/>
-<pinref part="JP5" gate="G$1" pin="1"/>
+<pinref part="MTR2" gate="G$1" pin="1"/>
 <wire x1="589.28" y1="269.24" x2="609.6" y2="269.24" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6399,7 +6399,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <pinref part="U3" gate="DRV2605" pin="OUT+"/>
 <wire x1="589.28" y1="264.16" x2="607.06" y2="264.16" width="0.1524" layer="91"/>
 <wire x1="607.06" y1="264.16" x2="607.06" y2="266.7" width="0.1524" layer="91"/>
-<pinref part="JP5" gate="G$1" pin="2"/>
+<pinref part="MTR2" gate="G$1" pin="2"/>
 <wire x1="607.06" y1="266.7" x2="609.6" y2="266.7" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6440,7 +6440,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <net name="N$31" class="0">
 <segment>
 <pinref part="U4" gate="DRV2605" pin="OUT-"/>
-<pinref part="JP7" gate="G$1" pin="1"/>
+<pinref part="MTR1" gate="G$1" pin="1"/>
 <wire x1="589.28" y1="327.66" x2="609.6" y2="327.66" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6449,7 +6449,7 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <pinref part="U4" gate="DRV2605" pin="OUT+"/>
 <wire x1="589.28" y1="322.58" x2="607.06" y2="322.58" width="0.1524" layer="91"/>
 <wire x1="607.06" y1="322.58" x2="607.06" y2="325.12" width="0.1524" layer="91"/>
-<pinref part="JP7" gate="G$1" pin="2"/>
+<pinref part="MTR1" gate="G$1" pin="2"/>
 <wire x1="607.06" y1="325.12" x2="609.6" y2="325.12" width="0.1524" layer="91"/>
 </segment>
 </net>

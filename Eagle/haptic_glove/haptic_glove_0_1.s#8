@@ -5415,8 +5415,8 @@ Source: http://www2.produktinfo.conrad.com/datenblaetter/700000-724999/705152-da
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND19" library="SparkFun" deviceset="GND" device=""/>
 <part name="P+3" library="SparkFun" deviceset="VCC" device=""/>
-<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="10k"/>
-<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="10k"/>
+<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k"/>
+<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="2.2k"/>
 <part name="P+4" library="SparkFun" deviceset="VCC" device=""/>
 <part name="U5" library="Testing" deviceset="MPU-6050" device="-1"/>
 <part name="GND20" library="SparkFun" deviceset="GND" device=""/>

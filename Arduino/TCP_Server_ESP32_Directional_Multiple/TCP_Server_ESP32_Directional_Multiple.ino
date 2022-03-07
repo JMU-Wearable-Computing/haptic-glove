@@ -18,7 +18,7 @@ const int Pin1 = 5;
 const int Pin2 = 6;
 const int Pin3 = 7;
 
-#define MIN_VIBE 100
+#define MIN_VIBE 150
 #define MAX_VIBE 255
 
 int val0 = MIN_VIBE;
@@ -37,33 +37,34 @@ Adafruit_NeoPixel pixels(1, PIN, NEO_GRB + NEO_KHZ800);
 int BUZZ = 0;
 int BEEP = 5;
 
-// Set Static Local IP
-IPAddress local_IP(172, 16, 1, 2);
-// Set your Gateway IP address
-IPAddress gateway(172, 16, 1, 1);
-IPAddress subnet(255, 255, 0, 0);
+//Toggle static or dynamic ip
+#define STATIC_IP true
+
 
 int port = 8888;  //Port number
 WiFiServer server(port);
 
 //Server connect to WiFi Network
+//const char *ssid = "KrustyKrab2.4";  //Enter your wifi SSID
+//const char *password = "Krabbypatties";  //Enter your wifi Password
+
 const char *ssid = "WearablesLab";  //Enter your wifi SSID
 const char *password = "";  //Enter your wifi Password
 
-int count = 0;
-String headers[] = { "buz0", "buz1", "buz2", "buz3" };
 String msg;
-String key;
-int value;
 
-void set_motor_output(int pin, int val) {
-  if (val < MIN_VIBE) {
+void set_motor_output(int en_pin, int pin, int val) {
+  if (val <= MIN_VIBE) {
+    digitalWrite(en_pin, LOW);
     val = MIN_VIBE;
+    digitalWrite(en_pin, LOW);
   } else if (val > MAX_VIBE) {
+    digitalWrite(en_pin, HIGH);
     val = MAX_VIBE;
+  } else {
+    digitalWrite(en_pin, HIGH);
   }
   analogWrite(pin, val);
-
 }
 
 
@@ -73,26 +74,39 @@ void getInput(WiFiClient client) {
   while (client.available() > 0) {
     msg = String(client.readStringUntil('\n'));
     Serial.println(msg);
-    
+
     val0 = msg.substring(1, 4).toInt();
     val1 = msg.substring(5, 8).toInt();
     val2 = msg.substring(9, 12).toInt();
     val3 = msg.substring(13, 16).toInt();
 
-    set_motor_output(Pin0, val0);
-    set_motor_output(Pin1, val1);
-    set_motor_output(Pin2, val2);
-    set_motor_output(Pin3, val3);
-    }
-  
+    set_motor_output(0, Pin0, val0);
+    set_motor_output(1, Pin1, val1);
+    set_motor_output(2, Pin2, val2);
+    set_motor_output(3, Pin3, val3);
+  }
 
-    client.flush();
+
+  client.flush();
 }
 
 
 
 void setup()
 {
+  if (STATIC_IP) {
+    // Set Static Local IP
+    // IPAddress local_IP(172, 16, 1, 2);
+    IPAddress local_IP(172, 16, 1, 3);
+    // Set your Gateway IP address
+    IPAddress gateway(172, 16, 1, 1);
+    IPAddress subnet(255, 255, 0, 0);
+    if (!WiFi.config(local_IP, gateway, subnet)) {
+      Serial.println("STA Failed to configure");
+    }
+  }
+
+
   Serial.begin(115200);
 
   pixels.setBrightness(5);
@@ -114,21 +128,17 @@ void setup()
   pinMode(Pin2, OUTPUT);
   pinMode(Pin3, OUTPUT);
 
-  // Set Driver Board Enable Pins HIGH
-  digitalWrite(0, HIGH);
-  digitalWrite(1, HIGH);
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
+  // Set Driver Board Enable Pins LOW
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
 
   analogWrite(Pin0, MIN_VIBE);
   analogWrite(Pin1, MIN_VIBE);
   analogWrite(Pin2, MIN_VIBE);
   analogWrite(Pin3, MIN_VIBE);
 
-  // Configure WIFI Network
-  if (!WiFi.config(local_IP, gateway, subnet)) {
-    Serial.println("STA Failed to configure");
-  }
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password); //Connect to wifi
