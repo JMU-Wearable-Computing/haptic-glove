@@ -39,6 +39,6 @@ When booted, the ESP32 establishes a user definable static ip.
 
 ### Message format
 Messages follows the format: /n01/n02/n03/n04  
-nXX is a number of length 3 between 0 and 255
+nXX is a number of length 3 between 0 and 255.
 Each segment of the message correspondes to the strength of a specific motor.
 Where n01 controls motor 1, n02 controls motor 2 and so on.
