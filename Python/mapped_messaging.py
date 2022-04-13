@@ -3,7 +3,7 @@ from haptic_mapping import *
 import random
 import time
 
-TCP_IP = "172.16.1.2"
+TCP_IP = "172.16.1.3"
 #TCP_IP = "172.16.1.3"
 #TCP_IP = "192.168.50.170"
 
@@ -26,7 +26,7 @@ for i in range(0,100):
     
     intensity = find_intensity_array(C, G, motors)
     print(G, intensity)
-    intensity= [150,100,100,100]
+    #intensity= [150,100,100,100]
     #intensity= [255,255,100,100]
     message = make_message(intensity)
 
