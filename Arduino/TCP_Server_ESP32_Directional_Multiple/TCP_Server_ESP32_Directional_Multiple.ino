@@ -1,135 +1,150 @@
 /*
-   Copyright (c) 2018, circuits4you.com
-   All rights reserved.
-   Create a TCP Server on ESP8266 NodeMCU.
-   TCP Socket Server Send Receive Demo
+   Tyler Webster
+   ESP32 haptic motor control software
 */
 
 #include <WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 #include <Sparkfun_DRV2605L.h>
+#include "network_cred.h"
 
-// Define Motor Driver and pins used for pwm signals
+// Toggle Static or Dynamic IP
+#define STATIC_IP true
+// Set Device ID Used in Static IP
+#define DEVICE_ID 4
+
+// Set network credentials (from network_cred.h)
+#define ssid mySSID_0  //wifi SSID
+#define password myPASSWORD_0  // wifi Password
+
+// Set port number and define server
+int port = 8888;  //Port number
+WiFiServer server(port);
+
+// Define Motor Driver and Vibration Signal Bounds
 SFE_HMD_DRV2605L HMD;
-
-const int Pin0 = 4;
-const int Pin1 = 5;
-const int Pin2 = 6;
-const int Pin3 = 7;
-
-#define MIN_VIBE 100
+#define MIN_VIBE 150
 #define MAX_VIBE 255
 
+// Motor Pins {ENABLE_PIN, SIGNAL_PWM_PIN}
+const int mot0[2] = {0, 4};
+const int mot1[2] = {1, 5};
+const int mot2[2] = {2, 6};
+const int mot3[2] = {3, 7};
+
+// Set All Motors to no Vibration
 int val0 = MIN_VIBE;
 int val1 = MIN_VIBE;
 int val2 = MIN_VIBE;
 int val3 = MIN_VIBE;
 
-#define SendKey 46  //Button to send data Flash BTN on NodeMCU
+// On the ESP32S2 SAOLA GPIO 18 is the NeoPixel.
+#define LED_PIN 18
 
-// On the ESP32S2 SAOLA GPIO is the NeoPixel.
-#define PIN        18
+// Define NeoPixel RGB LED
+Adafruit_NeoPixel pixels(1, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-//Single NeoPixel
-Adafruit_NeoPixel pixels(1, PIN, NEO_GRB + NEO_KHZ800);
-
-int BUZZ = 0;
-int BEEP = 5;
-
-// Set Static Local IP
-IPAddress local_IP(172, 16, 1, 2);
-// Set your Gateway IP address
-IPAddress gateway(172, 16, 1, 1);
-IPAddress subnet(255, 255, 0, 0);
-
-int port = 8888;  //Port number
-WiFiServer server(port);
-
-//Server connect to WiFi Network
-const char *ssid = "WearablesLab";  //Enter your wifi SSID
-const char *password = "";  //Enter your wifi Password
-
-int count = 0;
-String headers[] = { "buz0", "buz1", "buz2", "buz3" };
+// Global message holder
 String msg;
-String key;
-int value;
 
-void set_motor_output(int pin, int val) {
-  if (val < MIN_VIBE) {
+// Send signals to a specific motor
+void set_motor_output(const int motor_pins[2], int val) {
+  // If Vibration Value Below Threshold, Temporarilly Disable Motor
+  if (val <= MIN_VIBE) {
+    digitalWrite(motor_pins[0], LOW);
     val = MIN_VIBE;
+    // Limit Value of Vibration to Max Threshold
   } else if (val > MAX_VIBE) {
+    digitalWrite(motor_pins[0], HIGH);
     val = MAX_VIBE;
+  } else {
+    // Enable Motor
+    digitalWrite(motor_pins[0], HIGH);
   }
-  analogWrite(pin, val);
-
+  // Send Signal to Motor
+  analogWrite(motor_pins[1], val);
 }
 
-
+// Read and Decode Messages From TCP Client
 void getInput(WiFiClient client) {
-  //Message Example /123/456/789/321
+  // Message Example /123/456/789/321
   msg = "";
+
+  // If a Message Exists, Read it
   while (client.available() > 0) {
     msg = String(client.readStringUntil('\n'));
     Serial.println(msg);
-    
+
+    // Split Message and Assign Values to Motor Signals
     val0 = msg.substring(1, 4).toInt();
     val1 = msg.substring(5, 8).toInt();
     val2 = msg.substring(9, 12).toInt();
     val3 = msg.substring(13, 16).toInt();
 
-    set_motor_output(Pin0, val0);
-    set_motor_output(Pin1, val1);
-    set_motor_output(Pin2, val2);
-    set_motor_output(Pin3, val3);
-    }
-  
-
-    client.flush();
+    // Send New Signals to each Motor
+    set_motor_output(mot0, val0);
+    set_motor_output(mot1, val1);
+    set_motor_output(mot2, val2);
+    set_motor_output(mot3, val3);
+  }
+  client.flush();
 }
-
-
 
 void setup()
 {
+  // Check if Static IP Address is Needed and Configure Network
+  if (STATIC_IP) {
+    // Set Static Local IP (This Will Vary by Network Host)
+    IPAddress local_IP(172, 16, 1, DEVICE_ID);
+    // Set your Gateway IP address (Router's IP)
+    IPAddress gateway(172, 16, 1, 1);
+    IPAddress subnet(255, 255, 0, 0);
+
+    // Send Serial Message if Configuration Failed
+    if (!WiFi.config(local_IP, gateway, subnet)) {
+      Serial.println("STA Failed to configure");
+    }
+  }
+
+  // Enable Serial Output
   Serial.begin(115200);
 
+  // Start Onboard RGB LED
   pixels.setBrightness(5);
   pixels.begin(); // INITIALIZE NeoPixel (REQUIRED)
 
   // Start Driver Board
   HMD.begin();
-  HMD.Mode(0x03); //PWM INPUT
-  HMD.MotorSelect(0x0A);
+  HMD.Mode(0x03); // Set PWM Input Mode
+  HMD.MotorSelect(0x0A); // Set Motor Type
   HMD.Library(7); //change to 6 for LRA motors
 
-  // Set pins to output
-  pinMode(0, OUTPUT);
-  pinMode(1, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(Pin0, OUTPUT);
-  pinMode(Pin1, OUTPUT);
-  pinMode(Pin2, OUTPUT);
-  pinMode(Pin3, OUTPUT);
+  // Set All Motor Pins to Outputs
+  pinMode(mot0[0], OUTPUT);
+  pinMode(mot1[0], OUTPUT);
+  pinMode(mot2[0], OUTPUT);
+  pinMode(mot3[0], OUTPUT);
+  pinMode(mot0[1], OUTPUT);
+  pinMode(mot1[1], OUTPUT);
+  pinMode(mot2[1], OUTPUT);
+  pinMode(mot3[1], OUTPUT);
 
-  // Set Driver Board Enable Pins HIGH
-  digitalWrite(0, HIGH);
-  digitalWrite(1, HIGH);
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
-
-  analogWrite(Pin0, MIN_VIBE);
-  analogWrite(Pin1, MIN_VIBE);
-  analogWrite(Pin2, MIN_VIBE);
-  analogWrite(Pin3, MIN_VIBE);
-
-  // Configure WIFI Network
-  if (!WiFi.config(local_IP, gateway, subnet)) {
-    Serial.println("STA Failed to configure");
-  }
-
+  // Sequentially activate motors and then turn them off
+  set_motor_output(mot0, MAX_VIBE);
+  delay(500);
+  set_motor_output(mot0, MIN_VIBE);
+  set_motor_output(mot1, MAX_VIBE);
+  delay(500);
+  set_motor_output(mot1, MIN_VIBE);
+  set_motor_output(mot2, MAX_VIBE);
+  delay(500);
+  set_motor_output(mot2, MIN_VIBE);
+  set_motor_output(mot3, MAX_VIBE);
+  delay(500);
+  set_motor_output(mot3, MIN_VIBE);
+  
+  // Configure Wifi Connection, Start to Connect
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password); //Connect to wifi
   delay(100);
@@ -151,50 +166,47 @@ void setup()
   pixels.show();
 
 
-  // Print Network Details
+  // Open TCP Server and Print Network Details
+  server.begin();
   Serial.println("");
   Serial.print("Connected to ");
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-  server.begin();
-  Serial.print("Open Telnet and connect to IP:");
-  Serial.print(WiFi.localIP());
-  Serial.print(" on port ");
+  Serial.print("on port ");
   Serial.println(port);
 }
 
 void loop()
 {
+  // Execute if WiFi Connected
   if (WiFi.status() == WL_CONNECTED) {
+    // Check if a Client has Connected
     WiFiClient client = server.available();
 
     if (client) {
       if (client.connected())
       {
+        // Set LED Green if a Client is Connected
         pixels.setPixelColor(0, Adafruit_NeoPixel::Color(0, 255, 0 ));
         pixels.show();
         Serial.println("Client Connected");
       }
-
+      // While Client is Connected, Keep Reading Messages From Client
       while (client.connected()) {
         getInput(client);
       }
 
-      /*
-        //Send Data to connected client
-        while(Serial.available()>0)
-        {
-        client.write(Serial.read());
-        }
-      */
-
+      // Stop Client on Client Disconnect
       client.stop();
       Serial.println("Client disconnected");
+      // Set LED Back to Blue if Client Disconnected
       pixels.setPixelColor(0, Adafruit_NeoPixel::Color(0, 0, 255 ));
       pixels.show();
     }
   } else {
+    // Set LED to Red if Network Connection Lost
     pixels.setPixelColor(0, Adafruit_NeoPixel::Color(255, 0, 0 ));
+    pixels.show();
   }
 }

@@ -2,9 +2,9 @@ import socket
 from pynput import keyboard
 import time
 
-#TCP_IP = "172.16.1.2"
+TCP_IP = "172.16.1.4"
 
-TCP_IP = "192.168.50.170"
+#TCP_IP = "192.168.50.170"
 
 TCP_PORT = 8888
 
@@ -13,13 +13,12 @@ s.connect((TCP_IP, TCP_PORT))
  
 mode = "pull"
 MIN_VIBE = 100
-MAX_VIBE = 200
+MAX_VIBE = 250
 
 def make_message(index):
     command_array = [MIN_VIBE, MIN_VIBE, MIN_VIBE, MIN_VIBE]
     command_array[index] = MAX_VIBE
     return f'/{command_array[0]}/{command_array[1]}/{command_array[2]}/{command_array[3]}'
-
 
 pattern = '118'
 if mode == "push":
@@ -47,9 +46,7 @@ def on_press(key):
     if k == 'space':
         for i in range(0,1):
             s.send(f'/150/150/150/150\n'.encode('ascii'))
-
-            
- 
+    
     if k == 'q':    
         return False  # stoplistener; remove this if want more keys
  
