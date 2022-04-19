@@ -9,6 +9,11 @@ def find_distance(vector1, vector2, normalized=False):
     distance = np.linalg.norm(diff)
     return distance
 
+def orient_motor(motor_position, acceleration):
+    #TODO
+    print("Not implemented")
+
+
 
 def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
     output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
@@ -29,7 +34,7 @@ def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
     return output
 
 
-def find_intensity_array(current_pos, goal_pos, motor_positions):
+def find_intensity_array(current_pos, goal_pos, motor_positions, norm = True):
     U = goal_pos - current_pos
     #print(f'Displacement vector: {U}')
 
@@ -43,7 +48,7 @@ def find_intensity_array(current_pos, goal_pos, motor_positions):
     mapped = [0.0,0.0,0.0,0.0]
 
     for i in range(0, len(motor_positions)):
-        motor_distance[i] = find_distance(U, motor_positions[i], normalized=True)
+        motor_distance[i] = find_distance(U, motor_positions[i], normalized=norm)
         mapped[i] = reverse_map_to_range(motor_distance[i], 0.0, math.sqrt(2), 1, .59, bounded=True)
 
     mapped = np.array(mapped)
