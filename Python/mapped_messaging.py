@@ -7,6 +7,8 @@ import numpy as np
 import ast
 
 TCP_IP = "172.16.1.4"
+#TCP_IP = "192.168.1.4"
+
 #TCP_IP = "172.16.1.3"
 #TCP_IP = "192.168.50.170"
 
@@ -47,12 +49,13 @@ try:
     #accel_thread.start()
 
     C = np.array([0.0,0.0,0.0]) #Current Pos
-    G = np.array([0.0,100.0,0.0]) # Goal Pos
+    G = np.array([0.0,1.0,0.0]) # Goal Pos
 
-    motors = np.array([np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0])]) #array of motor positions
-    motors_UD = np.array([np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0]), np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0])])
-    motors_L = np.array([np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0])])
-    motors_R = np.array([np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0])])
+    #arrays of motor positions (from perspective of wearer)
+    motors = np.array([np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0])]) #standard position
+    motors_UD = np.array([np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0]), np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0])]) #upside down
+    motors_R = np.array([np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0])]) #rolled right
+    motors_L = np.array([np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0])]) #rolled left
     current_motors = motors
     while True:
 
@@ -65,9 +68,9 @@ try:
         elif (accel_norm[1] < -0.7):
             current_motors = motors_UD
         elif (accel_norm[0] > 0.7 ):
-            current_motors = motors_R
-        elif (accel_norm[0] < -0.7 ):
             current_motors = motors_L
+        elif (accel_norm[0] < -0.7 ):
+            current_motors = motors_R
 
 
         #G = np.array([0,random.uniform(-2,2),random.uniform(-2,2)]) # Goal Position

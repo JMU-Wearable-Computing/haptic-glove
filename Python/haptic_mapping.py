@@ -47,10 +47,10 @@ def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.arra
     #print(current_pos, goal_pos, accel)
 
     U = goal_pos - current_pos - accel
-    print(f'Displacement vector: {U}')
+    #print(f'Displacement vector: {U}')
 
     #D = np.linalg.norm(U)
-    print(f'Distance from goal: {D}')
+    #print(f'Distance from goal: {D}')
 
     I = map_to_range(D, 0, 1, 150, 255,  bounded=True)
     #print(f'Distance adjusted to range: {I}')
