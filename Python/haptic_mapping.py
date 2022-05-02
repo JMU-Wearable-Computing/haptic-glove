@@ -13,8 +13,6 @@ def orient_motor(motor_position, acceleration):
     #TODO
     print("Not implemented")
 
-
-
 def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
     output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     if bounded:
@@ -34,11 +32,24 @@ def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
     return output
 
 
-def find_intensity_array(current_pos, goal_pos, motor_positions, norm = True):
+def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.array([0.0,0.0,0.0]), norm = True):
     U = goal_pos - current_pos
+    D = np.linalg.norm(U)
+    
+    if norm:
+        if ( np.linalg.norm(current_pos) != 0):
+            current_pos = current_pos / np.linalg.norm(current_pos)
+        if ( np.linalg.norm(goal_pos) != 0):
+            goal_pos = goal_pos / np.linalg.norm(goal_pos)
+        if ( np.linalg.norm(accel) != 0):
+            accel = accel / np.linalg.norm(accel)
+
+    #print(current_pos, goal_pos, accel)
+
+    U = goal_pos - current_pos - accel
     #print(f'Displacement vector: {U}')
 
-    D = np.linalg.norm(U)
+    #D = np.linalg.norm(U)
     #print(f'Distance from goal: {D}')
 
     I = map_to_range(D, 0, 1, 150, 255,  bounded=True)
