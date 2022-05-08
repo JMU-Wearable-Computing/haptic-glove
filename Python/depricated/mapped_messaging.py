@@ -1,3 +1,6 @@
+# This is a test program
+
+
 import socket
 from haptic_mapping import *
 import random

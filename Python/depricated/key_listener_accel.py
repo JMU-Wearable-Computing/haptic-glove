@@ -12,10 +12,10 @@ TCP_PORT = 8888
 
 pFactor = 1.0
 
-motors = np.array([np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0])]) #standard position
-motors_UD = np.array([np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0]), np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0])]) #upside down
-motors_R = np.array([np.array([1.0,0.0,0.0]), np.array([-1.0,0.0,0.0]), np.array([0.0,1.0,0.0]), np.array([0.0,-1.0,0.0])]) #rolled right
-motors_L = np.array([np.array([-1.0,0.0,0.0]), np.array([1.0,0.0,0.0]), np.array([0.0,-1.0,0.0]), np.array([0.0,1.0,0.0])]) #rolled left
+motors = np.array([np.array([0.0,pFactor,0.0]), np.array([0.0,-pFactor,0.0]), np.array([-pFactor,0.0,0.0]), np.array([pFactor,0.0,0.0])]) #standard position
+motors_UD = np.array([np.array([0.0,-pFactor,0.0]), np.array([0.0,pFactor,0.0]), np.array([pFactor,0.0,0.0]), np.array([-pFactor,0.0,0.0])]) #upside down
+motors_R = np.array([np.array([pFactor,0.0,0.0]), np.array([-pFactor,0.0,0.0]), np.array([0.0,pFactor,0.0]), np.array([0.0,-pFactor,0.0])]) #rolled right
+motors_L = np.array([np.array([-pFactor,0.0,0.0]), np.array([pFactor,0.0,0.0]), np.array([0.0,-pFactor,0.0]), np.array([0.0,pFactor,0.0])]) #rolled left
 current_motors = motors
 
 def get_acceleration():
@@ -104,5 +104,3 @@ while True:
     print(make_message(find_intensity_array(C, vector, current_motors, norm=True)).encode('ascii'))
     s.send(make_message(find_intensity_array(C, vector, current_motors, norm=True)).encode('ascii'))
 listener.join()  # remove if main thread is polling self.keysup messsage
- 
- 
