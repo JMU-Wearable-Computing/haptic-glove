@@ -1,5 +1,5 @@
-from haptic_mapping import *
-from helpers import *
+from Python.haptic_mapping import *
+from Python.helpers import *
 import numpy as np
 from pynput import keyboard
 import socket
@@ -10,6 +10,8 @@ import time
 # Glove object
 # Supports versions with and without accelerometer
 # Used for manual opperation and testing
+
+
 class LocalizationDemo():
 
     def __init__(self, device_id, port, mode="pull", acceleration=False, verbose=False) -> None:
@@ -68,35 +70,56 @@ class LocalizationDemo():
         if key == keyboard.Key.esc:
             print("Program ending.")
             return False
-
+        vec = []
         if special_key:
             if key.name == 'up':
                 print("Up Key detected! Do the motor thing!")
+                vec = bytearray([255,0,0,0])
+                print(vec)
+            elif key.name == 'down':
+                print("Down Key detected! Do the motor thing!")
+                vec = bytearray([0,255,0,0])
+            elif key.name == 'right':
+                print("Right Key detected! Do the motor thing!")
+                vec = bytearray([0,0,255,0])
+            elif key.name == 'left':
+                print("Left Key detected! Do the motor thing!")
+                vec = bytearray([0,0,0,255])
+            else:
+                print('Single key detected as ', key.name)
+                vec = bytearray([0,0,0,0])
+        else:  # Keys other than special keys
+            if key.char == 'i':
+                print("i Key detected! Do the motor thing!")
+                vec = bytearray([255,255,0,0])
+            else:
+                print('Single key detected as ', key.char)
+                vec = bytearray([0,0,0,0])
 
-                ### create message to turn on two motors
+        ### create message to turn on two motors
 
-                ### send the message to the glove
+        ### send the message to the glove
 
-                ### wait two seconds
-                '''
-                IMPORTANT NOTE: Polling here may block the system on Windows.
-                See "The keyboard listener thread in https://pynput.readthedocs.io/en/latest/keyboard.html#monitoring-the-keyboard
-                The solution may be to dispatch this wait to another thread
-                '''
-                current_time_in_ns = time.time_ns()
-                duration_to_wait_in_ns = 2E9
-                print('Beginning wait of ', duration_to_wait_in_ns / 1E9, 'seconds')
-                while abs(time.time_ns() - current_time_in_ns) < duration_to_wait_in_ns:
-                    pass
-                print('Waiting done!')
+        glove.send_message(glove.make_message(vec))
 
+        ### wait two seconds
+        '''
+        IMPORTANT NOTE: Polling here may block the system on Windows.
+        See "The keyboard listener thread in https://pynput.readthedocs.io/en/latest/keyboard.html#monitoring-the-keyboard
+        The solution may be to dispatch this wait to another thread
+        '''
+        current_time_in_ns = time.time_ns()
+        duration_to_wait_in_ns = 2E9
+        print('Beginning wait of ', duration_to_wait_in_ns / 1E9, 'seconds')
+        while abs(time.time_ns() - current_time_in_ns) < duration_to_wait_in_ns:
+            pass
+        print('Waiting done!')
 
-                ### create message to turn off two motors
+        ### create message to turn off two motors
 
-                ### send message to glove
+        ### send message to glove
 
-        else:
-            print('Single key detected as ', key.char)
+        glove.send_message(glove.make_message(bytearray([0,0,0,0])))
 
     # Send message to glove over TCP socket
     def send_message(self, message):
@@ -120,6 +143,6 @@ if __name__ == '__main__':
     # Define glove
     glove = LocalizationDemo(4, 8888, acceleration=False, verbose=True)
     # Connect to glove
-    # glove.connect()
+    glove.connect()
     # Setup keyboard listener
     glove.keyboard_thread()
