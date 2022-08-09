@@ -79,6 +79,7 @@ class LocalizationDemo():
             elif key.name == 'down':
                 print("Down Key detected! Do the motor thing!")
                 vec = bytearray([0,255,0,0])
+                print(vec)
             elif key.name == 'right':
                 print("Right Key detected! Do the motor thing!")
                 vec = bytearray([0,0,255,0])
@@ -109,7 +110,7 @@ class LocalizationDemo():
         The solution may be to dispatch this wait to another thread
         '''
         current_time_in_ns = time.time_ns()
-        duration_to_wait_in_ns = 2E9
+        duration_to_wait_in_ns = 5E9
         print('Beginning wait of ', duration_to_wait_in_ns / 1E9, 'seconds')
         while abs(time.time_ns() - current_time_in_ns) < duration_to_wait_in_ns:
             pass
@@ -124,7 +125,7 @@ class LocalizationDemo():
     # Send message to glove over TCP socket
     def send_message(self, message):
         if self.connected:
-            self.s.send(message)
+            self.s.send(bytes(message,'UTF-8'))
         else:
             print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
