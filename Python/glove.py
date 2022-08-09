@@ -170,7 +170,7 @@ class Glove():
 
 if __name__ == '__main__':
     #Define glove
-    glove = Glove(4, 8888, acceleration=True, verbose=True)
+    glove = Glove(4, 8888, acceleration=False, verbose=True)
     #Connect to glove
     glove.connect()
     #Setup keyboard listener

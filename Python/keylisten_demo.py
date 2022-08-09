@@ -72,27 +72,36 @@ class LocalizationDemo():
             return False
         vec = []
         if special_key:
-            if key.name == 'up':
+            if key.name == 'up': #correct
                 print("Up Key detected! Do the motor thing!")
-                vec = bytearray([255,0,0,0])
+                vec = bytearray([255,150, 150, 150])
                 print(vec)
             elif key.name == 'down':
                 print("Down Key detected! Do the motor thing!")
-                vec = bytearray([255,255,0,255])
+                vec = bytearray([150,255,150,150])
                 print(vec)
-            elif key.name == 'right':
+            elif key.name == 'right': #correct
                 print("Right Key detected! Do the motor thing!")
-                vec = bytearray([0,0,255,0])
-            elif key.name == 'left':
+                vec = bytearray([150,150,150,255])
+            elif key.name == 'left': #correct
                 print("Left Key detected! Do the motor thing!")
                 vec = bytearray([0,0,255,255])
             else:
                 print('Single key detected as ', key.name)
                 vec = bytearray([0,0,0,0])
         else:  # Keys other than special keys
-            if key.char == 'i':
+            if key.char == 'i': #upper left
                 print("i Key detected! Do the motor thing!")
-                vec = bytearray([255,255,0,0])
+                vec = bytearray([255,0,0,255])
+            elif key.char == 'o': #upper right
+                print("o Key detected! Do the motor thing!")
+                vec = bytearray([255,150,150,255])
+            elif key.char == 'l': #bottom right
+                print("l Key detected! Do the motor thing!")
+                vec = bytearray([150,255,150,255])
+            elif key.char == 'k': #bottom left
+                print("k Key detected! Do the motor thing!")
+                vec = bytearray([150,255,255,150])
             else:
                 print('Single key detected as ', key.char)
                 vec = bytearray([0,0,0,0])
@@ -110,7 +119,7 @@ class LocalizationDemo():
         The solution may be to dispatch this wait to another thread
         '''
         current_time_in_ns = time.time_ns()
-        duration_to_wait_in_ns = 5E9
+        duration_to_wait_in_ns = 1E9
         print('Beginning wait of ', duration_to_wait_in_ns / 1E9, 'seconds')
         while abs(time.time_ns() - current_time_in_ns) < duration_to_wait_in_ns:
             pass
