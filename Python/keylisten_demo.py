@@ -78,14 +78,14 @@ class LocalizationDemo():
                 print(vec)
             elif key.name == 'down':
                 print("Down Key detected! Do the motor thing!")
-                vec = bytearray([0,255,0,0])
+                vec = bytearray([255,255,0,255])
                 print(vec)
             elif key.name == 'right':
                 print("Right Key detected! Do the motor thing!")
                 vec = bytearray([0,0,255,0])
             elif key.name == 'left':
                 print("Left Key detected! Do the motor thing!")
-                vec = bytearray([0,0,0,255])
+                vec = bytearray([0,0,255,255])
             else:
                 print('Single key detected as ', key.name)
                 vec = bytearray([0,0,0,0])
