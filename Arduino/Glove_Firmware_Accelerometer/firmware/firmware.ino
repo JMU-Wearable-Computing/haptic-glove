@@ -62,20 +62,24 @@ String outMsg;
 
 // Send signals to a specific motor
 void set_motor_output(const int motor_pins[2], int val) {
+
+  int enable_pin = motor_pins[0];
+  int signal_pin = motor_pins[1];
+  
   // If Vibration Value Below Threshold, Temporarilly Disable Motor
   if (val <= MIN_VIBE) {
-    digitalWrite(motor_pins[0], LOW);
+    digitalWrite(enable_pin, LOW);
     val = MIN_VIBE;
     // Limit Value of Vibration to Max Threshold
   } else if (val > MAX_VIBE) {
-    digitalWrite(motor_pins[0], HIGH);
+    digitalWrite(enable_pin, HIGH);
     val = MAX_VIBE;
   } else {
     // Enable Motor
-    digitalWrite(motor_pins[0], HIGH);
+    digitalWrite(enable_pin, HIGH);
   }
   // Send Signal to Motor
-  analogWrite(motor_pins[1], val);
+  analogWrite(signal_pin, val);
 }
 
 // Read and Decode Messages From TCP Client
