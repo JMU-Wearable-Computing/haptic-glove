@@ -24,7 +24,11 @@ class Glove():
         self.device_id = device_id
         self.verbose = verbose
         #Automatically find glove IP with device_id
-        self.TCP_IP = find_device_ip(self.device_id)
+        #self.TCP_IP = find_device_ip(self.device_id)
+
+        # remove automatic lookup to avoid error when multiple NICs are present
+        # IP is hard coded to 172.16.1.X based upon Apple AirPort router
+        self.TCP_IP = "172.16.1." + str(device_id)
         self.TCP_PORT = port
         #mode sets whether the vibrations tells use to move away or towards vibration
         self.mode = mode
