@@ -174,15 +174,15 @@ class Glove():
 
 if __name__ == '__main__':
     #Define glove
-    glove = Glove(4, 8888, acceleration=True, verbose=False)
+    glove = Glove(2, 8888, acceleration=True, verbose=True)
     #Connect to glove
     glove.connect()
     #Setup keyboard listener
-    glove.keyboard_thread()
+    glove.keyboard_thread(keys=['a', 's', 'd', 'f'])
 
     #Define second glove
-    glove1 = Glove(3, 8888, acceleration=True, verbose=False)
+    glove1 = Glove(4, 8888, acceleration=True, verbose=True)
     #Connect second glove
     glove1.connect()
     #setup keyboard keys for second glove and assigns w a s d keys to control the second glove
-    glove1.keyboard_thread( keys= ['w','s','a','d'])
+    glove1.keyboard_thread(keys=['h', 'j', 'k', 'l'])
