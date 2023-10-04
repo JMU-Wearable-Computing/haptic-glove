@@ -101,9 +101,11 @@ class Glove:
                             elif self.accel_norm[0] < -0.7:
                                 self.current_motors = self.motors_R
                             # Send new message to glove
-                            self.send_message(self.make_message(find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)).encode('ascii'))
+                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
+                            message = self.make_message(intensity_array).encode('ascii')
+                            self.send_message(message)
                             if self.verbose:
-                                print(self.make_message(find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)).encode('ascii'))
+                                print(message)
                         # TODO: investigate why this SLEEP is here
                         time.sleep(0.1)
                     except Exception as e:
@@ -155,12 +157,10 @@ class Glove:
             self.current_vector = self.commands[k]
             # If not using accelerometer, send message on keypress
             if not self.acceleration:
-                print(self.make_message(
-                    find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
-                                         norm=True)).encode('ascii'))
-                self.send_message(self.make_message(
-                    find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
-                                         norm=True)).encode('ascii'))
+                key_intensity = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
+                key_message = self.make_message(key_intensity).encode('ascii')
+                print(key_message)
+                self.send_message(key_message)
             time.sleep(.05)
         if k == 'space':
             self.current_vector = np.array([0.0, 0.0, 1.0])
