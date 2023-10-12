@@ -143,3 +143,36 @@ class Glove:
 
     def get_power_factor(self):
         return self.pFactor
+
+    def set_motors(self, intensities):
+        """
+        Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
+        :param intensities: An array of floats [0,1] to indicate the intensity of each motor
+        :return:
+        """
+
+        # Turn into NumPy array
+        raw_intensities = np.array(intensities)
+
+        # Append array of floating point zeros of length num_motors
+        if raw_intensities.size < self.num_motors:
+            raw_intensities = np.append(raw_intensities, np.zeros(self.num_motors))
+
+        # Truncate to length of num_motors (undoes part of previous step if intensities parameter is not empty)
+        if raw_intensities.size > self.num_motors:
+            raw_intensities = raw_intensities[:self.num_motors]
+
+        # Map 0-1 to 150-255
+        mapped_list = []
+        for val in raw_intensities:
+            mapped_val = map_to_range(val, 0, 1, 150, 255, True)
+            mapped_list.append(mapped_val)
+
+        # Turn into NumPy array
+        mapped_intensities = np.array(mapped_list).astype(int)
+
+        # Make and send message to glove
+        message = self.make_message(mapped_intensities).encode('ascii')
+        self.send_message(message)
+        if self.verbose:
+            print(message)
