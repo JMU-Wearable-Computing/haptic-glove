@@ -1,204 +1,135 @@
 from haptic_mapping import *
-from helpers import *
 import numpy as np
 from pynput import keyboard
-import socket
 from threading import Thread
 import time
+from refactored_glove import Glove
 
 
-# Glove object
-# Supports versions with and without accelerometer
-# Used for manual operation and testing
-class Glove:
+def keyboard_thread():
+    """
+    Create a thread for reading keyboard input for two gloves
+    :return:
+    """
+    listening_thread = Thread(target=listen_keyboard)
+    listening_thread.start()
 
-    pFactor = 1.0  # Power factor scales maximum intensity of motor vibrations
 
-    # Motor coordinate arrays that will be switched between based on acceleration data
-    motors = np.array([np.array([0.0, pFactor, 0.0]), np.array([0.0, -pFactor, 0.0]), np.array([-pFactor, 0.0, 0.0]),
-                       np.array([pFactor, 0.0, 0.0])])  # standard position
-    motors_UD = np.array([np.array([0.0, -pFactor, 0.0]), np.array([0.0, pFactor, 0.0]), np.array([pFactor, 0.0, 0.0]),
-                          np.array([-pFactor, 0.0, 0.0])])  # upside down
-    motors_R = np.array([np.array([pFactor, 0.0, 0.0]), np.array([-pFactor, 0.0, 0.0]), np.array([0.0, pFactor, 0.0]),
-                         np.array([0.0, -pFactor, 0.0])])  # rolled right
-    motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
-                         np.array([0.0, pFactor, 0.0])])  # rolled left
+def listen_keyboard(mode="pull"):
+    """
+    Begin listening to keyboard
+    :param mode: Whether motors "push" or "pull" user to target
+    :return:
+    """
 
-    def __init__(self, device_id, port, mode="pull", acceleration=False, verbose=False) -> None:
-        # Initialize object variables
-        self.connected = False
-        self.device_id = device_id
-        self.verbose = verbose
-        # Automatically find glove IP with device_id
-        # self.TCP_IP = find_device_ip(self.device_id)
+    # Global variables are a workaround since these were previously attributes of glove class
+    global commands
+    global commands1
+    global keys
+    global keys1
 
-        # remove automatic lookup to avoid error when multiple NICs are present
-        # IP is hard coded to 172.16.1.X based upon Apple AirPort router
-        self.TCP_IP = "172.16.1." + str(device_id)
-        self.TCP_PORT = port
-        # mode sets whether the vibrations tells use to move away or towards vibration
-        self.mode = mode
-        self.acceleration = acceleration
-        # If using accelerometer, initialize acceleration vectors
-        if acceleration:
-            self.accel_data = np.array([0.0, 0.0, 0.0])
-            self.accel_norm = np.array([0.0, 1.0, 0.0])
-        # Set initial conditions
-        self.current_vector = np.array([0.0, 1.0, 0.0])
-        self.glove_position = np.array([0.0, 0.0, 0.0])
-        # Set default motors
-        self.current_motors = self.motors
+    pFactor = glove.get_power_factor()
+    pFactor1 = glove1.get_power_factor()
 
-    # Connect to the glove via TCP socket
-    def connect(self):
-        try:
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.s.connect((self.TCP_IP, self.TCP_PORT))
-            self.connected = True
-            # If using accelerometer, spawn thread and tell it to read constantly
-            if self.acceleration:
-                self.accel_loop = True
-                self.acceleration_thread = Thread(target=self.__get_acceleration).start()
-        except:
-            if self.verbose:
-                print(f'Failed to connect to ip {self.TCP_IP}')
+    if mode == "pull":
+        commands = {keys[0]: np.array([0.0, pFactor, 0.0]), keys[1]: np.array([0.0, -pFactor, 0.0]),
+                    keys[2]: np.array([-pFactor, 0.0, 0.0]), keys[3]: np.array([pFactor, 0.0, 0.0])}
+        commands1 = {keys1[0]: np.array([0.0, pFactor1, 0.0]), keys1[1]: np.array([0.0, -pFactor1, 0.0]),
+                     keys1[2]: np.array([-pFactor1, 0.0, 0.0]), keys1[3]: np.array([pFactor1, 0.0, 0.0])}
+    elif mode == "push":
+        commands = {keys[0]: np.array([0.0, -pFactor, 0.0]), keys[1]: np.array([0.0, pFactor, 0.0]),
+                    keys[2]: np.array([pFactor, 0.0, 0.0]), keys[3]: np.array([-pFactor, 0.0, 0.0])}
+        commands1 = {keys1[0]: np.array([0.0, pFactor1, 0.0]), keys1[1]: np.array([0.0, -pFactor1, 0.0]),
+                     keys1[2]: np.array([-pFactor1, 0.0, 0.0]), keys1[3]: np.array([pFactor1, 0.0, 0.0])}
 
-    # Send a message to the glove and retrieve response containing accelerometer reading
-    def __get_acceleration(self):
-        while self.accel_loop:
-            if self.connected:
-                if self.acceleration:
-                    # Send message "accel"
-                    self.s.send('accel\n'.encode('ascii'))
-                    # Receive accelerometer reading
-                    # TODO: adjust recv to recv_into so buffer is not allocated each time  https://docs.python.org/3/library/socket.html
-                    msg = self.s.recv(4096).decode("ascii").split('\r')[0].split('\n')[0]
-                    try:
-                        # Check if message exists
-                        if len(msg) > 0:
-                            # Parse the acceleration message
-                            msg_split = msg.split(',')
-                            msg_split = np.array(msg_split)
-                            msg_split = msg_split.astype(float)
-                            self.accel_data = msg_split
-                            self.accel_norm = self.accel_data / np.linalg.norm(self.accel_data)
-                            # TODO: Possible numpy version of rounding acceleration to improve program performance?
-                            x_dat = self.accel_norm[0]
-                            y_dat = self.accel_norm[1]
-                            z_dat = self.accel_norm[2]
-                            # normalize acceleration vector
-                            self.accel_norm[0] = round(x_dat, 2)
-                            self.accel_norm[1] = round(y_dat, 2)
-                            self.accel_norm[2] = round(z_dat, 2)
+    #self.board = keyboard.Controller()
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()  # start to listen on a separate thread
+    listener.join()  # remove if main thread is polling self.keysup message
 
-                            # Change the coordinates of motors based on orientation of hand
-                            if self.accel_norm[1] > 0.7:
-                                self.current_motors = self.motors
-                            elif self.accel_norm[1] < -0.7:
-                                self.current_motors = self.motors_UD
-                            elif self.accel_norm[0] > 0.7:
-                                self.current_motors = self.motors_L
-                            elif self.accel_norm[0] < -0.7:
-                                self.current_motors = self.motors_R
-                            # Send new message to glove
-                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
-                            message = self.make_message(intensity_array).encode('ascii')
-                            self.send_message(message)
-                            if self.verbose:
-                                print(message)
-                        # TODO: investigate why this SLEEP is here
-                        time.sleep(0.1)
-                    except Exception as e:
-                        if self.verbose:
-                            print(f'Error communicating with glove. {e}')
-                else:
-                    if self.verbose:
-                        print(f'Glove {self.device_id} not setup for acceleration.')
-            else:
-                if self.verbose:
-                    print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
-    # Create a thread for reading keyboard input for a single glove
-    # Default to arrow keys for control of glove
-    def keyboard_thread(self, keys=['up', 'down', 'left', 'right']):
-        listening_thread = Thread(target=self.__listen_keyboard, args=(keys,))
-        listening_thread.start()
+def on_press(key):
+    """
+    Callback for keyboard presses
+    :param key: Key that is pressed
+    :return:
+    """
 
-    # Begin listening to keyboard
-    # Keys variable will override default key map
-    def __listen_keyboard(self, keys=['up', 'down', 'left', 'right']):
-        if self.mode == "pull":
-            self.commands = {keys[0]: np.array([0.0, self.pFactor, 0.0]), keys[1]: np.array([0.0, -self.pFactor, 0.0]),
-                             keys[2]: np.array([-self.pFactor, 0.0, 0.0]), keys[3]: np.array([self.pFactor, 0.0, 0.0])}
-        if self.mode == "push":
-            self.commands = {keys[0]: np.array([0.0, -self.pFactor, 0.0]), keys[1]: np.array([0.0, self.pFactor, 0.0]),
-                             keys[2]: np.array([self.pFactor, 0.0, 0.0]), keys[3]: np.array([-self.pFactor, 0.0, 0.0])}
-        self.keys = keys
-        self.board = keyboard.Controller()
-        self.listener = keyboard.Listener(on_press=self.__on_press)
-        self.listener.start()  # start to listen on a separate thread
-        self.listening = True
-        self.listener.join()  # remove if main thread is polling self.keysup message
-        self.listening = False
+    # Global variables are a workaround since these were previously attributes of glove class
+    global keys
+    global keys1
 
-    # Format message for transfer over TCP socket
-    def make_message(self, vect):
-        return f'/{vect[0]}/{vect[1]}/{vect[2]}/{vect[3]}\n'
+    # Stop listener
+    if key == keyboard.Key.esc:
+        return False
 
-    # Callback for keyboard presses
-    def __on_press(self, key):
-        if key == keyboard.Key.esc:
-            return False  # stop listener
-        try:
-            k = key.char  # single-char keys
-        except:
-            k = key.name  # other keys
-        if k in self.keys:  # keys of interest
-            self.current_vector = self.commands[k]
-            # If not using accelerometer, send message on keypress
-            if not self.acceleration:
-                key_intensity = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
-                key_message = self.make_message(key_intensity).encode('ascii')
-                print(key_message)
-                self.send_message(key_message)
-            time.sleep(.05)
-        if k == 'space':
-            self.current_vector = np.array([0.0, 0.0, 1.0])
-        # Press q or esc to stop listening to keyboard
-        if k == 'q':
-            if self.acceleration:
-                self.accel_loop = False
-            return False  # stop listener; remove this if want more keys
+    try:
+        k = key.char  # single-char keys
+    except:
+        k = key.name  # other keys
 
-    # Send message to glove over TCP socket
-    def send_message(self, message):
-        if self.connected:
-            self.s.send(message)
-        else:
-            print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
+    # Stop all motors but keep listener open
+    if k == 'space':
+        glove.current_vector = np.array([0.0, 0.0, 1.0])
+        glove1.current_vector = np.array([0.0, 0.0, 1.0])
 
-    def set_ip_manual(self, ip):
-        self.TCP_IP = ip
+    # Stop listener; remove this if you want more keys
+    elif k == 'q':
+        if glove.acceleration:
+            glove.accel_loop = False
+        if glove1.acceleration:
+            glove1.accel_loop = False
 
-    # Set the maximum intensity of the motor outputs
-    def set_power_factor(self, number):
-        if 1.0 > number > 0.0:
-            self.pFactor = number
-        else:
-            print(f'Power factor for glove {self.device_id} not in range. Power factor should be between 0 and 1')
+        return False
+
+    # Check if pressed key is for first glove
+    if k in keys:  # keys of interest
+        glove.current_vector = commands[k]
+
+        # If not using accelerometer, send message on keypress
+        if not glove.acceleration:
+            key_intensity = find_intensity_array(glove.glove_position, glove.current_vector, glove.current_motors, norm=True)
+            key_message = glove.make_message(key_intensity).encode('ascii')
+            print(key_message)
+            glove.send_message(key_message)
+
+        time.sleep(.05)
+
+    # Check if pressed key is for second glove
+    elif k in keys1:  # keys of interest
+        glove1.current_vector = commands1[k]
+
+        # If not using accelerometer, send message on keypress
+        if not glove1.acceleration:
+            key_intensity = find_intensity_array(glove1.glove_position, glove1.current_vector, glove1.current_motors, norm=True)
+            key_message = glove1.make_message(key_intensity).encode('ascii')
+            print(key_message)
+            glove1.send_message(key_message)
+
+        time.sleep(.05)
 
 
 if __name__ == '__main__':
-    # Define glove
-    glove = Glove(2, 8888, acceleration=True, verbose=True)
-    # Connect to glove
-    glove.connect()
-    # Setup keyboard listener
-    glove.keyboard_thread(keys=['a', 's', 'd', 'f'])
+    print('Welcome to the two glove haptic demo!\n\n'
+          'Press "esc" to stop the keyboard listener.\n'
+          'Press "q" to stop the keyboard listener and quit the program.\n'
+          'Press the space bar to stop all motors but keep the listener open.')
 
-    # Define second glove
-    glove1 = Glove(4, 8888, acceleration=True, verbose=True)
-    # Connect second glove
+    # Mode sets whether the vibrations tells use to move away or towards vibration
+    commands = None
+    commands1 = None
+
+    # Define gloves
+    glove = Glove(device_id=2, port=8888, acceleration=True, verbose=False)
+    glove1 = Glove(device_id=4, port=8888, acceleration=True, verbose=False)
+
+    # Keys to use for the gloves
+    keys = ['a', 's', 'd', 'f']
+    keys1 = ['h', 'j', 'k', 'l']
+
+    # Connect to gloves
+    glove.connect()
     glove1.connect()
-    # Setup keyboard keys for second glove and assigns w a s d keys to control the second glove
-    glove1.keyboard_thread(keys=['h', 'j', 'k', 'l'])
+
+    # Setup keyboard listeners
+    keyboard_thread()
