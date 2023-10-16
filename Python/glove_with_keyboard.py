@@ -1,9 +1,8 @@
-from haptic_mapping import *
 import numpy as np
 from pynput import keyboard
 from threading import Thread
 import time
-from refactored_glove import Glove
+from glove import Glove, find_intensity_array
 
 
 def keyboard_thread():
