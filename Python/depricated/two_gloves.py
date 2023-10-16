@@ -1,87 +1,18 @@
-import math
+from haptic_mapping import *
+from helpers import *
 import numpy as np
+from pynput import keyboard
 import socket
 from threading import Thread
 import time
 
 
-#Find the normalized distance between two vectors
-def find_distance(vector1, vector2, normalized=False):
-    if normalized:
-        vector1 = vector1 / np.linalg.norm(vector1)
-        vector2 = vector2 / np.linalg.norm(vector2)
-    diff = vector1 - vector2
-    distance = np.linalg.norm(diff)
-    return distance
-
-#Map a variable with expected range in_min-in_max to range out_min-out_max
-#Works like the map function in C++
-def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
-    output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-    if bounded:
-        if output < out_min:
-            output = out_min
-        if output > out_max:
-            output = out_max
-    return output
-
-#Like map but with an inverse relationship
-def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
-    output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-    if bounded:
-        if output > out_min:
-            output = out_min
-        if output < out_max:
-            output = out_max
-    return output
-
-#Generate array of vibration intensity for motors
-#Uses current position of glove, the goal position, postions of motors on hand and acceleration (acceleration not implemented yet)
-def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.array([0.0,0.0,0.0]), norm = True):
-    #Normalize all vectors
-    if norm:
-        if np.linalg.norm(current_pos) != 0:
-            current_pos = current_pos / np.linalg.norm(current_pos)
-        if np.linalg.norm(goal_pos) != 0:
-            goal_pos = goal_pos / np.linalg.norm(goal_pos)
-        if np.linalg.norm(accel) != 0:
-            accel = accel / np.linalg.norm(accel)
-
-    #Calculate displacement to goal and find distance
-    U = goal_pos - current_pos - accel
-    D = np.linalg.norm(U)
-
-    #Map the distance value to motor command values
-    #I is the maximum that a single motor can be driven
-    #I will be proportionaly distributed across motors that are closest to the displacement vector
-    I = map_to_range(D, 0, 1, 150, 255,  bounded=True)
-
-    motor_distance = [0.0,0.0,0.0,0.0]
-    mapped = [0.0,0.0,0.0,0.0]
-
-    #Find the distance between the displacement vector and motors
-    #Calculate distributions of vibration to each motor
-    for i in range(0, len(motor_positions)):
-        motor_distance[i] = find_distance(U, motor_positions[i], normalized=norm)
-        #Bound the proportion of vibration sent to a single motor
-        mapped[i] = reverse_map_to_range(motor_distance[i], 0.0, math.sqrt(2), 1, .59, bounded=True)
-
-    #Cast distributions of vibration to motors to a numpy array
-    mapped = np.array(mapped)
-    #Scale distribution by the global maximum vibration
-    intensity = np.array(I * mapped).astype(int)
-    return intensity
-
+# Glove object
+# Supports versions with and without accelerometer
+# Used for manual operation and testing
 class Glove:
-    """
-    Glove object
-    Supports versions with and without accelerometer
-    Used for manual operation and testing
-    """
 
     pFactor = 1.0  # Power factor scales maximum intensity of motor vibrations
-
-    num_motors = 4  # Number of motors on glove
 
     # Motor coordinate arrays that will be switched between based on acceleration data
     motors = np.array([np.array([0.0, pFactor, 0.0]), np.array([0.0, -pFactor, 0.0]), np.array([-pFactor, 0.0, 0.0]),
@@ -93,7 +24,7 @@ class Glove:
     motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
                          np.array([0.0, pFactor, 0.0])])  # rolled left
 
-    def __init__(self, device_id, port, acceleration=False, verbose=False) -> None:
+    def __init__(self, device_id, port, mode="pull", acceleration=False, verbose=False) -> None:
         # Initialize object variables
         self.connected = False
         self.device_id = device_id
@@ -105,6 +36,8 @@ class Glove:
         # IP is hard coded to 172.16.1.X based upon Apple AirPort router
         self.TCP_IP = "172.16.1." + str(device_id)
         self.TCP_PORT = port
+        # mode sets whether the vibrations tells use to move away or towards vibration
+        self.mode = mode
         self.acceleration = acceleration
         # If using accelerometer, initialize acceleration vectors
         if acceleration:
@@ -124,8 +57,8 @@ class Glove:
             self.connected = True
             # If using accelerometer, spawn thread and tell it to read constantly
             if self.acceleration:
-              self.accel_loop = True
-              self.acceleration_thread = Thread(target=self.__get_acceleration).start()
+                self.accel_loop = True
+                self.acceleration_thread = Thread(target=self.__get_acceleration).start()
         except:
             if self.verbose:
                 print(f'Failed to connect to ip {self.TCP_IP}')
@@ -138,7 +71,6 @@ class Glove:
                     # Send message "accel"
                     self.s.send('accel\n'.encode('ascii'))
                     # Receive accelerometer reading
-                    # TODO: adjust recv to recv_into so buffer is not allocated each time  https://docs.python.org/3/library/socket.html
                     msg = self.s.recv(4096).decode("ascii").split('\r')[0].split('\n')[0]
                     try:
                         # Check if message exists
@@ -149,7 +81,6 @@ class Glove:
                             msg_split = msg_split.astype(float)
                             self.accel_data = msg_split
                             self.accel_norm = self.accel_data / np.linalg.norm(self.accel_data)
-                            # TODO: Possible numpy version of rounding acceleration to improve program performance?
                             x_dat = self.accel_norm[0]
                             y_dat = self.accel_norm[1]
                             z_dat = self.accel_norm[2]
@@ -157,7 +88,6 @@ class Glove:
                             self.accel_norm[0] = round(x_dat, 2)
                             self.accel_norm[1] = round(y_dat, 2)
                             self.accel_norm[2] = round(z_dat, 2)
-
                             # Change the coordinates of motors based on orientation of hand
                             if self.accel_norm[1] > 0.7:
                                 self.current_motors = self.motors
@@ -168,13 +98,13 @@ class Glove:
                             elif self.accel_norm[0] < -0.7:
                                 self.current_motors = self.motors_R
                             # Send new message to glove
-                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
-                                                                   norm=True)
-                            message = self.make_message(intensity_array).encode('ascii')
-                            self.send_message(message)
+                            self.send_message(self.make_message(
+                                find_intensity_array(self.glove_position,self.current_vector, self.current_motors,
+                                                     norm=True)).encode('ascii'))
                             if self.verbose:
-                              print(message)
-                        # TODO: investigate why this SLEEP is here
+                                print(self.make_message(
+                                    find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
+                                                         norm=True)).encode('ascii'))
                         time.sleep(0.1)
                     except Exception as e:
                         if self.verbose:
@@ -186,12 +116,61 @@ class Glove:
                 if self.verbose:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
+    # Create a thread for reading keyboard input for a single glove
+    # Default to arrow keys for control of glove
+    def keyboard_thread(self, keys=['up', 'down', 'left', 'right']):
+        listening_thread = Thread(target=self.__listen_keyboard, args=(keys,))
+        listening_thread.start()
+
+    # Begin listening to keyboard
+    # Keys variable will override default key map
+    def __listen_keyboard(self, keys=['up', 'down', 'left', 'right']):
+        if self.mode == "pull":
+            self.commands = {keys[0]: np.array([0.0, self.pFactor, 0.0]), keys[1]: np.array([0.0, -self.pFactor, 0.0]),
+                             keys[2]: np.array([-self.pFactor, 0.0, 0.0]), keys[3]: np.array([self.pFactor, 0.0, 0.0])}
+        if self.mode == "push":
+            self.commands = {keys[0]: np.array([0.0, -self.pFactor, 0.0]), keys[1]: np.array([0.0, self.pFactor, 0.0]),
+                             keys[2]: np.array([self.pFactor, 0.0, 0.0]), keys[3]: np.array([-self.pFactor, 0.0, 0.0])}
+        self.keys = keys
+        self.board = keyboard.Controller()
+        self.listener = keyboard.Listener(on_press=self.__on_press)
+        self.listener.start()  # start to listen on a separate thread
+        self.listening = True
+        self.listener.join()  # remove if main thread is polling self.keysup message
+        self.listening = False
+
     # Format message for transfer over TCP socket
     def make_message(self, vect):
         return f'/{vect[0]}/{vect[1]}/{vect[2]}/{vect[3]}\n'
 
+    # Callback for keyboard presses
+    def __on_press(self, key):
+        if key == keyboard.Key.esc:
+            return False  # stop listener
+        try:
+            k = key.char  # single-char keys
+        except:
+            k = key.name  # other keys
+        if k in self.keys:  # keys of interest
+            self.current_vector = self.commands[k]
+            # If not using accelerometer, send message on keypress
+            if not self.acceleration:
+                print(self.make_message(
+                    find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
+                                         norm=True)).encode('ascii'))
+                self.send_message(self.make_message(
+                    find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
+                                         norm=True)).encode('ascii'))
+            time.sleep(.05)
+        if k == 'space':
+            self.current_vector = np.array([0.0, 0.0, 1.0])
+        # Press q or esc to stop listening to keyboard
+        if k == 'q':
+            if self.acceleration:
+                self.accel_loop = False
+            return False  # stop listener; remove this if want more keys
+
     # Send message to glove over TCP socket
-    # TODO: Possibly make this a private method
     def send_message(self, message):
         if self.connected:
             self.s.send(message)
@@ -208,38 +187,18 @@ class Glove:
         else:
             print(f'Power factor for glove {self.device_id} not in range. Power factor should be between 0 and 1')
 
-    def get_power_factor(self):
-        return self.pFactor
 
-    def set_motors(self, intensities):
-        """
-        Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
-        :param intensities: An array of floats [0,1] to indicate the intensity of each motor
-        :return:
-        """
+if __name__ == '__main__':
+    # Define glove
+    glove = Glove(2, 8888, acceleration=True, verbose=True)
+    # Connect to glove
+    glove.connect()
+    # Setup keyboard listener
+    glove.keyboard_thread(keys=['a', 's', 'd', 'f'])
 
-        # Turn into NumPy array
-        raw_intensities = np.array(intensities)
-
-        # Append array of floating point zeros of length num_motors
-        if raw_intensities.size < self.num_motors:
-            raw_intensities = np.append(raw_intensities, np.zeros(self.num_motors))
-
-        # Truncate to length of num_motors (undoes part of previous step if intensities parameter is not empty)
-        if raw_intensities.size > self.num_motors:
-            raw_intensities = raw_intensities[:self.num_motors]
-
-        # Map 0-1 to 150-255
-        mapped_list = []
-        for val in raw_intensities:
-            mapped_val = map_to_range(val, 0, 1, 150, 255, True)
-            mapped_list.append(mapped_val)
-
-        # Turn into NumPy array
-        mapped_intensities = np.array(mapped_list).astype(int)
-
-        # Make and send message to glove
-        message = self.make_message(mapped_intensities).encode('ascii')
-        self.send_message(message)
-        if self.verbose:
-            print(message)
+    # Define second glove
+    glove1 = Glove(4, 8888, acceleration=True, verbose=True)
+    # Connect second glove
+    glove1.connect()
+    # Setup keyboard keys for second glove and assigns w a s d keys to control the second glove
+    glove1.keyboard_thread(keys=['h', 'j', 'k', 'l'])
