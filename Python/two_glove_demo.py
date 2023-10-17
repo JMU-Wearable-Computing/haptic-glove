@@ -19,20 +19,24 @@ glove1 = Glove(device_id=4, port=8888, acceleration=False, verbose=True)
 glove.connect()
 glove1.connect()
 
+# Number of seconds to activate each time
+time_activated = 2.0
+
 # Set first glove
 glove.set_motors([3, -1])
-time.sleep(2.0)
+time.sleep(time_activated)
 
 # Set both gloves
 glove.set_motors([0.0, 0.8, 0.2])
 glove1.set_motors([1, 0, 1])
-time.sleep(2.0)
+time.sleep(time_activated)
 
 # Set both gloves
 glove.set_motors([1, 1, 1, .5])
 glove1.set_motors()
-time.sleep(2.0)
+time.sleep(time_activated)
 
 # Set both gloves
 glove.set_motors([.1, .32, 0, 1])
 glove1.set_motors([0, .5, 0, 1.0, 3, 2, -5, .6])
+time.sleep(time_activated)
