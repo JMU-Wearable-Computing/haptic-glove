@@ -1,3 +1,8 @@
+"""
+Module to define a haptic glove class.
+
+Version: 10/17/23
+"""
 import math
 import numpy as np
 import socket

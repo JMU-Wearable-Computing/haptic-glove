@@ -1,3 +1,8 @@
+"""
+Demo to show ability to control motor vibrations on multiple gloves with key presses
+
+Version: 10/17/23
+"""
 import numpy as np
 from pynput import keyboard
 from threading import Thread
@@ -109,16 +114,18 @@ def on_press(key):
 
 
 if __name__ == '__main__':
-    print('Welcome to the two glove haptic demo!\n\n'
+    print('Welcome to the glove(s) with keyboard demo!\n\n'
           'Press "esc" to stop the keyboard listener.\n'
           'Press "q" to stop the keyboard listener and quit the program.\n'
-          'Press the space bar to stop all motors but keep the listener open.')
+          'Press the space bar to stop all motors but keep the listener open.\n')
 
     # Mode sets whether the vibrations tells use to move away or towards vibration
     commands = None
     commands1 = None
 
     # Define gloves
+    # device_id will be different for every glove
+    # verbose=True prints out the intensity values message that is sent to the glove(s)
     glove = Glove(device_id=2, port=8888, acceleration=True, verbose=False)
     glove1 = Glove(device_id=4, port=8888, acceleration=True, verbose=False)
 
