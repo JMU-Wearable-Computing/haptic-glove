@@ -173,12 +173,8 @@ class Glove:
                             elif self.accel_norm[0] < -0.7:
                                 self.current_motors = self.motors_R
                             # Send new message to glove
-                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors,
-                                                                   norm=True)
-                            message = self.make_message(intensity_array).encode('ascii')
-                            self.send_message(message)
-                            if self.verbose:
-                              print(message)
+                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
+                            self.communicate_message(intensity_array)
                         # TODO: investigate why this SLEEP is here
                         time.sleep(0.1)
                     except Exception as e:
@@ -191,17 +187,38 @@ class Glove:
                 if self.verbose:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
-    # Format message for transfer over TCP socket
-    def make_message(self, vect):
+    def __make_message(self, vect):
+        """
+        Format message for transfer over TCP socket
+
+        :param vect: Vector to send to glove
+        """
         return f'/{vect[0]}/{vect[1]}/{vect[2]}/{vect[3]}\n'
 
-    # Send message to glove over TCP socket
-    # TODO: Possibly make this a private method
-    def send_message(self, message):
+    def __send_message(self, message):
+        """
+        Send message to glove over TCP socket
+
+        :param message: Message to send
+        """
         if self.connected:
             self.s.send(message)
         else:
             print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
+
+    def communicate_message(self, vect):
+        """
+        Make and send a message
+
+        :param vect: Vector to send to glove
+        :return: Message that is sent
+        """
+        message = self.__make_message(vect).encode('ascii')
+        self.__send_message(message)
+        if self.verbose:
+            print(message)
+
+        return message
 
     def set_ip_manual(self, ip):
         self.TCP_IP = ip
@@ -219,8 +236,8 @@ class Glove:
     def set_motors(self, intensities=[]):
         """
         Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
+
         :param intensities: An array of floats [0,1] to indicate the intensity of each motor
-        :return:
         """
 
         # Turn into NumPy array
@@ -241,7 +258,4 @@ class Glove:
         mapped_intensities = np.array(mapped_list).astype(int)
 
         # Make and send message to glove
-        message = self.make_message(mapped_intensities).encode('ascii')
-        self.send_message(message)
-        if self.verbose:
-            print(message)
+        self.communicate_message(mapped_intensities)

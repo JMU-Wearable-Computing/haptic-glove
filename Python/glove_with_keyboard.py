@@ -93,9 +93,7 @@ def on_press(key):
         # If not using accelerometer, send message on keypress
         if not glove.acceleration:
             key_intensity = find_intensity_array(glove.glove_position, glove.current_vector, glove.current_motors, norm=True)
-            key_message = glove.make_message(key_intensity).encode('ascii')
-            print(key_message)
-            glove.send_message(key_message)
+            print(glove.communicate_message(key_intensity))
 
         time.sleep(.05)
 
@@ -106,9 +104,7 @@ def on_press(key):
         # If not using accelerometer, send message on keypress
         if not glove1.acceleration:
             key_intensity = find_intensity_array(glove1.glove_position, glove1.current_vector, glove1.current_motors, norm=True)
-            key_message = glove1.make_message(key_intensity).encode('ascii')
-            print(key_message)
-            glove1.send_message(key_message)
+            print(glove1.communicate_message(key_intensity))
 
         time.sleep(.05)
 
