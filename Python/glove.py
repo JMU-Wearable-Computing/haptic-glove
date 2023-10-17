@@ -1,5 +1,4 @@
-"""
-Module to define a haptic glove class.
+"""Module to define a haptic glove class.
 
 Version: 10/17/23
 """
@@ -10,8 +9,13 @@ from threading import Thread
 import time
 
 
-# Find the normalized distance between two vectors
 def find_distance(vector1, vector2, normalized=False):
+    """Find the normalized distance between two vectors
+
+    :param vector1: First vector
+    :param vector2: Second vector
+    :param normalized: Whether to normalize vectors first
+    """
     if normalized:
         vector1 = vector1 / np.linalg.norm(vector1)
         vector2 = vector2 / np.linalg.norm(vector2)
@@ -19,9 +23,16 @@ def find_distance(vector1, vector2, normalized=False):
     distance = np.linalg.norm(diff)
     return distance
 
-# Map a variable with expected range in_min-in_max to range out_min-out_max
-# Works like the map function in C++
 def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
+    """Map a variable with expected range in_min-in_max to range out_min-out_max. Works like the map function in C++
+
+    :param x: Number to map
+    :param in_min: Minimum of input range
+    :param in_max: Maximum of input range
+    :param out_min: Minimum of output range
+    :param out_max: Maximum of output range
+    :param bounded: Whether to strictly bound input value to output range
+    """
     output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     if bounded:
         if output < out_min:
@@ -30,8 +41,16 @@ def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
             output = out_max
     return output
 
-# Like map but with an inverse relationship
 def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
+    """Inversely map a variable with expected range in_min-in_max to range out_min-out_max.
+
+    :param x: Number to map
+    :param in_min: Minimum of input range
+    :param in_max: Maximum of input range
+    :param out_min: Minimum of output range
+    :param out_max: Maximum of output range
+    :param bounded: Whether to strictly bound input value to output range
+    """
     output = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     if bounded:
         if output > out_min:
@@ -40,9 +59,15 @@ def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
             output = out_max
     return output
 
-# Generate array of vibration intensity for motors
-# Uses current position of glove, the goal position, positions of motors on hand and acceleration (acceleration not implemented yet)
 def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.array([0.0,0.0,0.0]), norm = True):
+    """Generate array of vibration intensity for motors. (acceleration not implemented yet)
+
+    :param current_pos: Current position of glove
+    :param goal_pos: Goal position of glove
+    :param motor_positions: Position of motors on the hand
+    :param accel: acceleration
+    :param norm: Whether to normalize vectors first
+    """
     # Normalize all vectors
     if norm:
         if np.linalg.norm(current_pos) != 0:
@@ -121,8 +146,8 @@ class Glove:
         # Set default motors
         self.current_motors = self.motors
 
-    # Connect to the glove via TCP socket
     def connect(self):
+        """Connect to the glove via TCP socket"""
         try:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.s.connect((self.TCP_IP, self.TCP_PORT))
@@ -188,16 +213,14 @@ class Glove:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
     def __make_message(self, vect):
-        """
-        Format message for transfer over TCP socket
+        """Format message for transfer over TCP socket
 
         :param vect: Vector to send to glove
         """
         return f'/{vect[0]}/{vect[1]}/{vect[2]}/{vect[3]}\n'
 
     def __send_message(self, message):
-        """
-        Send message to glove over TCP socket
+        """Send message to glove over TCP socket
 
         :param message: Message to send
         """
@@ -207,8 +230,7 @@ class Glove:
             print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
     def communicate_message(self, vect):
-        """
-        Make and send a message
+        """Make and send a message
 
         :param vect: Vector to send to glove
         :return: Message that is sent
@@ -221,21 +243,22 @@ class Glove:
         return message
 
     def set_ip_manual(self, ip):
+        """Manually set glove IP"""
         self.TCP_IP = ip
 
-    # Set the maximum intensity of the motor outputs
     def set_power_factor(self, number):
+        """Set the maximum intensity of the motor outputs"""
         if 1.0 > number > 0.0:
             self.pFactor = number
         else:
             print(f'Power factor for glove {self.device_id} not in range. Power factor should be between 0 and 1')
 
     def get_power_factor(self):
+        """Get glove power factor"""
         return self.pFactor
 
     def set_motors(self, intensities=[]):
-        """
-        Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
+        """Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
 
         :param intensities: An array of floats [0,1] to indicate the intensity of each motor
         """

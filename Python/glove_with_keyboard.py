@@ -1,5 +1,4 @@
-"""
-Demo to show ability to control motor vibrations on multiple gloves with key presses
+"""Demo to show ability to control motor vibrations on multiple gloves with key presses
 
 Version: 10/17/23
 """
@@ -11,19 +10,15 @@ from glove import Glove, find_intensity_array
 
 
 def keyboard_thread():
-    """
-    Create a thread for reading keyboard input for two gloves
-    :return:
-    """
+    """Create a thread for reading keyboard input for two gloves"""
     listening_thread = Thread(target=listen_keyboard)
     listening_thread.start()
 
 
 def listen_keyboard(mode="pull"):
-    """
-    Begin listening to keyboard
+    """Begin listening to keyboard
+
     :param mode: Whether motors "push" or "pull" user to target
-    :return:
     """
 
     # Global variables are a workaround since these were previously attributes of glove class
@@ -53,10 +48,9 @@ def listen_keyboard(mode="pull"):
 
 
 def on_press(key):
-    """
-    Callback for keyboard presses
+    """Callback for keyboard presses
+
     :param key: Key that is pressed
-    :return:
     """
 
     # Global variables are a workaround since these were previously attributes of glove class

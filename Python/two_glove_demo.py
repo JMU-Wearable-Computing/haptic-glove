@@ -1,5 +1,4 @@
-"""
-Demo to show vibration functionality of two gloves
+"""Demo to show vibration functionality of two gloves
 
 Author: Will Bradford
 Version: 10/17/23
