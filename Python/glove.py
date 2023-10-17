@@ -211,7 +211,7 @@ class Glove:
     def get_power_factor(self):
         return self.pFactor
 
-    def set_motors(self, intensities):
+    def set_motors(self, intensities=[]):
         """
         Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
         :param intensities: An array of floats [0,1] to indicate the intensity of each motor
@@ -230,10 +230,7 @@ class Glove:
             raw_intensities = raw_intensities[:self.num_motors]
 
         # Map 0-1 to 150-255
-        mapped_list = []
-        for val in raw_intensities:
-            mapped_val = map_to_range(val, 0, 1, 150, 255, True)
-            mapped_list.append(mapped_val)
+        mapped_list = [map_to_range(val, 0, 1, 150, 255, True) for val in raw_intensities]
 
         # Turn into NumPy array
         mapped_intensities = np.array(mapped_list).astype(int)
