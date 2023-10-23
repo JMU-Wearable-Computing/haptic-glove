@@ -1,9 +1,10 @@
-pynput==1.7.6
+pynput
 absl-py==0.13.0
 attrs==21.2.0
 cycler==0.10.0
-kiwisolver==1.3.2
-matplotlib==3.4.3
+# kiwisolver==1.3.2 No idea why this is included (10/23/23)
+# matplotlib==3.4.3 Is not used by project? (10/23/23)
 # placeholder for system mediapipe. Is not used by this implementation
 # mediapipe==0.8.7.2
-numpy==1.21.2
+#numpy==1.21.2
+numpy
