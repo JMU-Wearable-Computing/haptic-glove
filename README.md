@@ -5,37 +5,27 @@ TODO
 
 ## Circuit board
 
-<img src = "img/board_top.png" />
-<img src = "img/board_bottom.png" />
+TODO
 
-## ESP32 Arduino IDE setup 
+## Arduino Nano Arduino IDE setup 
 
 ### Guide:
-https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
+TODO
 
 ### Board manager URL:
-https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
+TODO
 
 ### Correct board type:
-ESP32S2 Native USB
+TODO
 
 ### Arduino Libraries
 Included within repo:  
 1. Adafruit_NeoPixel.h
 2. Adafruit_DRV2605.h
 
-## Communicating with ESP32
+## Communicating with Arduino Nano
 
-ESP32 can be communicated with via TCP socket connection.  
-Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.  
-When booted, the ESP32 establishes a user definable static ip.  
-
-### Onboard LED color meanings
-|Color|Meaning|
---- | --- |
-|RED|Not connected to network|
-|BLUE|Connected to user specified network|
-|GREEN|TCP client connected and ready for messages|
+TODO
 
 ### Message format
 Messages follows the format: /n01/n02/n03/n04  
