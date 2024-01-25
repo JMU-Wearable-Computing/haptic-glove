@@ -23,7 +23,7 @@ def find_distance(vector1, vector2, normalized=False):
     distance = np.linalg.norm(diff)
     return distance
 
-def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
+def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False): # TODO: Can this be removed for glove 2.0?
     """Map a variable with expected range in_min-in_max to range out_min-out_max. Works like the map function in C++
 
     :param x: Number to map
@@ -41,7 +41,7 @@ def map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
             output = out_max
     return output
 
-def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False):
+def reverse_map_to_range(x, in_min, in_max, out_min, out_max, bounded=False): #TODO: Can this be removed for glove 2.0?
     """Inversely map a variable with expected range in_min-in_max to range out_min-out_max.
 
     :param x: Number to map
@@ -84,7 +84,7 @@ def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.arra
     # Map the distance value to motor command values
     # I is the maximum that a single motor can be driven
     # I will be proportionally distributed across motors that are closest to the displacement vector
-    I = map_to_range(D, 0, 1, 150, 255,  bounded=True)
+    I = map_to_range(D, 0, 1, 150, 255,  bounded=True) # TODO: See comments at function creation
 
     motor_distance = [0.0,0.0,0.0,0.0]
     mapped = [0.0,0.0,0.0,0.0]
@@ -94,7 +94,7 @@ def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.arra
     for i in range(0, len(motor_positions)):
         motor_distance[i] = find_distance(U, motor_positions[i], normalized=norm)
         # Bound the proportion of vibration sent to a single motor
-        mapped[i] = reverse_map_to_range(motor_distance[i], 0.0, math.sqrt(2), 1, .59, bounded=True)
+        mapped[i] = reverse_map_to_range(motor_distance[i], 0.0, math.sqrt(2), 1, .59, bounded=True) # TODO: See comments at function creation
 
     # Cast distributions of vibration to motors to a numpy array
     mapped = np.array(mapped)
@@ -111,8 +111,6 @@ class Glove:
 
     pFactor = 1.0  # Power factor scales maximum intensity of motor vibrations
 
-    num_motors = 4  # Number of motors on glove
-
     # Motor coordinate arrays that will be switched between based on acceleration data
     motors = np.array([np.array([0.0, pFactor, 0.0]), np.array([0.0, -pFactor, 0.0]), np.array([-pFactor, 0.0, 0.0]),
                        np.array([pFactor, 0.0, 0.0])])  # standard position
@@ -123,15 +121,16 @@ class Glove:
     motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
                          np.array([0.0, pFactor, 0.0])])  # rolled left
 
-    def __init__(self, device_id, port, acceleration=False, verbose=False) -> None:
+    def __init__(self, device_id, num_motors, port, acceleration=False, verbose=False) -> None:
         # Initialize object variables
         self.connected = False
         self.device_id = device_id
+        self.num_motors = num_motors  # Number of motors on glove
         self.verbose = verbose
         # Automatically find glove IP with device_id
         # self.TCP_IP = find_device_ip(self.device_id)
 
-        # remove automatic lookup to avoid error when multiple NICs are present
+        # TODO: remove automatic lookup to avoid error when multiple NICs are present
         # IP is hard coded to 172.16.1.X based upon Apple AirPort router
         self.TCP_IP = "172.16.1." + str(device_id)
         self.TCP_PORT = port
@@ -161,7 +160,7 @@ class Glove:
                 print(f'Failed to connect to ip {self.TCP_IP}')
 
     # Send a message to the glove and retrieve response containing accelerometer reading
-    def __get_acceleration(self):
+    def __get_acceleration(self): # TODO: Current firmware 2.0 does not support accelerometer
         while self.accel_loop:
             if self.connected:
                 if self.acceleration:
@@ -213,11 +212,23 @@ class Glove:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
     def __make_message(self, vect):
-        """Format message for transfer over TCP socket
+        """Format message for transfer over TCP socket. Message can be variable length, up to a length equal to num_motors
 
         :param vect: Vector to send to glove
         """
-        return f'/{vect[0]}/{vect[1]}/{vect[2]}/{vect[3]}\n'
+
+        # TODO: Currently defaulted as an E message. Change this to accomodate future message types
+        msg = 'E,'
+
+        for effect_id in vect:
+          msg += f'{effect_id},'
+
+        # Remove comma at the end, add newline character
+        msg = msg[:-1]
+        msg += '\n'
+
+        return msg
+        #return f'\{vect[0]}\{vect[1]}\{vect[2]}\{vect[3]}\n'
 
     def __send_message(self, message):
         """Send message to glove over TCP socket
@@ -257,28 +268,25 @@ class Glove:
         """Get glove power factor"""
         return self.pFactor
 
-    def set_motors(self, intensities=[]):
-        """Set the intensity of each motor. The order of the intensities array corresponds to the motor numbers
+    def set_motors(self, effects=[]):
+        """Set the playback effect of each motor. The order of the effects array corresponds to the motor numbers
 
-        :param intensities: An array of floats [0,1] to indicate the intensity of each motor
+        :param effects: An array of integers [-1,123] to indicate the playback effect of each motor
         """
 
         # Turn into NumPy array
-        raw_intensities = np.array(intensities)
+        raw_effects = np.array(effects)
 
         # Append array of floating point zeros of length num_motors
-        if raw_intensities.size < self.num_motors:
-            raw_intensities = np.append(raw_intensities, np.zeros(self.num_motors))
+        if raw_effects.size < self.num_motors:
+            raw_effects = np.append(raw_effects, np.zeros(self.num_motors))
 
-        # Truncate to length of num_motors (undoes part of previous step if intensities parameter is not empty)
-        if raw_intensities.size > self.num_motors:
-            raw_intensities = raw_intensities[:self.num_motors]
-
-        # Map 0-1 to 150-255
-        mapped_list = [map_to_range(val, 0, 1, 150, 255, True) for val in raw_intensities]
+        # Truncate to length of num_motors (undoes part of previous step if effects parameter is not empty)
+        if raw_effects.size > self.num_motors:
+            raw_effects = raw_effects[:self.num_motors]
 
         # Turn into NumPy array
-        mapped_intensities = np.array(mapped_list).astype(int)
+        final_effects = raw_effects.astype(int)
 
         # Make and send message to glove
-        self.communicate_message(mapped_intensities)
+        self.communicate_message(final_effects)
