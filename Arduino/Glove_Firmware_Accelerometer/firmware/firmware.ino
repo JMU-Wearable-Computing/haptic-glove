@@ -13,7 +13,7 @@
 
 // Toggle Static or Dynamic IP
 #define STATIC_IP true
-// Set Device ID Used in Static IP
+// Set Device ID Used in Static IP (Acceptable ranges are 10-100)
 #define DEVICE_ID 4
 
 // Define ADXL345 Accelerometer https://learn.adafruit.com/adxl345-digital-accelerometer/library-reference
