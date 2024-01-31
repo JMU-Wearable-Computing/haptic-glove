@@ -217,9 +217,8 @@ class Glove:
         :param vect: Vector to send to glove
         """
 
-        # TODO: Currently defaulted as an E message. Change this to accomodate future message types
-        msg = 'E,'
-
+        # Create string for message. this allows for variable message length
+        msg = ''
         for effect_id in vect:
           msg += f'{effect_id},'
 
@@ -228,7 +227,6 @@ class Glove:
         msg += '\n'
 
         return msg
-        #return f'\{vect[0]}\{vect[1]}\{vect[2]}\{vect[3]}\n'
 
     def __send_message(self, message):
         """Send message to glove over TCP socket
@@ -240,13 +238,21 @@ class Glove:
         else:
             print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
-    def communicate_message(self, vect):
+    def communicate_message(self, msg_tup):
         """Make and send a message
 
-        :param vect: Vector to send to glove
+        :param msg_tup: Tuple containing cmd letter and data contents to send to glove
         :return: Message that is sent
         """
-        message = self.__make_message(vect).encode('ascii')
+        # Create message string with cmd letter
+        message = msg_tup[0]
+
+        # If there is data to include in the message, include it
+        if len(msg_tup) == 2:
+            message += "," + self.__make_message(msg_tup[1])
+
+        # Encode and send message
+        message = message.encode('ascii')
         self.__send_message(message)
         if self.verbose:
             print(message)
@@ -271,8 +277,11 @@ class Glove:
     def set_motors(self, effects=[]):
         """Set the playback effect of each motor. The order of the effects array corresponds to the motor numbers
 
-        :param effects: An array of integers [-1,123] to indicate the playback effect of each motor
+        :param effects: A list containing a command letter followed by integers [-1,123] that indicate the desired playback effect of each motor
         """
+
+        # Remove and save command letter
+        cmd_letter = effects.pop(0)
 
         # Turn into NumPy array
         raw_effects = np.array(effects)
@@ -289,4 +298,4 @@ class Glove:
         final_effects = raw_effects.astype(int)
 
         # Make and send message to glove
-        self.communicate_message(final_effects)
+        self.communicate_message((cmd_letter, final_effects))
