@@ -3,6 +3,7 @@
 ## PCB
 
 ### Schematic
+TODO
 
 ### Layout
 
@@ -36,11 +37,11 @@ Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
-### FUTURE Onboard LED state meanings
+### Onboard LED state meanings
 |State|Meaning|
 --- | --- |
 |OFF|Not connected to network|
-|BLINKING|Connected to user specified network|
+|BLINKING|Connected to user specified network (not currently implemented)|
 |SOLID|TCP client connected and ready for messages|
 
 ### Message format
