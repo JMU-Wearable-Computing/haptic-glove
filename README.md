@@ -31,7 +31,7 @@ Network credentials can be modified with the "ssid" and "password" variables wit
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
 ### Message format
-Messages follows the format: X,n01,n02,n03,n04,n05,n06,n07,n08
+Messages follows the format: X,n01,n02,n03,n04,n05,n06,n07,n08\n
 X is a char that signifies the message type. nXX is a number.
 Negative numbers will be ignored and the playback of the current haptic effect will continue.
 0 will stop the corresponding driver.
