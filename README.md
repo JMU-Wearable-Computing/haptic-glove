@@ -16,16 +16,19 @@ TODO
 TODO
 
 ### Correct board type:
-TODO
+Arduino NANO 33 IoT
 
 ### Arduino Libraries
-Included within repo:  
-1. Adafruit_NeoPixel.h
-2. Adafruit_DRV2605.h
+ 
+1. Adafruit_DRV2605.h
+2. Arduino_LSM6DS3.h
+3. WiFiNINA.h
 
-## Communicating with Arduino Nano
+## Communicating with Nano 33 IoT
 
-TODO
+Nano 33 IoT can be communicated with via TCP socket connection.
+Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.
+When booted, the Nano 33 IoT establishes a user definable static IP.
 
 ### Message format
 Messages follows the format: /n01/n02/n03/n04  
