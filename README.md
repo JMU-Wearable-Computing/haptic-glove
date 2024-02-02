@@ -1,15 +1,23 @@
 # haptic-glove
 
-## Wiring diagram
-TODO
-
 ## PCB
+
+### Schematic
+
+### Layout
 
 <img src = "img/glove-2.0-top.png" />
 <img src = "img/glove-2.0-bottom.png" />
 
 ## Eagle PCB Set-Up
+
+### OSHPark Plugin
 The OSHPark Eagle plugin includes OSHPark design rules and allows the user to send the .brd file directly to an OSHPark cart. See the OSHPark-Eagle-Tools GitHub: https://github.com/OSHPark/OSHPark-Eagle-Tools
+
+### Libraries
+Included in the repository are:
+1. TCA9548APWR.lbr (I2C multiplexer)
+2. SparkFun-Eagle-Libraries-main.zip
 
 ## Arduino Nano Arduino IDE setup 
 
