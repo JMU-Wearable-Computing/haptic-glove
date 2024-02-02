@@ -8,6 +8,9 @@ TODO
 <img src = "img/glove-2.0-top.png" />
 <img src = "img/glove-2.0-bottom.png" />
 
+## Eagle PCB Set-Up
+The OSHPark Eagle plugin includes OSHPark design rules and allows the user to send the .brd file directly to an OSHPark cart. See the OSHPark-Eagle-Tools GitHub: https://github.com/OSHPark/OSHPark-Eagle-Tools
+
 ## Arduino Nano Arduino IDE setup 
 
 ### Correct board type:
