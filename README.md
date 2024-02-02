@@ -5,7 +5,8 @@ TODO
 
 ## PCB
 
-TODO
+<img src = "img/glove-2.0-top.png" />
+<img src = "img/glove-2.0-bottom.png" />
 
 ## Arduino Nano Arduino IDE setup 
 
