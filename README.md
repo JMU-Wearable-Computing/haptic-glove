@@ -3,7 +3,7 @@
 ## Wiring diagram
 TODO
 
-## Circuit board
+## PCB
 
 TODO
 
