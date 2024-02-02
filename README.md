@@ -9,12 +9,6 @@ TODO
 
 ## Arduino Nano Arduino IDE setup 
 
-### Guide:
-TODO
-
-### Board manager URL:
-TODO
-
 ### Correct board type:
 Arduino NANO 33 IoT
 
@@ -29,6 +23,13 @@ Arduino NANO 33 IoT
 Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
+
+### Onboard LED state meanings
+|State|Meaning|
+--- | --- |
+|OFF|Not connected to network|
+|BLINKING|Connected to user specified network|
+|SOLID|TCP client connected and ready for messages|
 
 ### Message format
 Messages follows the format: X,n01,n02,n03,n04,n05,n06,n07,n08
