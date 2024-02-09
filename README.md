@@ -10,6 +10,15 @@ TODO
 <img src = "img/glove-2.0-top.png" />
 <img src = "img/glove-2.0-bottom.png" />
 
+#### PCB Edit History
+##### V2.0
+- Initial board redesign
+##### V2.1 (TODO)
+- Changed part J1 to be an accurate JST-PH connector
+- (TODO) Shifted Arduino placement to allow for more clearance between the Arduino and the motor headers
+- (TODO) Implemented graphic to denote onboard IMU directions
+- (TODO) Added a spot to write the board's device ID 
+  
 ## Eagle PCB Set-Up
 
 ### OSHPark Plugin
