@@ -17,7 +17,8 @@ TODO
 - Changed part J1 to be an accurate JST-PH connector
 - (TODO) Shifted Arduino placement to allow for more clearance between the Arduino and the motor headers
 - (TODO) Implemented graphic to denote onboard IMU directions
-- (TODO) Added a spot to write the board's device ID 
+- (TODO) Added a spot to write the board's device ID
+- (TODO) Shifted some silkscreen placements so that text is not cut off by pads
   
 ## Eagle PCB Set-Up
 
