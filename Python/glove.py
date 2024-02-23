@@ -211,20 +211,33 @@ class Glove:
                 if self.verbose:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
-    def __make_message(self, vect):
+    def __make_message(self, vect, magic_byte):
         """Format message for transfer over TCP socket. Message can be variable length, up to a length equal to num_motors
 
         :param vect: Vector to send to glove
+        :param magic_byte: Byte value to XOR with the checksum. Default is 0xff
         """
 
-        # Create string for message. this allows for variable message length
+        # Create string for message. This allows for variable message length
         msg = ''
+
+        # Add each effect ID to the message
         for effect_id in vect:
           msg += f'{effect_id},'
 
-        # Remove comma at the end, add newline character
-        msg = msg[:-1]
-        msg += '\n'
+        # Create checksum to add to the end of the message
+        checksum = 0
+
+        # Turn each character into an integer and XOR each byte of the message together
+        for char in msg:
+            checksum ^= ord(char)
+
+        # XOR the magic byte with the other bytes of the message
+        checksum ^= magic_byte
+
+        # Add integer version of the checksum and a newline character to the message
+        # Note that the required comma before the checksum was added at the end of the above for loop
+        msg += f'{checksum}\n'
 
         return msg
 
@@ -238,10 +251,11 @@ class Glove:
         else:
             print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
-    def communicate_message(self, msg_tup):
+    def communicate_message(self, msg_tup, magic_byte):
         """Make and send a message
 
         :param msg_tup: Tuple containing cmd letter and data contents to send to glove
+        :param magic_byte: Byte value to XOR with the checksum. Default is 0xff
         :return: Message that is sent
         """
         # Create message string with cmd letter
@@ -249,7 +263,7 @@ class Glove:
 
         # If there is data to include in the message, include it
         if len(msg_tup) == 2:
-            message += "," + self.__make_message(msg_tup[1])
+            message += "," + self.__make_message(msg_tup[1], magic_byte)
 
         # Encode and send message
         message = message.encode('ascii')
@@ -274,10 +288,11 @@ class Glove:
         """Get glove power factor"""
         return self.pFactor
 
-    def set_motors(self, effects=[]):
+    def set_motors(self, effects=[], magic_byte=0xff):
         """Set the playback effect of each motor. The order of the effects array corresponds to the motor numbers
 
         :param effects: A list containing a command letter followed by integers [-1,123] that indicate the desired playback effect of each motor
+        :param magic_byte: Byte value to XOR with the checksum
         """
 
         # Remove and save command letter
@@ -298,4 +313,4 @@ class Glove:
         final_effects = raw_effects.astype(int)
 
         # Make and send message to glove
-        self.communicate_message((cmd_letter, final_effects))
+        self.communicate_message((cmd_letter, final_effects), magic_byte)
