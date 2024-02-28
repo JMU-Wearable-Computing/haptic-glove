@@ -64,3 +64,6 @@ Numbers higher than 123 will set the playback effect to effect # 123
 All decimals will be rounded DOWN
 Each segment of the message correspondes to the strength of a specific haptic driver.
 Where n01 controls driver 1, n02 controls driver 2, and so on.
+
+## Tutorials
+TODO
