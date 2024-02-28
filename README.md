@@ -2,13 +2,12 @@
 
 ## PCB
 
-### Schematic
-TODO
+### Schematic V2.1
+<img src = "Board Images/V2.1/glove-2.1-sch.png" />
 
-### Layout
-
-<img src = "img/glove-2.0-top.png" />
-<img src = "img/glove-2.0-bottom.png" />
+### Layout V2.0
+<img src = "Board Images/V2.0/glove-2.0-top.png" />
+<img src = "Board Images/V2.0/glove-2.0-bottom.png" />
 
 #### PCB Edit History
 ##### V2.0
