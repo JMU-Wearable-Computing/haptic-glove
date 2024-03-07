@@ -12,7 +12,7 @@
 #### PCB Edit History
 ##### V2.0
 - Initial board redesign
-##### V2.1 (TODO)
+##### V2.1
 - Changed part J1 to be an accurate JST-PH connector
 - Shifted Arduino placement down 1 mm to allow for more clearance between the Arduino and the motor header pins
 - (TODO) Implemented graphic to denote onboard IMU directions
