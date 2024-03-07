@@ -5,9 +5,9 @@
 ### Schematic V2.1
 <img src = "Board Images/V2.1/glove-2.1-sch.png" />
 
-### Layout V2.0
-<img src = "Board Images/V2.0/glove-2.0-top.png" />
-<img src = "Board Images/V2.0/glove-2.0-bottom.png" />
+### Layout V2.1
+<img src = "Board Images/V2.1/glove-2.1-top.png" />
+<img src = "Board Images/V2.1/glove-2.1-bottom.png" />
 
 #### PCB Edit History
 ##### V2.0
@@ -15,7 +15,7 @@
 ##### V2.1
 - Changed part J1 to be an accurate JST-PH connector
 - Shifted Arduino placement down 1 mm to allow for more clearance between the Arduino and the motor header pins
-- (TODO) Implemented graphic to denote onboard IMU directions
+- Implemented graphic to denote onboard IMU directions
 - Added a spot on the back of the board to write the board's device ID
 - Shifted some silkscreen placements so that part names are not cut off by pads
   
