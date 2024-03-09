@@ -32,6 +32,9 @@ Included in the repository are:
 
 ## Arduino Nano Arduino IDE setup 
 
+### Correct IDE version
+Arduino IDE 2.X.X
+
 ### Correct board type:
 Arduino NANO 33 IoT
 
@@ -47,7 +50,7 @@ Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
-### Onboard LED state meanings
+### Onboard LED state meanings (TODO)
 |State|Meaning|
 --- | --- |
 |OFF|Not connected to network|
@@ -67,4 +70,19 @@ Each segment of the message correspondes to the strength of a specific haptic dr
 Where n01 controls driver 1, n02 controls driver 2, and so on.
 
 ## Tutorials
+### Arduino IDE setup
+This will teach you how to set up the Arduino IDE for use of the haptic glove. Prior to following this tutorial, you should already have the Arduino IDE downloaded.
+
+1. Open firmware-2.0.ino
+
+### Communicating with the Arduino via serial port
+This will teach you how to send messages to the Arduino via the serial port that will control the haptic motors and the onboard IMU.
+
+### Communicating with the Arduino via TCP socket connection
+This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
+
+#### Initial Arduino set up
 TODO
+#### Setting up Python
+TODO
+
