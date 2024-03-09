@@ -22,7 +22,7 @@
 ## Eagle PCB Set-Up
 
 ### OSHPark Plugin
-The OSHPark Eagle plugin includes OSHPark design rules and allows the user to send the .brd file directly to an OSHPark cart. See the OSHPark-Eagle-Tools GitHub: https://github.com/OSHPark/OSHPark-Eagle-Tools
+The OSHPark Eagle plugin includes OSHPark design rules and allows the user to send the .brd file directly to an OSHPark cart. See the [OSHPark-Eagle-Tools GitHub](https://github.com/OSHPark/OSHPark-Eagle-Tools)
 
 ### Libraries
 Included in the repository are:
@@ -35,7 +35,11 @@ Included in the repository are:
 ### Correct IDE version
 Arduino IDE 2.X.X
 
-### Correct board type:
+### Correct board library and name:
+#### Board Library
+Arduino SAMD Boards (32-bits ARM Cortex-M0+)
+
+#### Board Name
 Arduino NANO 33 IoT
 
 ### Arduino Libraries
@@ -73,7 +77,12 @@ Where n01 controls driver 1, n02 controls driver 2, and so on.
 ### Arduino IDE setup
 This will teach you how to set up the Arduino IDE for use of the haptic glove. Prior to following this tutorial, you should already have the Arduino IDE downloaded.
 
-1. Open firmware-2.0.ino
+1. Open <kbd>firmware-2.0.ino</kbd>. <kbd>network_cred.h</kbd> should automatically open in a separate tab
+2. Click the <kbd>network_cred.h</kbd> tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
+3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for "nano 33 iot". The one board library that should be shown is <kbd>Arduino SAMD Boards (32-bits ARM Cortex-M0+)</kbd>. Install this library.
+4. Open the Library manager by clicking the correct icon on the left of the IDE. Search for and install <kbd>Adafruit DRV2605 Library</kbd>, <kbd>Arduino_LSM6DS3</kbd> and <kbd>WiFiNINA</kbd>.
+5. Navigate to <kbd>Tools</kbd>><kbd>Board</kbd>><kbd>Arduino</kbd>><kbd>SAMD Boards (32-bits ARM Cortex-M0+)</kbd> and select <kbd>Arduino Nano 33 IoT</kbd> as the board.
+6. Congratulations! You now have Arduino IDE set up to be used with the haptic glove.
 
 ### Communicating with the Arduino via serial port
 This will teach you how to send messages to the Arduino via the serial port that will control the haptic motors and the onboard IMU.
