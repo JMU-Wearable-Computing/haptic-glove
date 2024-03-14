@@ -90,20 +90,37 @@ This will teach you how to set up the Arduino IDE for use of the haptic glove. P
 <img src = "Images/Tutorial Photos/Arduino IDE set up/WiFiNINA library screenshot.png" />
 
 5. Navigate to <kbd>Tools</kbd>><kbd>Board</kbd>><kbd>Arduino</kbd>><kbd>SAMD Boards (32-bits ARM Cortex-M0+)</kbd> and select <kbd>Arduino Nano 33 IoT</kbd> as the board.
-6. Congratulations! You now have Arduino IDE set up to be used with the haptic glove.
+6. Congratulations! Arduino IDE is now set up to be used with the haptic glove.
 
 ### Communicating with the Arduino via serial port
 This will teach you how to send messages to the Arduino via the serial port that will control the haptic motors and the onboard IMU.
+
+#### Initial Arduino set up
+1. Complete the "Arduino IDE set up" tutorial.
+2. Set the user-definable variables in the firmware. The variable `DEVICE_ID` does not matter when using serial communication.
+
+<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
+
+3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
+
+#### Example Use
+TODO
 
 ### Communicating with the Arduino via TCP socket connection
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
 
 #### Initial Arduino set up
-1. Complete "Arduino IDE set up" tutorial.
+1. Complete the "Arduino IDE set up" tutorial.
 2. Set the user-definable variables in the firmware. Be sure to set `DEVICE_ID` to a unique integer [10, 100].
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
 
+3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
+4. Once uploaded, you can safely unplug the Arduino from your computer. Congratulations! Your Arduino now has the necessary software and is ready for use with the haptic glove.
+
 #### Setting up Python
+TODO
+
+#### Example Use
 TODO
 
