@@ -1,6 +1,6 @@
 # haptic-glove
 
-## PCB
+## PCB (Printed Circuit Board)
 
 ### Schematic V2.1
 <img src = "Images/Board Photos/V2.1/glove-2.1-sch.png" />
