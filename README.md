@@ -100,7 +100,7 @@ This will teach you how to send messages to the Arduino via a TCP socket to cont
 
 #### Initial Arduino set up
 1. Complete "Arduino IDE set up" tutorial.
-2. Set the user-definable variables in the firmware. Be sure to set 'DEVICE_ID' to a unique integer [10, 100].
+2. Set the user-definable variables in the firmware. Be sure to set `DEVICE_ID` to a unique integer [10, 100].
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
 
