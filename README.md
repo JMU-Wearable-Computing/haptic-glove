@@ -99,7 +99,11 @@ This will teach you how to send messages to the Arduino via the serial port that
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
 
 #### Initial Arduino set up
-TODO
+1. Complete "Arduino IDE set up" tutorial.
+2. Set the user-definable variables in the firmware. Be sure to set 'DEVICE_ID' to a unique integer [10, 100].
+
+<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
+
 #### Setting up Python
 TODO
 
