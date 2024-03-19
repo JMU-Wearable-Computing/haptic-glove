@@ -73,6 +73,10 @@ All decimals will be rounded DOWN
 Each segment of the message correspondes to the strength of a specific haptic driver.
 Where n01 controls driver 1, n02 controls driver 2, and so on.
 
+#### Example Messages
+
+TODO
+
 ## Tutorials
 ### Arduino IDE setup
 This will teach you how to set up the Arduino IDE for use of the haptic glove. Prior to following this tutorial, you should already have the Arduino IDE downloaded.
