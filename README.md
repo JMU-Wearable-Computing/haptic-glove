@@ -62,19 +62,25 @@ When booted, the Nano 33 IoT establishes a user definable static IP.
 |SOLID|TCP client connected and ready for messages|
 
 ### Message format
-Messages follows the format: X,n01,n02,n03,n04,n05,n06,n07,n08
+Messages follows the format: <kbd>X,n01,n02,n03,n04,n05,n06,n07,n08</kbd>
 
 X is a char that signifies the message type. nXX is a number.
 Negative numbers will be ignored and the playback of the current haptic effect will continue.
 0 will stop the corresponding driver.
+All decimals will be rounded DOWN.
+Each segment of the message correspondes to the strength of a specific haptic driver, where n01 controls driver 1, n02 controls driver 2, and so on.
+
+#### Effect Messages
 For messages of type 'E', numbers [1, 123] will set the playback effect of the corresponding driver.
-Numbers higher than 123 will set the playback effect to effect # 123
-All decimals will be rounded DOWN
-Each segment of the message correspondes to the strength of a specific haptic driver.
-Where n01 controls driver 1, n02 controls driver 2, and so on.
+Numbers higher than 123 will set the playback effect to effect # 123.
 
-#### Example Messages
+##### Example
+The message <kbd>'E',100,43,55,1,123,34,99,2</kbd> will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message <kbd>'E',0,-1,100.7,9999,0,0,0,0</kbd> afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
 
+#### Acceleration Messages
+For messages of type 'A', no numbers are to be included in the message. Sending 'A' as the entire message returns the acceleration data at that instant and sends it to the client.
+
+##### Example
 TODO
 
 ## Tutorials
