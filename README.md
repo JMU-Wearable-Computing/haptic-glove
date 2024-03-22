@@ -81,7 +81,9 @@ The message <kbd>'E',100,43,55,1,123,34,99,2</kbd> will cause motor one to activ
 For messages of type 'A', numbers are not required. They may be included, but will not be used by the Arduino. This message returns the acceleration data at that instant and sends it to the client.
 
 ##### Example
-TODO
+The following is the Serial output of an acceleration message. <kbd>outMsg</kbd> is the object that is sent to the client.
+<img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
+
 
 ## Tutorials
 ### Arduino IDE setup
