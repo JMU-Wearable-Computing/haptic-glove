@@ -78,7 +78,7 @@ Numbers higher than 123 will set the playback effect to effect # 123.
 The message <kbd>'E',100,43,55,1,123,34,99,2</kbd> will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message <kbd>'E',0,-1,100.7,9999,0,0,0,0</kbd> afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
 
 #### Acceleration Messages
-For messages of type 'A', no numbers are to be included in the message. Sending 'A' as the entire message returns the acceleration data at that instant and sends it to the client.
+For messages of type 'A', numbers are not required. They may be included, but will not be used by the Arduino. This message returns the acceleration data at that instant and sends it to the client.
 
 ##### Example
 TODO
