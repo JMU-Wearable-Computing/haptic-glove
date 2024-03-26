@@ -116,20 +116,35 @@ This will teach you how to send messages to the Arduino via the serial port that
 3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 
 #### Example Use
-We will use the same example messages that were used in the [Message Format section](#message-format).
+We will use an example message that was used in the [Message Format section](#message-format). Feel free to use other example messages from that section to familiarize yourself with the message structure.
 
 ##### Turning all motors on with an effect message
 1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `E,100,43,55,1,123,34,99,2`
 
                                           INSERT PICTURE OF SERIAL TERMINAL
 
-2. 
+2. If the variable `debug` is set to `true`, the following should print to the serial monitor:
+
+                                          INSERT PICTURE OF SERIAL TERMINAL
+
+3. All motors should now be activated. Motor number 1 should be set to haptic effect # 100, motor number 2 should be set to haptic effect # 43, and so on.
+
+##### Accessing the accelerometer data using an acceleration message
+1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `A`
+
+                                          INSERT PICTURE OF SERIAL TERMINAL
+
+2. If the variable `debug` is set to `true`, the following should print to the serial monitor:
+
+                                          INSERT PICTURE OF SERIAL TERMINAL
+
+3. The user is also able to include numbers in acceleration messages, albeit they have no function or purpose. This capability is present purely to keep message structure consistent throughout different message types. Try creating your own acceleration message that includes numbers using the same general structure as the previous effect message that you entered into the serial monitor. Notice how no matter the numbers that are entered, there is no effect on the output–the message still outputs the accerometer data gathered at that instant.
 
 ### Communicating with the Arduino via TCP socket connection
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
 
 #### Initial Arduino set up
-1. Complete the "Arduino IDE set up" tutorial.
+1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
 2. Set the user-definable variables in the firmware. Be sure to set `DEVICE_ID` to a unique integer [10, 100].
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
