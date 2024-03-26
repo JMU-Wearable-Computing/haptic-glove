@@ -51,7 +51,7 @@ Arduino NANO 33 IoT
 ## Communicating with Nano 33 IoT
 
 Nano 33 IoT can be communicated with via TCP socket connection.
-Network credentials can be modified with the "ssid" and "password" variables within the Arduino code.
+Network credentials can be modified with the `ssid` and `password` variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
 ### Onboard LED state meanings (TODO)
@@ -62,7 +62,7 @@ When booted, the Nano 33 IoT establishes a user definable static IP.
 |SOLID|TCP client connected and ready for messages|
 
 ### Message format
-Messages follows the format: <kbd>X,n01,n02,n03,n04,n05,n06,n07,n08</kbd>
+Messages follows the format: `X,n01,n02,n03,n04,n05,n06,n07,n08`
 
 X is a char that signifies the message type. nXX is a number.
 Negative numbers will be ignored and the playback of the current haptic effect will continue.
@@ -75,13 +75,13 @@ For messages of type 'E', numbers [1, 123] will set the playback effect of the c
 Numbers higher than 123 will set the playback effect to effect # 123.
 
 ##### Example
-The message <kbd>'E',100,43,55,1,123,34,99,2</kbd> will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message <kbd>'E',0,-1,100.7,9999,0,0,0,0</kbd> afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
+The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
 
 #### Acceleration Messages
 For messages of type 'A', numbers are not required. They may be included, but will not be used by the Arduino. This message returns the acceleration data at that instant and sends it to the client.
 
 ##### Example
-The following is the Serial output of an acceleration message. <kbd>outMsg</kbd> is the object that is sent to the client.
+The following is the Serial output of an acceleration message. `outMsg` is the object that is sent to the client.
 <img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
 
 
@@ -89,27 +89,27 @@ The following is the Serial output of an acceleration message. <kbd>outMsg</kbd>
 ### Arduino IDE setup
 This will teach you how to set up the Arduino IDE for use of the haptic glove. Prior to following this tutorial, you should already have the Arduino IDE downloaded.
 
-1. Open <kbd>firmware-2.0.ino</kbd>. <kbd>network_cred.h</kbd> should automatically open in a separate tab
-2. Click the <kbd>network_cred.h</kbd> tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
-3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for "nano 33 iot". The one board library that should be shown is <kbd>Arduino SAMD Boards (32-bits ARM Cortex-M0+)</kbd>. Install this library. Feel free to install a newer version than what is shown in the picture.
+1. Open `firmware-2.0.ino`. `network_cred.h` should automatically open in a separate tab
+2. Click the `network_cred.h` tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
+3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for `nano 33 iot`. The one board library that should be shown is `Arduino SAMD Boards (32-bits ARM Cortex-M0+)`. Install this library. Feel free to install a newer version than what is shown in the picture.
 
 <img src = "Images/Tutorial Photos/Arduino IDE set up/Board manager screenshot.png" />
 
-4. Open the Library manager by clicking the correct icon on the left of the IDE. Search for and install <kbd>Adafruit DRV2605 Library</kbd>, <kbd>Arduino_LSM6DS3</kbd> and <kbd>WiFiNINA</kbd>. Feel free to install newer versions than what are shown in the pictures.
+4. Open the Library manager by clicking the correct icon on the left of the IDE. Search for and install `Adafruit DRV2605 Library`, `Arduino_LSM6DS3` and `WiFiNINA`. Feel free to install newer versions than what are shown in the pictures.
 
 <img src = "Images/Tutorial Photos/Arduino IDE set up/DRV2605 library screenshot.png" />
 <img src = "Images/Tutorial Photos/Arduino IDE set up/LSM6dS3 library screenshot.png" />
 <img src = "Images/Tutorial Photos/Arduino IDE set up/WiFiNINA library screenshot.png" />
 
-5. Navigate to <kbd>Tools</kbd>><kbd>Board</kbd>><kbd>Arduino</kbd>><kbd>SAMD Boards (32-bits ARM Cortex-M0+)</kbd> and select <kbd>Arduino Nano 33 IoT</kbd> as the board.
+5. Navigate to `Tools`>`Board`>`Arduino`>`SAMD Boards (32-bits ARM Cortex-M0+)` and select `Arduino Nano 33 IoT` as the board.
 6. Congratulations! Arduino IDE is now set up to be used with the haptic glove.
 
 ### Communicating with the Arduino via serial port
 This will teach you how to send messages to the Arduino via the serial port that will control the haptic motors and the onboard IMU.
 
 #### Initial Arduino set up
-1. Complete the "Arduino IDE set up" tutorial.
-2. Set the user-definable variables in the firmware. The variable `DEVICE_ID` does not matter when using serial communication.
+1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
+2. Set the user-definable variables in the firmware. The value of the variable `DEVICE_ID` does not matter when using serial communication.
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
 
@@ -117,6 +117,13 @@ This will teach you how to send messages to the Arduino via the serial port that
 
 #### Example Use
 We will use the same example messages that were used in the [Message Format section](#message-format).
+
+##### Turning all motors on with an effect message
+1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `E,100,43,55,1,123,34,99,2`
+
+                                          INSERT PICTURE OF SERIAL TERMINAL
+
+2. 
 
 ### Communicating with the Arduino via TCP socket connection
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
