@@ -116,7 +116,7 @@ This will teach you how to send messages to the Arduino via the serial port that
 3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 
 #### Example Use
-We will use the same example messages that were used in the [Message Format section](#message-fprmat).
+We will use the same example messages that were used in the [Message Format section](###message-fprmat).
 
 ### Communicating with the Arduino via TCP socket connection
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
