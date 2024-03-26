@@ -2,6 +2,7 @@
 
 ## Haptic Effect Waveforms
 <img src = "Images/DRV2605 Waveforms.png" />
+
 [Image source](https://learn.adafruit.com/assets/72593)
 
 ## PCB (Printed Circuit Board)
