@@ -86,7 +86,8 @@ The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using
 For messages of type 'A', numbers are not required. They may be included, but will not be used by the Arduino. This message returns the acceleration data at that instant and sends it to the client.
 
 ##### Example
-As long as the variable `debug` is set to `true`, the following is the Serial ouput of s serially processed acceleration message. `outMsg` is the object that is sent to the TCP client.
+As long as the variable `debug` is set to `true`, the following is the Serial ouput of an acceleration message. `outMsg` is the object that is sent to the TCP client.
+
 <img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
 
 
