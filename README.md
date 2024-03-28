@@ -18,7 +18,6 @@
 ##### V2.0
 - Initial board redesign
 ##### V2.1
-- Changed part J1 to be an accurate JST-PH connector
 - Shifted Arduino placement down 1 mm to allow for more clearance between the Arduino and the motor header pins
 - Added graphic to denote onboard IMU directions
 - Added a spot on the back of the board to write the board's device ID
