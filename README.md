@@ -11,7 +11,7 @@
 <img src = "Images/Board Photos/V2.1/glove-2.1-sch.png" />
 
 ### Layout V2.1
-<img src = "Images/Board Photos/V2.1/glove-2.1-top.png" />
+
 <img src = "Images/Board Photos/V2.1/glove-2.1-bottom.png" />
 
 #### PCB Edit History
