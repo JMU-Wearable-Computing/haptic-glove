@@ -11,7 +11,7 @@
 <img src = "Images/Board Photos/V2.1/glove-2.1-sch.png" />
 
 ### Layout V2.1
-<img src = "Images/Board Photos/V2.1/glove-2.1-top.png" />
+
 <img src = "Images/Board Photos/V2.1/glove-2.1-bottom.png" />
 
 #### PCB Edit History
@@ -22,6 +22,7 @@
 - Added graphic to denote onboard IMU directions
 - Added a spot on the back of the board to write the board's device ID
 - Shifted some silkscreen placements so that part names are not cut off by pads
+- Added text to denote correct Arduino orientation
   
 ## Eagle PCB Set-Up
 
