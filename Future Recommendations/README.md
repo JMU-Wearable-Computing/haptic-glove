@@ -10,3 +10,7 @@ TODO
 
 ## Reworking Python Haptic Glove Game & Demo to Work with Glove V2
 TODO
+
+## PCB Revision
+### 5V Step Up Converter
+TODO
