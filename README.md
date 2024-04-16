@@ -32,8 +32,7 @@ The OSHPark Eagle plugin includes OSHPark design rules and allows the user to se
 ### Libraries
 Included in the repository are:
 1. TCA9548APWR.lbr (I2C multiplexer)
-2. 1769.lbr (JST-PH connector)
-3. SparkFun-Eagle-Libraries-main.zip
+2. SparkFun-Eagle-Libraries-main.zip
 
 ## Arduino Nano Arduino IDE setup 
 
