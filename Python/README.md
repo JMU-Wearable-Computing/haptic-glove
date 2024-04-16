@@ -1,8 +1,7 @@
 glove.py = Base class for haptic glove object
 
-two_glove.py = Example of using two haptic glove simultaneously
+glove-demo-single.py = Example to test haptic motor functionality of one glove
 
-**Branches**
-main = function example
+glove-demo-multiple.py = Example to test haptic motor functionality of two or more gloves
 
-glove_refactor = current re-organization of glove.py to remove application specific code (Sept 2023 - present)
+echo.py = Echo script to test TCP socket communication
