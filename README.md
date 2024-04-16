@@ -58,6 +58,9 @@ Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the `ssid` and `password` variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
+### Known Errors
+- TODO: Driver 8 issue
+
 ### Onboard LED state meanings (TODO)
 |State|Meaning|
 --- | --- |
