@@ -52,6 +52,18 @@ Arduino NANO 33 IoT
 2. Arduino_LSM6DS3.h
 3. WiFiNINA.h
 
+### Troubleshooting
+Sometimes, Arduino IDE fails to recognize that Nano 33 IoT is connected to a USB port. Should this happen, try the following fixes:
+- Attempt to connect it to other USB ports on your machine
+- If the above does not work, quickly double click the `RST` button on the Arduino while it is plugged into your machine. This will cause your Arduino's bootloader to run indefinitely. You will know that it has entered this state when you see the onboard LED slowly pulsing on and off. Arduino IDE should now recognize it and you should now be able to upload code.
+
+If neither of these options work, then it is likely that either
+
+(A). the bootloader on the Arduino is missing or corrupted, or  
+(B). there is some hardware damage on the Arduino.
+
+Sources: [Forum post 1](https://forum.arduino.cc/t/solved-arduino-nano-33-iot-not-recognized-by-windows-10/621376) & [Forum post 2](https://forum.arduino.cc/t/arduino-nano-33-iot-not-recognized-by-pc/1192703/4)
+
 ## Communicating with Nano 33 IoT
 
 Nano 33 IoT can be communicated with via TCP socket connection.
