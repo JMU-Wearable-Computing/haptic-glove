@@ -18,6 +18,7 @@
 #define DEVICE_ID 10             // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true           // Toggle static or dynamic IP
 const bool debug = true;         // Toggle debug mode (Toggle program being verbose)
+//const bool msgSeparation = true; // Toggle ability for accel data to be collected while drivers are activated
 int port = 8888;                 // Port number for WiFi server
 
 // This toggles whether or not to activate the eighth driver for use. Only toggle this if:
@@ -111,7 +112,7 @@ void WiFiConnect() {
   delay(100);                  // Is this needed?
 
   // Wait for connection
-  if (debug) { Serial.println("Connecting to WiFi"); }
+  if (debug) { Serial.println("Connecting to WiFi..."); }
   while (WiFi.status() != WL_CONNECTED) {
     if (debug) { Serial.print("."); }
     delay(500);
@@ -122,12 +123,9 @@ void WiFiConnect() {
   // Open TCP server
   server.begin();
   if (debug) {  // Print network details
-    Serial.print("\nConnected to ");
-    Serial.println(ssid);
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-    Serial.print("on port ");
-    Serial.println(port);
+    Serial.print("\nConnected to "); Serial.println(ssid);
+    Serial.print("IP address: "); Serial.println(WiFi.localIP());
+    Serial.print("on port "); Serial.println(port);
   }
   // TODO: LED blinking if connected to WiFi but not client. Currently is just on
   digitalWrite(LED_BUILTIN, HIGH);
@@ -357,13 +355,16 @@ void getAcceleration() {
 
       Serial.print("outMsg = "); Serial.println(outMsg);
     }
+    // Wait for new acceleration data to populate
+    // TODO: Is it beneficial to have a dedicated global variable that stores the accelerometer's sample rate?
+    delay((1 / IMU.accelerationSampleRate()) * 1000); // Comment out if sample rate is low so that this doesn't delay new messages from being read
   }
   else {
     if (debug) {Serial.println("ERROR: Failed to read acceleration");}
   }
 }
 
-void SerialDrvCtrl() {
+void serialDrvCtrl() {
   // If a message exists, read it
   if (Serial.available() > 0) {
     packet = String(Serial.readStringUntil('\n'));
@@ -382,7 +383,73 @@ void SerialDrvCtrl() {
       if (theDastardlyEighthDriver) {changeEffect(&drv7, val7, 7);}
     }
     else if (msgObj.cmd == 'A') { // Process as acceleration message
-      accelToggle = true;
+      if (msgObj.data0 == 0) { // Stop polling accelerometer
+        accelToggle = false;
+        if (debug) {Serial.println("\nAccelerometer stopped");}
+      }
+      else {
+        accelToggle = true;
+      }
+    }
+  }
+}
+
+// Stop all motor drivers
+void allDrvStop() {
+  val0 = 0;
+  changeEffect(&drv0, val0, 0);
+  val1 = 0;
+  changeEffect(&drv1, val1, 1);
+  val2 = 0;
+  changeEffect(&drv2, val2, 2);
+  val3 = 0;
+  changeEffect(&drv3, val3, 3);
+  val4 = 0;
+  changeEffect(&drv4, val4, 4);
+  val5 = 0;
+  changeEffect(&drv5, val5, 5);
+  val6 = 0;
+  changeEffect(&drv6, val6, 6);
+  if (theDastardlyEighthDriver) {
+    val7 = 0;
+    changeEffect(&drv7, val7, 7);
+  }
+}
+
+// Play current effect on all drivers
+void allDrvPlay() {
+  if (val0 != 0) {
+    muxSelect(0);
+    drv0.go();
+  }
+  if (val1 != 0) {
+    muxSelect(1);
+    drv1.go();
+  }
+  if (val2 != 0) {
+    muxSelect(2);
+    drv2.go();
+  }
+  if (val3 != 0) {
+    muxSelect(3);
+    drv3.go();
+  }
+  if (val4 != 0) {
+    muxSelect(4);
+    drv4.go();
+  }
+  if (val5 != 0) {
+    muxSelect(5);
+    drv5.go();
+  }
+  if (val6 != 0) {
+    muxSelect(6);
+    drv6.go();
+  }
+  if (theDastardlyEighthDriver) {
+    if (val7 != 0) {
+      muxSelect(7);
+      drv7.go();
     }
   }
 }
@@ -446,7 +513,7 @@ void setup() {
       ;
   }
   if (debug) {
-    Serial.println("Accelerometer initialized");
+    Serial.println("\nAccelerometer initialized");
     Serial.print("Sample rate = "); Serial.print(IMU.accelerationSampleRate()); Serial.println(" Hz\n");
   }
 
@@ -470,12 +537,6 @@ void loop() {
       }
       // While client is connected, keep reading messages from client
       while (client.connected()) {
-        if (accelToggle) {
-          getAcceleration();
-
-          // Send acceleration data to client
-          client.println(outMsg);
-        }
         // If a message exists, read it
         if (client.available() > 0) {
           packet = String(client.readStringUntil('\n')); // TODO: turn packet into a char array from inception to simplify later code in both the checksum as well as createCmdMsg()
@@ -514,51 +575,46 @@ void loop() {
 
           createCmdMsg(&packet);
           if (msgObj.cmd == 'E') {  // Process as effect message
-            accelToggle = false; // Halt accel if it is going
             processEMessage(&msgObj);
+
+            // Send new signals to each motor
+            changeEffect(&drv0, val0, 0);
+            changeEffect(&drv1, val1, 1);
+            changeEffect(&drv2, val2, 2);
+            changeEffect(&drv3, val3, 3);
+            changeEffect(&drv4, val4, 4);
+            changeEffect(&drv5, val5, 5);
+            changeEffect(&drv6, val6, 6);
+            if (theDastardlyEighthDriver) {
+              changeEffect(&drv7, val7, 7); // THIS LINE IS WHAT TRIGGERS WIFI DISCONNECT
+            }
           }
           else if (msgObj.cmd == 'A') { // Process as acceleration message
-            accelToggle = true;
+            if (msgObj.data0 == 0) { // Stop polling accelerometer
+              accelToggle = false;
+              if (debug) {Serial.println("\nAccelerometer stopped");}
+            }
+            else {
+              accelToggle = true;
+            }
           }
         }
-        // Continuously send signals to each motor so that they keep playing until client is disconnected
-        changeEffect(&drv0, val0, 0);
-        changeEffect(&drv1, val1, 1);
-        changeEffect(&drv2, val2, 2);
-        changeEffect(&drv3, val3, 3);
-        changeEffect(&drv4, val4, 4);
-        changeEffect(&drv5, val5, 5);
-        changeEffect(&drv6, val6, 6);
-        if (theDastardlyEighthDriver) {
-          changeEffect(&drv7, val7, 7); // THIS LINE IS WHAT TRIGGERS WIFI DISCONNECT
+        if (accelToggle) {
+          getAcceleration();
+
+          // Send acceleration data to client
+          client.println(outMsg); // Does this placement give the computer on the other end enough time to read the accel data before client.flush() is called below?
         }
+        allDrvPlay(); // Continuously play effects while client connected
         client.flush();
       }
-
-      // Stop client & accelerometer on client disconnect
-      client.stop();
-      accelToggle = false;
       if (debug) { Serial.println("Client disconnected\n"); }
 
-      // Turn off motors on client disconnect
-      val0 = 0;
-      changeEffect(&drv0, 0, 0);
-      val1 = 0;
-      changeEffect(&drv1, 0, 1);
-      val2 = 0;
-      changeEffect(&drv2, 0, 2);
-      val3 = 0;
-      changeEffect(&drv3, 0, 3);
-      val4 = 0;
-      changeEffect(&drv4, 0, 4);
-      val5 = 0;
-      changeEffect(&drv5, 0, 5);
-      val6 = 0;
-      changeEffect(&drv6, 0, 6);
-      if (theDastardlyEighthDriver) {
-        val7 = 0;
-        changeEffect(&drv7, 0, 7);
-      }
+      // Stop client, accelerometer, and drivers on client disconnect
+      client.stop();
+      accelToggle = false;
+      if (debug) {Serial.println("Accelerometer stopped\n");}
+      allDrvStop();
 
       // TODO: Make LED blink when connected to WiFi but not client. Currently is just on for both cases
     }
@@ -575,52 +631,17 @@ void loop() {
 
   //********************************************* Control Via Serial *********************************************
 
-  SerialDrvCtrl();
+  serialDrvCtrl();
   while (accelToggle) { // Continuously spit out accel data until another message is read over Serial
     getAcceleration();
-    // Wait for new acceleration data to populate
-    // TODO: Is it beneficial to have a dedicated global variable that stores the accelerometer's sample rate?
-    delay((1 / IMU.accelerationSampleRate()) * 1000); // Comment out if sample rate is low so that this doesn't delay new messages from being read
 
     // TODO: Save accel data or maybe write it to a file to connected computer via Serial?
 
-    SerialDrvCtrl();
+    serialDrvCtrl();
+    allDrvPlay(); // Continue driver playback if they aren't stopped
   }
   Serial.flush(); // Is this needed? "Waits for the transmission of outgoing serial data to complete"
 
-  // Continuously play effects after message receival (only used if message received via Serial)
-  if (val0 != 0) {
-    muxSelect(0);
-    drv0.go();
-  }
-  if (val1 != 0) {
-    muxSelect(1);
-    drv1.go();
-  }
-  if (val2 != 0) {
-    muxSelect(2);
-    drv2.go();
-  }
-  if (val3 != 0) {
-    muxSelect(3);
-    drv3.go();
-  }
-  if (val4 != 0) {
-    muxSelect(4);
-    drv4.go();
-  }
-  if (val5 != 0) {
-    muxSelect(5);
-    drv5.go();
-  }
-  if (val6 != 0) {
-    muxSelect(6);
-    drv6.go();
-  }
-  if (theDastardlyEighthDriver) {
-    if (val7 != 0) {
-      muxSelect(7);
-      drv7.go();
-    }
-  }
+  // Continuously play effects after message receival
+  allDrvPlay();
 }
