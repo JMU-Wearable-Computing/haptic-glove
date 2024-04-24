@@ -4,6 +4,14 @@
 TODO
 ### Checksum/Parity Check
 TODO
+### Implementing Threads
+#### Onboard LED state meanings
+Make it to where the below table is what happens
+|State|Meaning|
+--- | --- |
+|OFF|Not connected to network|
+|BLINKING|Connected to user specified network|
+|SOLID|TCP client connected and ready for messages|
 
 ### Message Parser
 #### Implement custom parser rather than strtok()
