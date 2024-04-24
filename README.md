@@ -73,12 +73,11 @@ When booted, the Nano 33 IoT establishes a user definable static IP.
 ### Known Errors
 - TODO: Driver 8 issue
 
-### Onboard LED state meanings (TODO)
+### Onboard LED state meanings
 |State|Meaning|
 --- | --- |
 |OFF|Not connected to network|
-|BLINKING|Connected to user specified network (not currently implemented)|
-|SOLID|TCP client connected and ready for messages|
+|ON|Connected to user specified network|
 
 ### Message format
 Messages follows the format: `X,n01,n02,n03,n04,n05,n06,n07,n08`
