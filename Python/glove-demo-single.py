@@ -11,6 +11,7 @@ print('Welcome to the single glove demo!\n'
 
 # Define glove
 # device_id will be different for every glove
+# port should be consistent with the port number in firmware-V2.ino. This is normally port=8888
 # acceleration=True activates the accelerometer for the entire time that the Python script is running
 # verbose=True prints out the message that is sent to the glove
 # glove = Glove(device_id=10, port=8888, acceleration=False, verbose=True)
