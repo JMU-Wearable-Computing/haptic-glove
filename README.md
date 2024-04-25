@@ -95,7 +95,7 @@ Numbers higher than 123 will set the playback effect to effect # 123.
 Should you want to halt the haptic playback of all drivers, simply passing `'E'` as the entire effect message will do this.
 
 ##### Example
-The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
+The message `'E',100,43,55,1,123,34,99,2` will cause driver one to activate using haptic effect # 100, driver two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop drivers 1, 5, 6, 7, and 8. Driver 2 will remain activated with the same haptic effect as before (# 43), driver 3 will activate using haptic effect # 100, and driver 4 will activate using haptic effect # 123.
 
 #### Acceleration Messages
 For messages of type 'A', numbers are used to toggle the continuous collection of acceleration data. Only one number should be passed. Passing the number zero will halt data collection, while any other number will resume data collection. For simplicity's sake, it is recommended to only use the number one to resume data collection. Once started, data will be continuously returned and sent to the client until another acceleration message is recieved that instructs the system to halt data collection.
@@ -127,7 +127,7 @@ INSERT A NEW PICTURE
 6. Congratulations! Arduino IDE is now set up to be used with the haptic glove.
 
 ### Communicating with the Arduino via serial port
-This will teach you how to send messages to the Arduino via the serial port that will control the haptic motors and the onboard IMU.
+This will teach you how to send messages to the Arduino via the Serial port that will control the haptic motor drivers and the onboard IMU.
 
 #### Initial Arduino set up
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
@@ -146,16 +146,16 @@ This will teach you how to send messages to the Arduino via the serial port that
 #### Example Use
 We will use an example message that was used in the [Message Format section](#message-format). Feel free to use other example messages from that section to familiarize yourself with the message structure. Or, be brave and create your own message (just be sure to follow the correct structure!)
 
-##### Turning all motors on with an effect message
+##### Turning all drivers on with an effect message
 1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `E,100,43,55,1,123,34,99,2`
 
 <img src = "Images/Tutorial Photos/Serial Example Use/Serial Effect Message Input Example.png" />
 
 2. If the variable `debug` is set to `true`, the following should be the last of what prints to the Serial Monitor:
 
-<img src = "Images/Tutorial Photos/Serial Example Use/Serial Effect Message Output.png" />
+<img src = "Images/Tutorial Photos/Serial Example Use/Serial Effect Messsage Output.png" />
 
-3. All motors should now be activated. Motor number 1 should be set to haptic effect # 100, motor number 2 should be set to haptic effect # 43, and so on.
+3. All drivers should now be activated. Driver number 1 should be set to haptic effect # 100, driver number 2 should be set to haptic effect # 43, and so on.
 
 ##### Accessing the accelerometer data using an acceleration message
 1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `A`
@@ -169,7 +169,7 @@ We will use an example message that was used in the [Message Format section](#me
 3. The user is also able to include numbers in acceleration messages, albeit they have no function or purpose. This capability is present purely to keep message structure consistent throughout different message types. Try creating your own acceleration message that includes numbers, using the same general structure as the previous effect message that you entered into the serial monitor. Notice how no matter the numbers that are entered, there is no effect on the output–the message still outputs the accerometer data gathered at that instant.
 
 ### Communicating with the Arduino via TCP socket connection
-This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motors and the onboard IMU.
+This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motor drivers and the onboard IMU.
 
 #### Initial Arduino set up
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
@@ -197,4 +197,4 @@ The current theory for why this issue is happening is that the moment the I2C mu
 This issue is present on all of the existing haptic glove V2.0 boards, so it is not believed that it is simply an issue with the soldering of the components, however this is still a possibility. However, it may be a tolerance issue with the traces on the PCB itself. Also, it is worth noting that during fabrication of the PCBs there was a power-ground short somewhere that disappeared before we could track down the cause. It disappeared once all components were soldered onto the PCB. This may be related to the problem explained above, although there is no corroborating evidence to prove that this is the case.
 
 
-The true cause of this issue is unknown, so it is best to utilize the `theDastardlyEighthDriver` variable to only use seven motors if your application uses TCP sockets to control the drivers.
+The true cause of this issue is unknown, so it is best to utilize the `theDastardlyEighthDriver` variable to only use seven drivers if your application uses TCP sockets.
