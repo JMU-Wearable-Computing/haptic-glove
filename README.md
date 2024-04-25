@@ -183,7 +183,14 @@ This assumes that you already have Python installed and can successfully run a P
 3. Congrats! Python is now ready for use with the haptic glove.
 
 #### Example Use
-TODO
+We will use `glove-demo-single.py` for this example. This is meant as a demonstration of the glove-V2 capabilities so that you can go on and create your own applications using the same methods.
+
+1. After cloning this repository, open `glove-demo-single.py`
+2. Ensure the correct parameters are set for the Glove object (`device_id`, `port`, `acceleration`, and `verbose`). Explanations for these parameters are in this Python file
+3. The demo script is now ready for use. You can go ahead and run it, or customize the effect numbers that are sent to the glove.
+
+**NOTE:** If you choose to activate the accelerometer on the Arduino (this is the default) then be sure that the `acceleration` property of the glove object is set to `True`. This will turn on continuous transmission of acceleration data until the Python script ends. Be sure that `glove.accel_loop` is set to `False` at the end of this example script. Otherwise, the program will be stuck in a loop and will continue to output acceleration data until the program is manually killed.
+
 
 ## Known Issues
 ### The Dastardly Eighth Motor Driver
