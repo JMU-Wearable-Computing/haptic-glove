@@ -70,19 +70,6 @@ Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the `ssid` and `password` variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
-### Known Issues
-#### The Dastardly Eighth Motor Driver
-##### Explanation and Recommendation
-If you are attempting to control the motor drivers via TCP socket connection, attempting to activate the eighth driver (including if you tell it to halt effect playback by passing a zero in the correct place in an [effect message](#effect-messages) when it is already not activated) will cause the WiFi to disconnect. This will prevent reconnection until the onboard WiFi chip is fully turned off/on again by calling `WiFi.end()` and then the custom `WiFiConnect()` function that performs all of the initial WiFi connection procedures. Because of the nature of TCP socket connections, this requires the Arduino and desktop computer to restart their connection and create a new socket and client, at which point the problem will (99 times out of 100) happen again. To remedy this, the boolean variable `theDastardlyEighthDriver` has been added to the firmware that controls the use of the eighth driver. If you are at all using TCP socket connections with the haptic glove, be sure to keep this variable set to `false` so that the WiFi disconnect problem does not occur. You will only be able to use seven of the eight drivers, but the WiFi connection will be reliable and shouldn't drop. If you are strictly using Serial communication to control the motor drivers, then feel free to set `theDastardlyEighthDriver` to `true`. This will allow you to use all eight drivers for your application.
-##### Potential Cause
-The current theory for why this issue is happening is that the moment the I2C multiplexer begins to communicate with this eighth driver, since the driver's I2C lines are tied high and the mux pulls them low to communicate, power and ground are very briefly shorted. It is believed that this short then messes with the WiFi chip's power supply, causing WiFi to drop and requiring the WiFi chip to be reset.
-
-
-This issue is present on all of the existing haptic glove V2.0 boards, so it is not believed that it is simply an issue with the soldering of the components, however this is still a possibility. However, it may be a tolerance issue with the traces on the PCB itself. Also, it is worth noting that during fabrication of the PCBs there was a power-ground short somewhere that disappeared before we could track down the cause. It disappeared once all components were soldered onto the PCB. This may be related to the problem explained above, although there is no corroborating evidence to prove that this is the case.
-
-
-The true cause of this issue is unknown, so it is best to utilize the `theDastardlyEighthDriver` variable to only use seven motors if your application uses TCP sockets to control the drivers.
-
 ### Onboard LED state meanings
 |State|Meaning|
 --- | --- |
@@ -194,3 +181,15 @@ TODO
 #### Example Use
 TODO
 
+## Known Issues
+### The Dastardly Eighth Motor Driver
+#### Explanation and Recommendation
+If you are attempting to control the motor drivers via TCP socket connection, attempting to activate the eighth driver (including if you tell it to halt effect playback by passing a zero in the correct place in an [effect message](#effect-messages) when it is already not activated) will cause the WiFi to disconnect. This will prevent reconnection until the onboard WiFi chip is fully turned off/on again by calling `WiFi.end()` and then the custom `WiFiConnect()` function that performs all of the initial WiFi connection procedures. Because of the nature of TCP socket connections, this requires the Arduino and desktop computer to restart their connection and create a new socket and client, at which point the problem will (99 times out of 100) happen again. To remedy this, the boolean variable `theDastardlyEighthDriver` has been added to the firmware that controls the use of the eighth driver. If you are at all using TCP socket connections with the haptic glove, be sure to keep this variable set to `false` so that the WiFi disconnect problem does not occur. You will only be able to use seven of the eight drivers, but the WiFi connection will be reliable and shouldn't drop. If you are strictly using Serial communication to control the motor drivers, then feel free to set `theDastardlyEighthDriver` to `true`. This will allow you to use all eight drivers for your application.
+#### Potential Cause
+The current theory for why this issue is happening is that the moment the I2C multiplexer begins to communicate with this eighth driver, since the driver's I2C lines are tied high and the mux pulls them low to communicate, power and ground are very briefly shorted. It is believed that this short then messes with the WiFi chip's power supply, causing WiFi to drop and requiring the WiFi chip to be reset.
+
+
+This issue is present on all of the existing haptic glove V2.0 boards, so it is not believed that it is simply an issue with the soldering of the components, however this is still a possibility. However, it may be a tolerance issue with the traces on the PCB itself. Also, it is worth noting that during fabrication of the PCBs there was a power-ground short somewhere that disappeared before we could track down the cause. It disappeared once all components were soldered onto the PCB. This may be related to the problem explained above, although there is no corroborating evidence to prove that this is the case.
+
+
+The true cause of this issue is unknown, so it is best to utilize the `theDastardlyEighthDriver` variable to only use seven motors if your application uses TCP sockets to control the drivers.
