@@ -96,10 +96,11 @@ Numbers higher than 123 will set the playback effect to effect # 123.
 The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
 
 #### Acceleration Messages
-For messages of type 'A', numbers are not required. They may be included, but will not be used by the Arduino. This message returns the acceleration data at that instant and sends it to the client.
+For messages of type 'A', numbers are used to toggle the continuous collection of acceleration data. Only one number should be passed. Passing the number zero will halt data collection, while any other number will resume data collection. For simplicity's sake, it is recommended to only use the number one to resume data collection. Once started, data will be continuously returned and sent to the client until another acceleration message is recieved that instructs the system to halt data collection.
 
 ##### Example
-As long as the variable `debug` is set to `true`, the following is the Serial ouput of an acceleration message. `outMsg` is the object that is sent to the TCP client.
+The message `'A',1` will cause continuous acceleration data collection and sending to start. The message `'A',0` will halt all acceleration data collection and sending.
+As long as the variable `debug` is set to `true`, the following is the Serial ouput of the acceleration message `'A',1`. `outMsg` is the object that is sent to the TCP client.
 
 <img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
 
@@ -111,7 +112,7 @@ This will teach you how to set up the Arduino IDE for use of the haptic glove. P
 1. Open `firmware-2.0.ino`. `network_cred.h` should automatically open in a separate tab
 2. Click the `network_cred.h` tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
 3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for `nano 33 iot`. The one board library that should be shown is `Arduino SAMD Boards (32-bits ARM Cortex-M0+)`. Install this library. Feel free to install a newer version than what is shown in the picture.
-
+INSERT A NEW PICTURE
 <img src = "Images/Tutorial Photos/Arduino IDE set up/Board manager screenshot.png" />
 
 4. Open the Library manager by clicking the correct icon on the left of the IDE. Search for and install `Adafruit DRV2605 Library`, `Arduino_LSM6DS3` and `WiFiNINA`. Feel free to install newer versions than what are shown in the pictures.
