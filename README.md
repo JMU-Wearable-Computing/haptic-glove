@@ -92,7 +92,7 @@ The true cause of this issue is unknown, so it is best to utilize the `theDastar
 ### Message format
 Messages follows the format: `X,n01,n02,n03,n04,n05,n06,n07,n08`
 
-NOTE FOR SERIAL COMMUNICATION ONLY: Despite the known issue with [the dastardly eighth motor driver](#the-dastardly-eighth-motor-driver), the message format remains the same. Even if you are not using all eight drivers in your application with Serial communication, values for all eight drivers should be passed if you are sending an [effect message](#effect-messages) unless you are sending an [all stop message](#all-stop-message).
+**NOTE FOR SERIAL COMMUNICATION ONLY:** Despite the known issue with [the dastardly eighth motor driver](#the-dastardly-eighth-motor-driver), the message format remains the same. Even if you are not using all eight drivers in your application with Serial communication, values for all eight drivers should be passed if you are sending an [effect message](#effect-messages) unless you are sending an [all stop message](#all-stop-message).
 
 X is a char that signifies the message type. nXX is a number.
 Negative numbers will be ignored and the playback of the current haptic effect will continue.
