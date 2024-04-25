@@ -71,7 +71,17 @@ Network credentials can be modified with the `ssid` and `password` variables wit
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
 ### Known Issues
-- TODO: Driver 8 issue
+#### The Dastardly Eighth Motor Driver
+##### Explanation and Recommendation
+If you are attempting to control the motor drivers via TCP socket connection, attempting to activate the eighth driver (including if you tell it to halt effect playback by passing a zero in the correct place in an [effect message](#effect-messages) when it is already not activated) will cause the WiFi to disconnect. This will prevent reconnection until the onboard WiFi chip is fully turned off/on again by calling `WiFi.end()` and then the custom `WiFiConnect()` function that performs all of the initial WiFi connection procedures. Because of the nature of TCP socket connections, this requires the Arduino and desktop computer to restart their connection and create a new socket and client, at which point the problem will (99 times out of 100) happen again. To remedy this, the boolean variable `theDastardlyEighthDriver` has been added to the firmware that controls the use of the eighth driver. If you are at all using TCP socket connections with the haptic glove, be sure to keep this variable set to `false` so that the WiFi disconnect problem does not occur. You will only be able to use seven of the eight drivers, but the WiFi connection will be reliable and shouldn't drop. If you are strictly using Serial communication to control the motor drivers, then feel free to set `theDastardlyEighthDriver` to `true`. This will allow you to use all eight drivers for your application.
+##### Potential Cause
+The current theory for why this issue is happening is that the moment the I2C multiplexer begins to communicate with this eighth driver, since the driver's I2C lines are tied high and the mux pulls them low to communicate, power and ground are very briefly shorted. It is believed that this short then messes with the WiFi chip's power supply, causing WiFi to drop and requiring the WiFi chip to be reset.
+
+
+This issue is present on all of the existing haptic glove V2.0 boards, so it is not believed that it is simply an issue with the soldering of the components, however this is still a possibility. However, it may be a tolerance issue with the traces on the PCB itself. Also, it is worth noting that during fabrication of the PCBs there was a power-ground short somewhere that disappeared before we could track down the cause. It disappeared once all components were soldered onto the PCB. This may be related to the problem explained above, although there is no corroborating evidence to prove that this is the case.
+
+
+The true cause of this issue is unknown, so it is best to utilize the `theDastardlyEighthDriver` variable to only use seven motors if your application uses TCP sockets to control the drivers.
 
 ### Onboard LED state meanings
 |State|Meaning|
@@ -81,6 +91,8 @@ When booted, the Nano 33 IoT establishes a user definable static IP.
 
 ### Message format
 Messages follows the format: `X,n01,n02,n03,n04,n05,n06,n07,n08`
+
+NOTE FOR SERIAL COMMUNICATION ONLY: Despite the known issue with [the dastardly eighth motor driver](#the-dastardly-eighth-motor-driver), the message format remains the same. Even if you are not using all eight drivers in your application with Serial communication, values for all eight drivers should be passed if you are sending an [effect message](#effect-messages) unless you are sending an [all stop message](#all-stop-message).
 
 X is a char that signifies the message type. nXX is a number.
 Negative numbers will be ignored and the playback of the current haptic effect will continue.
@@ -92,6 +104,9 @@ Each segment of the message correspondes to the strength of a specific haptic dr
 For messages of type 'E', numbers [1, 123] will set the playback effect of the corresponding driver.
 Numbers higher than 123 will set the playback effect to effect # 123.
 
+##### All Stop Message
+Should you want to halt the haptic playback of all drivers, simply passing `'E'` as the entire effect message will accomplish this task.
+
 ##### Example
 The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
 
@@ -99,7 +114,7 @@ The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using
 For messages of type 'A', numbers are used to toggle the continuous collection of acceleration data. Only one number should be passed. Passing the number zero will halt data collection, while any other number will resume data collection. For simplicity's sake, it is recommended to only use the number one to resume data collection. Once started, data will be continuously returned and sent to the client until another acceleration message is recieved that instructs the system to halt data collection.
 
 ##### Example
-The message `'A',1` will cause continuous acceleration data collection and sending to start. The message `'A',0` will halt all acceleration data collection and sending.
+The message `'A',1` will begin continuous acceleration data collection and sending. The message `'A',0` will halt all acceleration data collection and sending.
 As long as the variable `debug` is set to `true`, the following is the Serial ouput of the acceleration message `'A',1`. `outMsg` is the object that is sent to the TCP client.
 
 <img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
