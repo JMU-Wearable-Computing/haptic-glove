@@ -156,7 +156,7 @@ We will use an example message that was used in the [Message Format section](#me
 ##### Accessing the accelerometer data using an acceleration message
 1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `A,1`
 
-<img src = "" />
+<img src = "Images/Tutorial Photos/Serial Example Use/Serial Accel Message Example.png" />
 
 2. As long as the variable `debug` is set to `true`, the following should print to the Serial Monitor. `outMsg` is the object that is sent to the TCP client.
 
