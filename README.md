@@ -131,7 +131,7 @@ This will teach you how to send messages to the Arduino via the serial port that
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
 2. Set the user-definable variables in the firmware. The value of the variable `DEVICE_ID` does not matter when using serial communication.
 
-<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
+<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable Screenshot.png" />
 
 3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 
