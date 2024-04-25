@@ -101,11 +101,7 @@ The message `'E',100,43,55,1,123,34,99,2` will cause driver one to activate usin
 For messages of type 'A', numbers are used to toggle the continuous collection of acceleration data. Only one number should be passed. Passing the number zero will halt data collection, while any other number will resume data collection. For simplicity's sake, it is recommended to only use the number one to resume data collection. Once started, data will be continuously returned and sent to the client until another acceleration message is recieved that instructs the system to halt data collection.
 
 ##### Example
-The message `'A',1` will begin continuous acceleration data collection and sending. The message `'A',0` will halt all acceleration data collection and sending.  
-As long as the variable `debug` is set to `true`, the following is the Serial ouput of the acceleration message `'A',1`. `outMsg` is the object that is sent to the TCP client.
-
-<img src = "Images/Tutorial Photos/Message Examples/Example Serial Acceleration Message.png" />
-
+The message `'A',1` will begin continuous acceleration data collection and sending. The message `'A',0` will halt all acceleration data collection and sending.
 
 ## Tutorials
 ### Arduino IDE setup
@@ -158,15 +154,15 @@ We will use an example message that was used in the [Message Format section](#me
 3. All drivers should now be activated. Driver number 1 should be set to haptic effect # 100, driver number 2 should be set to haptic effect # 43, and so on.
 
 ##### Accessing the accelerometer data using an acceleration message
-1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `A`
+1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `A,1`
 
-                                          INSERT PICTURE OF SERIAL TERMINAL
+<img src = "" />
 
-2. If the variable `debug` is set to `true`, the following should print to the serial monitor:
+2. As long as the variable `debug` is set to `true`, the following should print to the Serial Monitor. `outMsg` is the object that is sent to the TCP client.
 
-                                          INSERT PICTURE OF SERIAL TERMINAL
+<img src = "Images/Tutorial Photos/Message Examples/Example Serial Acceleration Message.png" />
 
-3. The user is also able to include numbers in acceleration messages, albeit they have no function or purpose. This capability is present purely to keep message structure consistent throughout different message types. Try creating your own acceleration message that includes numbers, using the same general structure as the previous effect message that you entered into the serial monitor. Notice how no matter the numbers that are entered, there is no effect on the output–the message still outputs the accerometer data gathered at that instant.
+3. Now input the message `A,0` or just simply `A` into the Serial Monitor. Notice how the continuous collection of accelerometer data has stopped.
 
 ### Communicating with the Arduino via TCP socket connection
 This will teach you how to send messages to the Arduino via a TCP socket to control the haptic motor drivers and the onboard IMU.
