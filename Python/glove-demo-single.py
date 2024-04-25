@@ -13,7 +13,7 @@ print('Welcome to the single glove demo!\n'
 # device_id will be different for every glove
 # acceleration=True activates the accelerometer for the entire time that the Python script is running
 # verbose=True prints out the message that is sent to the glove
-#glove = Glove(device_id=10, port=8888, acceleration=False, verbose=True)
+# glove = Glove(device_id=10, port=8888, acceleration=False, verbose=True)
 glove = Glove(device_id=10, port=8888, acceleration=True, verbose=True)
 
 # Connect to glove (Arduino does not register a connection until a message is sent.
