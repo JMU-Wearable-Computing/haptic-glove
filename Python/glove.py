@@ -121,11 +121,10 @@ class Glove:
     motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
                          np.array([0.0, pFactor, 0.0])])  # rolled left
 
-    def __init__(self, device_id, num_motors, port, acceleration=False, verbose=False) -> None:
+    def __init__(self, device_id, port, acceleration=False, verbose=False) -> None:
         # Initialize object variables
         self.connected = False
         self.device_id = device_id
-        self.num_motors = num_motors  # Number of motors on glove
         self.verbose = verbose
         # Automatically find glove IP with device_id
         # self.TCP_IP = find_device_ip(self.device_id)
@@ -212,7 +211,7 @@ class Glove:
                     print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
 
     def __make_message(self, vect, magic_byte):
-        """Format message for transfer over TCP socket. Message can be variable length, up to a length equal to num_motors
+        """Format message for transfer over TCP socket. Message can be variable length, up to a length of 8
 
         :param vect: Vector to send to glove
         :param magic_byte: Byte value to XOR with the checksum. Default is 0xff
@@ -301,13 +300,13 @@ class Glove:
         # Turn into NumPy array
         raw_effects = np.array(effects)
 
-        # Append array of floating point zeros of length num_motors
-        if raw_effects.size < self.num_motors:
-            raw_effects = np.append(raw_effects, np.zeros(self.num_motors))
+        # Append array of floating point zeros of length 8
+        if raw_effects.size < 8:
+            raw_effects = np.append(raw_effects, np.zeros(8))
 
-        # Truncate to length of num_motors (undoes part of previous step if effects parameter is not empty)
-        if raw_effects.size > self.num_motors:
-            raw_effects = raw_effects[:self.num_motors]
+        # Truncate to length of 8 (undoes part of previous step if effects parameter is not empty)
+        if raw_effects.size > 8:
+            raw_effects = raw_effects[:8]
 
         # Turn into NumPy array
         final_effects = raw_effects.astype(int)
