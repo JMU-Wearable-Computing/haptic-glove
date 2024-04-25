@@ -135,7 +135,7 @@ This will teach you how to send messages to the Arduino via the Serial port that
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable Variables.png" />
 
-**NOTE:** See the [Known Issues](#known-issues) for an explanation of `theDastardlyEighthDriver`
+**NOTE:** See the [Known Issues section](#known-issues) for an explanation of `theDastardlyEighthDriver`
 
 3. Ensure that the Serial Monitor baud rate is set to 9600
 
