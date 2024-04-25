@@ -177,7 +177,10 @@ This will teach you how to send messages to the Arduino via a TCP socket to cont
 4. Once uploaded, you can safely unplug the Arduino from your computer. Congratulations! Your Arduino now has the necessary software and is ready for use with the haptic glove.
 
 #### Setting up Python
-TODO
+This assumes that you already have Python installed and can successfully run a Python script.
+1. Clone this repository (glove-V2) to your local computer
+2. Open the repository in your preffered IDE (PyCharm is recommended)
+3. Congrats! Python is now ready for use with the haptic glove.
 
 #### Example Use
 TODO
