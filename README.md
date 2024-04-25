@@ -149,11 +149,11 @@ We will use an example message that was used in the [Message Format section](#me
 ##### Turning all motors on with an effect message
 1. In the serial monitor, type the following message and then press <kbd>Enter</kbd> (enter it EXACTLY as it appears here): `E,100,43,55,1,123,34,99,2`
 
-                                          INSERT PICTURE OF SERIAL TERMINAL
+<img src = "Images/Tutorial Photos/Serial Example Use/Serial Effect Message Input Example.png" />
 
-2. If the variable `debug` is set to `true`, the following should print to the serial monitor:
+2. If the variable `debug` is set to `true`, the following should be the last of what prints to the Serial Monitor:
 
-                                          INSERT PICTURE OF SERIAL TERMINAL
+<img src = "Images/Tutorial Photos/Serial Example Use/Serial Effect Message Output.png" />
 
 3. All motors should now be activated. Motor number 1 should be set to haptic effect # 100, motor number 2 should be set to haptic effect # 43, and so on.
 
