@@ -101,10 +101,10 @@ The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using
 For messages of type 'A', numbers are used to toggle the continuous collection of acceleration data. Only one number should be passed. Passing the number zero will halt data collection, while any other number will resume data collection. For simplicity's sake, it is recommended to only use the number one to resume data collection. Once started, data will be continuously returned and sent to the client until another acceleration message is recieved that instructs the system to halt data collection.
 
 ##### Example
-The message `'A',1` will begin continuous acceleration data collection and sending. The message `'A',0` will halt all acceleration data collection and sending.
+The message `'A',1` will begin continuous acceleration data collection and sending. The message `'A',0` will halt all acceleration data collection and sending.  
 As long as the variable `debug` is set to `true`, the following is the Serial ouput of the acceleration message `'A',1`. `outMsg` is the object that is sent to the TCP client.
 
-<img src = "Images/Tutorial Photos/Message Examples/Example Acceleration Message.png" />
+<img src = "Images/Tutorial Photos/Message Examples/Example Serial Acceleration Message.png" />
 
 
 ## Tutorials
@@ -132,11 +132,16 @@ This will teach you how to send messages to the Arduino via the serial port that
 #### Initial Arduino set up
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
 2. Set the user-definable variables in the firmware. The value of the variable `DEVICE_ID` does not matter when using serial communication.
-3. See the [Known Issues](#known-issues) for an explanation of `theDastardlyEighthDriver`
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable Variables.png" />
 
-3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
+**NOTE:** See the [Known Issues](#known-issues) for an explanation of `theDastardlyEighthDriver`
+
+3. Ensure that the Serial Monitor baud rate is set to 9600
+
+<img src = "" />
+
+4. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 
 #### Example Use
 We will use an example message that was used in the [Message Format section](#message-format). Feel free to use other example messages from that section to familiarize yourself with the message structure. Or, be brave and create your own message (just be sure to follow the correct structure!)
