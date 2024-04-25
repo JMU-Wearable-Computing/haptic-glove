@@ -159,7 +159,7 @@ class Glove:
                 print(f'Failed to connect to ip {self.TCP_IP}')
 
     # Send a message to the glove and retrieve response containing accelerometer reading
-    def __get_acceleration(self):
+    def __get_acceleration(self): # TODO: Edit to where the user can turn this on/off within their Python script based on their application
         self.s.send('A,1\n'.encode('ascii'))
         while self.accel_loop:
             if self.connected:
@@ -179,7 +179,7 @@ class Glove:
                             '''x_dat = self.accel_data[0]
                             y_dat = self.accel_data[1]
                             z_dat = self.accel_data[2]'''
-                            #print(self.accel_data)
+                            # print(self.accel_data) # Print out accel data to ensure that the thread is functioning
                         # TODO: investigate why this SLEEP is here
                         time.sleep(0.1)
                     except Exception as e:
