@@ -70,7 +70,7 @@ Nano 33 IoT can be communicated with via TCP socket connection.
 Network credentials can be modified with the `ssid` and `password` variables within the Arduino code.
 When booted, the Nano 33 IoT establishes a user definable static IP.
 
-### Known Errors
+### Known Issues
 - TODO: Driver 8 issue
 
 ### Onboard LED state meanings
@@ -130,6 +130,7 @@ This will teach you how to send messages to the Arduino via the serial port that
 #### Initial Arduino set up
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
 2. Set the user-definable variables in the firmware. The value of the variable `DEVICE_ID` does not matter when using serial communication.
+3. See the [Known Issues](#known-issues) for an explanation of `theDastardlyEighthDriver`
 
 <img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable Variables.png" />
 
