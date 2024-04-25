@@ -18,7 +18,6 @@
 #define DEVICE_ID 10             // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true           // Toggle static or dynamic IP
 const bool debug = true;         // Toggle debug mode (Toggle program being verbose)
-//const bool msgSeparation = true; // Toggle ability for accel data to be collected while drivers are activated
 int port = 8888;                 // Port number for WiFi server
 
 // This toggles whether or not to activate the eighth driver for use. Only toggle this if:
