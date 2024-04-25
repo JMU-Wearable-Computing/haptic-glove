@@ -158,7 +158,7 @@ We will use an example message that was used in the [Message Format section](#me
 
 <img src = "Images/Tutorial Photos/Serial Example Use/Serial Accel Message Example.png" />
 
-2. As long as the variable `debug` is set to `true`, the following should print to the Serial Monitor. `outMsg` is the object that is sent to the TCP client.
+2. As long as the variable `debug` is set to `true`, the following should print to the Serial Monitor. `outMsg` is the object that is sent to the TCP client. Acceleration data is now being continuously collected.
 
 <img src = "Images/Tutorial Photos/Message Examples/Example Serial Acceleration Message.png" />
 
