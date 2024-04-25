@@ -171,7 +171,7 @@ This will teach you how to send messages to the Arduino via a TCP socket to cont
 1. Complete the [Arduino IDE setup tutorial](#arduino-ide-setup).
 2. Set the user-definable variables in the firmware. Be sure to set `DEVICE_ID` to a unique integer [10, 100].
 
-<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable screenshot.png" />
+<img src = "Images/Tutorial Photos/Initial Arduino set up/User Definable Variables.png" />
 
 3. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 4. Once uploaded, you can safely unplug the Arduino from your computer. Congratulations! Your Arduino now has the necessary software and is ready for use with the haptic glove.
