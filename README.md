@@ -105,7 +105,7 @@ For messages of type 'E', numbers [1, 123] will set the playback effect of the c
 Numbers higher than 123 will set the playback effect to effect # 123.
 
 ##### All Stop Message
-Should you want to halt the haptic playback of all drivers, simply passing `'E'` as the entire effect message will accomplish this task.
+Should you want to halt the haptic playback of all drivers, simply passing `'E'` as the entire effect message will do this.
 
 ##### Example
 The message `'E',100,43,55,1,123,34,99,2` will cause motor one to activate using haptic effect # 100, motor two to activate using haptic effect # 43, and so on. Passing the message `'E',0,-1,100.7,9999,0,0,0,0` afterwards will stop motors 1, 5, 6, 7, and 8. Motor 2 will remain activated with the same haptic effect as before (# 43), motor 3 will activate using haptic effect # 100, and motor 4 will activate using haptic effect # 123.
