@@ -139,7 +139,7 @@ This will teach you how to send messages to the Arduino via the serial port that
 
 3. Ensure that the Serial Monitor baud rate is set to 9600
 
-<img src = "" />
+<img src = "Images/Tutorial Photos/Initial Arduino set up/Baud Rate Photo.png" />
 
 4. Connect the Arduino to your computer via USB, ensure the correct board and port are selected in the Arduino IDE, and upload the firmware by clicking the arrow button in the top left of the IDE.
 
