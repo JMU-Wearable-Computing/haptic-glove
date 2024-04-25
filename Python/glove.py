@@ -1,6 +1,6 @@
 """Module to define a haptic glove class.
 
-Version: 10/17/23
+Version: 4/25/24
 """
 import math
 import numpy as np
@@ -136,8 +136,8 @@ class Glove:
         self.acceleration = acceleration
         # If using accelerometer, initialize acceleration vectors
         if acceleration:
-            self.accel_data = np.array([0.0, 0.0, 0.0])
-            self.accel_norm = np.array([0.0, 1.0, 0.0])
+            self.accel_data = np.array([0.0, 0.0, 0.0, 0.0])
+            #self.accel_norm = np.array([0.0, 1.0, 0.0])
         # Set initial conditions
         self.current_vector = np.array([0.0, 1.0, 0.0])
         self.glove_position = np.array([0.0, 0.0, 0.0])
@@ -159,12 +159,11 @@ class Glove:
                 print(f'Failed to connect to ip {self.TCP_IP}')
 
     # Send a message to the glove and retrieve response containing accelerometer reading
-    def __get_acceleration(self): # TODO: Current firmware 2.0 does not support accelerometer
+    def __get_acceleration(self):
+        self.s.send('A,1\n'.encode('ascii'))
         while self.accel_loop:
             if self.connected:
                 if self.acceleration:
-                    # Send message "accel"
-                    self.s.send('accel\n'.encode('ascii'))
                     # Receive accelerometer reading
                     # TODO: adjust recv to recv_into so buffer is not allocated each time  https://docs.python.org/3/library/socket.html
                     msg = self.s.recv(4096).decode("ascii").split('\r')[0].split('\n')[0]
@@ -176,28 +175,11 @@ class Glove:
                             msg_split = np.array(msg_split)
                             msg_split = msg_split.astype(float)
                             self.accel_data = msg_split
-                            self.accel_norm = self.accel_data / np.linalg.norm(self.accel_data)
                             # TODO: Possible numpy version of rounding acceleration to improve program performance?
-                            x_dat = self.accel_norm[0]
-                            y_dat = self.accel_norm[1]
-                            z_dat = self.accel_norm[2]
-                            # normalize acceleration vector
-                            self.accel_norm[0] = round(x_dat, 2)
-                            self.accel_norm[1] = round(y_dat, 2)
-                            self.accel_norm[2] = round(z_dat, 2)
-
-                            # Change the coordinates of motors based on orientation of hand
-                            if self.accel_norm[1] > 0.7:
-                                self.current_motors = self.motors
-                            elif self.accel_norm[1] < -0.7:
-                                self.current_motors = self.motors_UD
-                            elif self.accel_norm[0] > 0.7:
-                                self.current_motors = self.motors_L
-                            elif self.accel_norm[0] < -0.7:
-                                self.current_motors = self.motors_R
-                            # Send new message to glove
-                            intensity_array = find_intensity_array(self.glove_position, self.current_vector, self.current_motors, norm=True)
-                            self.communicate_message(intensity_array)
+                            '''x_dat = self.accel_data[0]
+                            y_dat = self.accel_data[1]
+                            z_dat = self.accel_data[2]'''
+                            #print(self.accel_data)
                         # TODO: investigate why this SLEEP is here
                         time.sleep(0.1)
                     except Exception as e:
