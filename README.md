@@ -107,7 +107,7 @@ The message `'A',1` will begin continuous acceleration data collection and sendi
 ### Arduino IDE setup
 This will teach you how to set up the Arduino IDE for use of the haptic glove. Prior to following this tutorial, you should already have the Arduino IDE downloaded.
 
-1. Open `firmware-2.0.ino`. `network_cred.h` should automatically open in a separate tab
+1. Open `firmware-V2.ino`. `network_cred.h` should automatically open in a separate tab
 2. Click the `network_cred.h` tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
 3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for `nano 33 iot`. The one board library that should be shown is `Arduino SAMD Boards (32-bits ARM Cortex-M0+)`. Install this library. Feel free to install a newer version than what is shown in the picture.
 INSERT A NEW PICTURE
