@@ -179,7 +179,7 @@ This will teach you how to send messages to the Arduino via a TCP socket to cont
 #### Setting up Python
 This assumes that you already have Python installed and can successfully run a Python script.
 1. Clone this repository (glove-V2) to your local computer
-2. Open the repository in your preffered IDE (PyCharm is recommended)
+2. Open the repository in your preferred IDE (PyCharm is recommended)
 3. Congrats! Python is now ready for use with the haptic glove.
 
 #### Example Use
