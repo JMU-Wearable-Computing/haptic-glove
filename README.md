@@ -110,7 +110,7 @@ This will teach you how to set up the Arduino IDE for use of the haptic glove. P
 1. Open `firmware-V2.ino`. `network_cred.h` should automatically open in a separate tab
 2. Click the `network_cred.h` tab at the top and input your WiFi credentials. Press <kbd>Command</kbd> + <kbd>S</kbd> to save your edits on a Mac (<kbd>Control</kbd> + <kbd>S</kbd> on Windows).
 3. Open the Boards Manager by clicking the correct icon on the left of the IDE. Search for `nano 33 iot`. The one board library that should be shown is `Arduino SAMD Boards (32-bits ARM Cortex-M0+)`. Install this library. Feel free to install a newer version than what is shown in the picture.
-INSERT A NEW PICTURE
+
 <img src = "Images/Tutorial Photos/Arduino IDE set up/Board manager screenshot.png" />
 
 4. Open the Library manager by clicking the correct icon on the left of the IDE. Search for and install `Adafruit DRV2605 Library`, `Arduino_LSM6DS3` and `WiFiNINA`. Feel free to install newer versions than what are shown in the pictures.
