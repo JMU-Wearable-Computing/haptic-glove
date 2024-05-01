@@ -29,4 +29,4 @@ The lab's glove demos currently only work with V1 of both the glove and Python c
 
 ## PCB Revision
 ### 5V Step Up Converter
-When using battery power for glove V2, a 5V boost/step up converter must be used to provide the Arduino with enough voltage. as of Spring 2024, we are using a [PowerBoost 1000 Basic]() breakout board from Arduino. Make a new PCB revision to include this boost converter and all required circuitry onto the PCB itself.
+When using battery power for glove V2, a 5V boost/step up converter must be used to provide the Arduino with enough voltage. as of Spring 2024, we are using a [PowerBoost 1000 Basic](https://www.adafruit.com/product/2030?gad_source=1&gclid=Cj0KCQjw0MexBhD3ARIsAEI3WHJGWiqXa6Qvy5UAzQNldZxjR16mb_I9gWrGQy2Cvcb_LnZyqPt9uMoaAlsDEALw_wcB) breakout board from Arduino. Make a new PCB revision that includes this boost converter and all required circuitry onto the PCB itself.
