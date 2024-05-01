@@ -1,5 +1,9 @@
 # Recommendations for Future Work
 ## Software Development
+### General
+Explore both `firmware-V2` and the Python scripts to both:
+- Familiarize yourself with the workings of each, and
+- Look at and address the various "TODO:" comments that are shrewn throughout.
 ### VS Code
 Install [PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#ide-vscode) for VS Code to develop Arduino code. Also look at [this link](https://docs.platformio.org/en/latest/boards/atmelsam/nano_33_iot.html#board-atmelsam-nano-33-iot) to learn how to set up VS Code to use the Nano 33 IoT within PlatformIO.
 ### Checksum/Parity Check
