@@ -26,7 +26,7 @@ Currently, `firmware-V2` uses the built in function `strtok()` to parse received
 - Sometimes the software freezes if message does not contain instructions for all 8 motors
 
 ## Debugging the Arduino using an Atmel-ICE
-Look into some surface mounted pins or magnetic pins to access the Arduino's debug pins on the underside of the Arduino. Learn how to use the Atmel-ICE to interface with these pins to debug the Arduino. Refer to [this link](https://docs.platformio.org/en/latest/boards/atmelsam/nano_33_iot.html#board-atmelsam-nano-33-iot) for reference for the beginning of your search of how to debug the Nano 33 IoT with the Atmel-ICE.
+Look into some surface mounted pins or magnetic pins to access the Arduino's debug pins on the underside of the Arduino. Learn how to use the Atmel-ICE to interface with these pins to debug the Arduino. Refer to [this PlatformIO link](https://docs.platformio.org/en/latest/boards/atmelsam/nano_33_iot.html#board-atmelsam-nano-33-iot) and [this SAM-based Arduino debugging tutorial](https://docs.arduino.cc/tutorials/mkr-wifi-1010/atmel-ice/) for reference for the beginning of your search of how to debug the Nano 33 IoT with the Atmel-ICE.
 
 ## Reworking Python Haptic Glove Game & Demo to Work with Glove V2
 The lab's glove demos currently only work with V1 of both the glove and Python code. Update these demos to work with the V2 glove and Python code. This will likely require some internal restructuring of the demos themselves.
