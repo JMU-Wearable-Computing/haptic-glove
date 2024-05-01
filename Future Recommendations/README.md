@@ -1,9 +1,10 @@
 # Recommendations for Future Work
 ## Software Development
 ### VS Code
-TODO
+Install [PlatformIO](https://docs.platformio.org/en/latest/integration/ide/vscode.html#ide-vscode) for VS Code to develop Arduino code
 ### Checksum/Parity Check
-TODO
+Implement a checksum to verify the authenticity of each message recieved over TCP Socket
+- We ran into some trouble implementing this, so we abandoned our efforts since this is a secondary feature that is not necesary for the design. There is already some rudimentary draft code in `firmware-V2` and `glove.py`
 ### Implementing Threads
 #### Onboard LED state meanings
 Make it to where the below table is what happens
