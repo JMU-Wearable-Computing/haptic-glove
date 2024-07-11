@@ -121,7 +121,7 @@ class Glove:
     motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
                          np.array([0.0, pFactor, 0.0])])  # rolled left
 
-    def __init__(self, device_id, port, acceleration=False, verbose=False) -> None:
+    def __init__(self, device_id, port, acceleration=False, verbose=True) -> None:
         # Initialize object variables
         self.connected = False
         self.device_id = device_id
