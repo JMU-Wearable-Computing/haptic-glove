@@ -39,7 +39,7 @@ glove2.set_motors(['E', 11, 0, -1, 1234, -1234, 46, 0, 64])
 # glove3.set_motors(['E', 11, 0, -1, 1234, -1234, 46, 0, 64])
 time.sleep(time_activated)
 
-# Kill the accelerometer loop so the program ends (Uncomment if glove.acceleration=True)
-# glove.accel_loop = False
-# glove2.accel_loop = False
-# glove3.accel_loop = False
+# disconnected from glove and stop accelerometer thread
+glove.disconnect()
+glove2.disconnect()
+
