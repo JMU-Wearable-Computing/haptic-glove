@@ -207,12 +207,13 @@ class HapticDriver:
                 # warning if acceleration not enabled
                 else:
                     if self.verbose:
-                        print(f'Glove {self.device_id} not setup for acceleration.')
+                        print(f'Glove {self.device_id} not setup for acceleration. Accel thread shutting down.')
 
             # warning if no socket is present
             else:
                 if self.verbose:
-                    print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
+                    print(f'Glove {self.device_id} not connected. Please run Glove.connect() method. Accel thread shutting down.')
+                    return
 
             # if global shut down initiated
             if self.shutdown:
