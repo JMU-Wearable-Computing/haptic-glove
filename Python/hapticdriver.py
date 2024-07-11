@@ -171,6 +171,8 @@ class HapticDriver:
 
     # Send a message to the glove and retrieve response containing accelerometer reading
     def __get_acceleration(self): # TODO: Edit to where the user can turn this on/off within their Python script based on their application
+
+        # this is a one time send
         self.s.send('A,1\n'.encode('ascii'))
         while self.accel_loop:
 
