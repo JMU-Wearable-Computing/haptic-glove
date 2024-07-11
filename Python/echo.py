@@ -4,6 +4,9 @@ Increments received ASCII character by 1 and sends it via TCP socket
 
 Author: Will Bradford
 
+Current implementation is broken with boards running Firmware V2.0. See issue #7 in repo.
+- Jason Forsyth (7/11/24)
+
 """
 
 import socket
