@@ -102,7 +102,7 @@ def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.arra
     intensity = np.array(I * mapped).astype(int)
     return intensity
 
-class Glove:
+class HapticDriver:
     """
     Glove object
     Supports versions with and without accelerometer
