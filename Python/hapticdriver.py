@@ -151,6 +151,7 @@ class HapticDriver:
         """Connect to the glove via TCP socket"""
         try:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.s.settimeout(10)
             self.s.connect((self.TCP_IP, self.TCP_PORT))
             self.connected = True
             # If using accelerometer, spawn thread and tell it to read constantly
@@ -160,6 +161,9 @@ class HapticDriver:
         except:
             if self.verbose:
                 print(f'Failed to connect to ip {self.TCP_IP}')
+            return False
+
+        return True
 
     def disconnect(self):
 
