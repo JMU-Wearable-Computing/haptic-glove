@@ -3,18 +3,24 @@ Demo program to activate four individual motors in sequence. Targeted at v2.0 bo
 
 Jason Forsyth (7/11/2024)
 """
+import sys
+
 from hapticdriver import HapticDriver
 import time
 
 glove = HapticDriver(device_id=10, port=8888, acceleration=False, verbose=True)
 
-glove.connect()
+success = glove.connect()
+
+if success is False:
+    print('Could not connect to glove. Exiting.')
+    sys.exit(-1)
 
 # set motor 1 to effect 16 (1000 ms alert)
 glove.set_motors(['E', 16, 0, 0, 0, 0, 0, 0, 0])
 
 # sleep 1s
-time.sleep(1)
+time.sleep(5)
 
 # set motor 2 to effect 16 (1000 ms alert)
 glove.set_motors(['E', 0, 16, 0, 0, 0, 0, 0, 0])
