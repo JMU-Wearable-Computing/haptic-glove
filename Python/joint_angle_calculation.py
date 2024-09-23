@@ -3,21 +3,24 @@
 #importing libraries
 import numpy as np
 import math as math
+import matplotlib.pyplot as plt
 
 # loading up files
-angle_data = np.loadtxt('joint_angle_test_data.csv', skiprows=7, delimiter=",")
+angle_data = np.loadtxt('joint_angle_test_data_002.csv', skiprows=7, delimiter=",")
 
 # determining variables
-time = angle_data[:, 0]
-hand_x = angle_data[:, 7]
-hand_y = angle_data[:, 8]
-hand_z = angle_data[:, 9]
-shoulder_x = angle_data[:, 1]
-shoulder_y = angle_data[:, 2]
-shoulder_z = angle_data[:, 3]
-elbow_x = angle_data[:, 4]
-elbow_y = angle_data[:, 5]
-elbow_z = angle_data[:, 6]
+time = angle_data[:, 1]
+hand_x = angle_data[:, 5]
+hand_y = angle_data[:, 6]
+hand_z = angle_data[:, 7]
+shoulder_x = angle_data[:, 8]
+shoulder_y = angle_data[:, 9]
+shoulder_z = angle_data[:, 10]
+elbow_x = angle_data[:, 2]
+elbow_y = angle_data[:, 3]
+elbow_z = angle_data[:, 4]
+
+angles_list = list()
 
 # making vectors
 for i in range(0, len(time)):
@@ -48,14 +51,8 @@ for i in range(0, len(time)):
 
     angle_radians = math.acos(dot_product / (elbow_hand_vector_mag * elbow_shoulder_vector_mag))
     angle_degrees = math.degrees(angle_radians)
-    print(angle_degrees)
+    angles_list.append(angle_degrees)
 
-
-   # for j in range(0, 3):
-       # dot_product = 0
-       # multiply = elbow_hand_vector[j] * elbow_shoulder_vector[j]
-       # dot_product = dot_product + multiply
-
-        #angle_radians = math.acos(dot_product / (elbow_hand_vector_mag * elbow_shoulder_vector_mag))
-        #angle_degrees = math.degrees(angle_radians)
-        #print(angle_degrees)
+# plotting
+plt.plot(time, angles_list)
+plt.show()
