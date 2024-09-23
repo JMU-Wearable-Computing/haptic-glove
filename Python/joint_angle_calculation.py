@@ -6,7 +6,7 @@ import math as math
 import matplotlib.pyplot as plt
 
 # loading up files
-angle_data = np.loadtxt('joint_angle_test_data_002.csv', skiprows=7, delimiter=",")
+angle_data = np.loadtxt('joint_angle_test_data_005.csv', skiprows=7, delimiter=",")
 
 # determining variables
 time = angle_data[:, 1]
