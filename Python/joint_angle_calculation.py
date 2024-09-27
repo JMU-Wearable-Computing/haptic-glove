@@ -6,7 +6,7 @@ import math as math
 import matplotlib.pyplot as plt
 
 # loading up files
-angle_data = np.loadtxt('joint_angle_test_data_005.csv', skiprows=7, delimiter=",")
+angle_data = np.loadtxt('joint_angle_test_data_006.csv', skiprows=7, delimiter=",")
 
 # determining variables
 time = angle_data[:, 1]
@@ -55,4 +55,7 @@ for i in range(0, len(time)):
 
 # plotting
 plt.plot(time, angles_list)
+plt.xlabel('Time (s)')
+plt.ylabel('Elbow Joint Angle (degrees)')
+plt.title('Elbow Joint Angle Over Time')
 plt.show()
