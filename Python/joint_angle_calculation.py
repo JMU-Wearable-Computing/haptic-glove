@@ -6,19 +6,19 @@ import math as math
 import matplotlib.pyplot as plt
 
 # loading up files
-angle_data = np.loadtxt('joint_angle_test_data_006.csv', skiprows=7, delimiter=",")
+angle_data = np.loadtxt('Sammy_Bicep_Curls.csv', skiprows=7, delimiter=",")
 
 # determining variables
 time = angle_data[:, 1]
-hand_x = angle_data[:, 5]
-hand_y = angle_data[:, 6]
-hand_z = angle_data[:, 7]
-shoulder_x = angle_data[:, 8]
-shoulder_y = angle_data[:, 9]
-shoulder_z = angle_data[:, 10]
-elbow_x = angle_data[:, 2]
-elbow_y = angle_data[:, 3]
-elbow_z = angle_data[:, 4]
+hand_x = angle_data[:, 8]
+hand_y = angle_data[:, 9]
+hand_z = angle_data[:, 10]
+shoulder_x = angle_data[:, 2]
+shoulder_y = angle_data[:, 3]
+shoulder_z = angle_data[:, 4]
+elbow_x = angle_data[:, 5]
+elbow_y = angle_data[:, 6]
+elbow_z = angle_data[:, 7]
 
 angles_list = list()
 
