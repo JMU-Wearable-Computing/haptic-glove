@@ -82,7 +82,7 @@ struct CommandMessage {
 bool IMU_INITIALIZED = false;
 
 // Instantiate Message object
-CommandMessage msgObj;
+CommandMessage command;
 
 // Connect to WiFi
 void WiFiConnect() {
@@ -387,7 +387,9 @@ void setup() {
   digitalWrite(MUXRST, HIGH);
 
   // Initialize drivers
-  drvInit(drvs);
+  for (int8_t i = 0; i < max_motors; i++) {
+    drvs[i] = new MotorDriver(i);
+  }
 
   // Sequentially activate/deactivate drivers
   if (debug) { Serial.println("Cycling drivers\n"); }
@@ -479,19 +481,8 @@ void loop() {
                                 End of rudimentary draft of checksum implementation
           */
 
-          createCmdMsg(&packet);
-          if (msgObj.cmd == 'E') {  // Process as effect message
-            processEMessage(&msgObj, drvs);
-          }
-          else if (msgObj.cmd == 'A') { // Process as acceleration message
-            if (msgObj.data[0] == 0) { // Stop polling accelerometer
-              accelToggle = false;
-              if (debug) {Serial.println("\nAccelerometer stopped");}
-            }
-            else {
-              accelToggle = true;
-            }
-          }
+          command.recievePacket(client);
+          command.runCommand();
         }
         if (accelToggle) {
           getAcceleration();
@@ -524,8 +515,10 @@ void loop() {
   }
 
   //********************************************* Control Via Serial *********************************************
-
-  serialDrvCtrl(drvs);
+  if (Serial.available() > 0) {
+    command.recievePacket();
+    command.runCommand(drivers);
+  }
   while (accelToggle) { // Continuously spit out accel data until another message is read over Serial
     getAcceleration();
 
