@@ -71,7 +71,14 @@ void MotorDriver::init()
     {
         Serial.print("Driver ");
         Serial.print(drvNum);
-        Serial.println(" initialized.");
+        if (initialized) 
+        {
+            Serial.println(" initialized.");
+        }
+        else
+        {
+            Serial.println(" not initialized.");
+        }
     }
 }
 
@@ -155,8 +162,9 @@ void MotorDriver::muxSelect(uint8_t i)
 
 MotorDriverSet::MotorDriverSet(size_t numDrvs)
 {
-    if (numDrvs >= 0 && numDrvs <= 7)
+    if (numDrvs >= 0 && numDrvs <= 8)
     {
+        this->numDrvs = numDrvs;
         drivers = new MotorDriver *[numDrvs];
         for (int i = 0; i < (int)numDrvs; i++)
         {

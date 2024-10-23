@@ -28,6 +28,9 @@ void setup()
   drvs = new MotorDriverSet(MAX_MOTORS);
   command = new CommandMessage(MAX_MOTORS, *drvs);
 
+  Serial.print("Num drivers: ");
+  Serial.println(drvs->numDrvs);
+
   // Sequentially activate/deactivate drivers
   if (DEBUG)
   {
