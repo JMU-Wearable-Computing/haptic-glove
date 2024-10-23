@@ -6,7 +6,7 @@
 #include <WiFiNINA.h>
 #include <Arduino.h>
 #include <math.h>
-#include <SPI.h> // This is supposed to be required for WiFiNINA to work but I do not notice a difference in functionality with or without it
+#include <SPI.h>
 #include <Arduino_LSM6DS3.h>
 
 // Constants and definitions
@@ -21,9 +21,14 @@
 #define ssid "WearablesLab" // Network SSID
 #define password ""         // Network password
 
+// Forward declarations
+struct MotorDriver;
+struct MotorDriverSet;
+struct CommandMessage;
+
 // Global variables
-extern MotorDriverSet drvs;
-extern CommandMessage command;
+extern MotorDriverSet* drvs;
+extern CommandMessage* command;
 
 extern float accelX;
 extern float accelY;
@@ -34,11 +39,6 @@ extern bool IMU_INITIALIZED;
 extern String outMsg;
 
 extern WiFiServer server;
-
-// Forward declarations
-struct MotorDriver;
-struct MotorDriverSet;
-struct CommandMessage;
 
 // MotorDriver struct for controlling motors
 struct MotorDriver {
@@ -63,6 +63,7 @@ struct MotorDriverSet {
     void processEMessage(CommandMessage msg);
     void go();
     void stop();
+    void cycle();
 };
 
 // CommandMessage struct for parsing messages
