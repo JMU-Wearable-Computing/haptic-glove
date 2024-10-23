@@ -5,6 +5,27 @@
 
 #include "utils.h"
 
+
+// Global variables
+MotorDriverSet drvs;
+CommandMessage command;
+
+float accelX = 0;
+float accelY = 0;
+float accelZ = 0;
+float mag = 0;
+bool accelToggle = false;
+bool IMU_INITIALIZED = false;
+String outMsg;
+
+// Wifi settings
+WiFiServer server(PORT);
+IPAddress local_IP(172, 16, 1, DEVICE_ID);
+
+IPAddress gateway(172, 16, 1, 1);
+IPAddress dns(172, 16, 1, 1);
+IPAddress subnet(255, 255, 0, 0);
+
 /*
   Motor Driver object for tracking motor state
 
@@ -29,7 +50,7 @@ struct MotorDriver
     {
         adaDrv = new Adafruit_DRV2605();
 
-        if (debug)
+        if (DEBUG)
         {
             Serial.print("Initializing Driver ");
             Serial.println(drvNum);
@@ -41,7 +62,7 @@ struct MotorDriver
         // Start adafruit motor
         if (!adaDrv->begin())
         {
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Could not find DRV2605 number ");
                 Serial.println(drvNum);
@@ -53,7 +74,7 @@ struct MotorDriver
 
         initialized = true;
 
-        if (debug)
+        if (DEBUG)
         {
             Serial.print("Driver ");
             Serial.print(drvNum);
@@ -63,22 +84,11 @@ struct MotorDriver
 
     void changeEffect(int effectNum)
     {
-        if (effectNum < 0 || effectNum > 123)
-        {
-            if (debug)
-            {
-                Serial.print("Effect ID Number must be between 0 and 123 inclusive, actual value was: ");
-                Serial.println(effectNum);
-            }
-
-            return;
-        }
-
         muxSelect(drvNum);
 
-        if (effectNum > 0)
+        if (effectNum > 0 && effectNum <= 123)
         { // Set new playback effect
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Setting the effect ID of driver ");
                 Serial.print(drvNum);
@@ -89,7 +99,7 @@ struct MotorDriver
             adaDrv->setWaveform(0, effectNum); // Desired effect
             adaDrv->setWaveform(1, 0);         // End waveform
 
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Effect ID of driver ");
                 Serial.print(drvNum);
@@ -101,7 +111,7 @@ struct MotorDriver
         }
         else if (effectNum == 0)
         { // Stop driver
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Stopping driver number ");
                 Serial.print(drvNum);
@@ -110,18 +120,37 @@ struct MotorDriver
 
             adaDrv->stop();
 
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Driver number ");
                 Serial.print(drvNum);
                 Serial.println(" stopped.");
             }
         }
-        if (debug)
+        else
+        {
+            if (DEBUG)
+            {
+                Serial.print("Effect ID Number must be between 0 and 123 inclusive, actual value was: ");
+                Serial.println(effectNum);
+            }
+
+            return;
+        }
+        if (DEBUG)
         {
             Serial.println();
         } // Print newline for easier reading
         this->effect = effectNum;
+    }
+
+    void go()
+    {
+        if (effect != 0)
+        {
+            muxSelect(drvNum);
+            adaDrv->go();
+        }
     }
 
     void muxSelect(uint8_t i)
@@ -139,25 +168,28 @@ struct MotorDriverSet
 
     MotorDriverSet(size_t numDrvs)
     {
-        if (numDrvs < 0 || numDrvs > 7)
+        if (numDrvs >= 0 && numDrvs <= 7)
         {
-            if (debug)
+            drivers = new MotorDriver *[numDrvs];
+            for (size_t i = 0; i < numDrvs; i++)
+            {
+                drivers[i] = new MotorDriver(i);
+            }
+        }
+        else
+        {
+            if (DEBUG)
             {
                 Serial.print("Drivier initialization failed: numDrvs must be between 0 and 7 inclusive, actual value was: ");
                 Serial.println(numDrvs);
             }
             return;
         }
-        drivers = new MotorDriver *[numDrvs];
-        for (size_t i = 0; i < numDrvs; i++)
-        {
-            drivers[i] = new MotorDriver(i);
-        }
     }
 
     void processEMessage(CommandMessage msg)
     {
-        if (debug)
+        if (DEBUG)
         {
             Serial.println("Processing as an effect message.");
         }
@@ -165,33 +197,63 @@ struct MotorDriverSet
         // Assign effect numbers
         for (size_t i = 0; i < numDrvs; i++)
         {
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Motor ");
                 Serial.print(i);
                 Serial.print(" Effect = ");
-                Serial.println(msgToSend->data[i]);
+                Serial.println(msg.data[i]);
             }
-            drivers[i]->changeEffect(msgToSend->data[i]);
+            drivers[i]->changeEffect(msg.data[i]);
         }
 
-        if (debug)
+        if (DEBUG)
         {
             Serial.println("\n");
         } // Print 2 newlines for easier reading
+    }
+
+    void go()
+    {
+        for (int i = 0; i < numDrvs; i++)
+        {
+            drivers[i]->go();
+        }
+    }
+
+    void stop()
+    {
+        for (size_t i = 0; i < numDrvs; i++)
+        {
+            drivers[i]->changeEffect(0);
+        }
+    }
+
+    void cycle()
+    {
+        for (int i = 0; i < numDrvs; i++) 
+        {
+            drivers[i]->changeEffect(64);
+            drivers[i]->adaDrv->go();
+            delay(500);
+        }
+
+        stop();
     }
 };
 
 // General message structure
 struct CommandMessage
 {
+    MotorDriverSet* drivers;
     String packet;
     char cmd;
     int *data;
 
-    CommandMessage(size_t numDrvs)
+    CommandMessage(size_t numDrvs, MotorDriverSet drivers)
     {
         data = new int[numDrvs];
+        this->drivers = &drivers;
     }
 
     void recievePacket()
@@ -206,9 +268,15 @@ struct CommandMessage
         processPacket();
     }
 
+    void testPacket(String packet)
+    {
+        this->packet = packet;
+        processPacket();
+    }
+
     void processPacket()
     {
-        if (debug)
+        if (DEBUG)
         {
             Serial.print("\nMessage reads ");
             Serial.println(packet);
@@ -220,7 +288,7 @@ struct CommandMessage
 
         if (packet.length() < 9)
         { // Allows for user to pass messages that are < the number of parameters needed to create a Message object
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Message length is ");
                 Serial.print(packet.length());
@@ -232,7 +300,7 @@ struct CommandMessage
         {
             msgLength = packet.length() + 1; // Add 1 character for null terminator
 
-            if (debug)
+            if (DEBUG)
             {
                 Serial.print("Message length is ");
                 Serial.println(msgLength);
@@ -260,7 +328,7 @@ struct CommandMessage
             ptr = strtok(NULL, ",");
         }
 
-        if (debug)
+        if (DEBUG)
         {
             Serial.println("The message pieces detected are:");
             for (int n = 0; n < index; n++)
@@ -272,72 +340,60 @@ struct CommandMessage
             Serial.println(); // Print newline for easier reading
         }
 
-        // Test if valid cmd
-        if (validateCmd(*msgPieces[0]))
+        // Create Message object; ignore checksum at the end
+        cmd = *msgPieces[0];
+        if (DEBUG)
         {
+            Serial.print("CommandObject cmd = ");
+            Serial.println(cmd);
+        }
 
-            if (debug)
+        for (int i = 0; i < drivers->numDrvs; i++)
+        {
+            data[i] = atoi(msgPieces[i + 1]);
+            if (DEBUG)
             {
-                Serial.println("Command validated");
-                Serial.println("Created a message object with the following parameters:");
-            }
-
-            // Create Message object; ignore checksum at the end
-            cmd = *msgPieces[0];
-            if (debug)
-            {
-                Serial.print("CommandObject cmd = ");
-                Serial.println(cmd);
-            }
-
-            for (int i = 0; i < max_motors; i++)
-            {
-                data[i] = atoi(msgPieces[i + 1]);
-                if (debug)
-                {
-                    Serial.print("CommandObject data ");
-                    Serial.print(i);
-                    Serial.print(" = ");
-                    Serial.println(data[i]);
-                }
+                Serial.print("CommandObject data ");
+                Serial.print(i);
+                Serial.print(" = ");
+                Serial.println(data[i]);
             }
         }
-        else
-        { // Handle invalid cmd letters; retry input
-            if (debug)
-            {
-                Serial.println("Invalid Message type received.");
-            }
-        }
+
+        runCommand();
     }
 
-    void runCommand(MotorDriverSet driverSet)
+    void runCommand()
     {
         if (cmd == 'E')
         {
-            driverSet.processEMessage(*this);
+            drivers->processEMessage(*this);
         }
         else if (cmd == 'A')
         { // Process as acceleration message
             if (data[0] == 0)
             { // Stop polling accelerometer
                 accelToggle = false;
-                if (debug)
+                if (DEBUG)
                 {
                     Serial.println("\nAccelerometer stopped");
                 }
             }
-            else
+            else if (data[0] == 1)
             {
                 accelToggle = true;
             }
         }
+        else
+        {
+            if (DEBUG)
+            {
+                Serial.print("Command not supported: ");
+                Serial.println(cmd);
+            }
+        }
     }
 };
-
-
-
-bool IMU_INITIALIZED = false;
 
 // Connect to WiFi
 void WiFiConnect()
@@ -346,7 +402,7 @@ void WiFiConnect()
     if (STATIC_IP)
     {
         WiFi.config(local_IP, dns, gateway, subnet);
-        if (debug)
+        if (DEBUG)
         {
             Serial.print("Local IP address set to: ");
             Serial.println(local_IP);
@@ -365,13 +421,13 @@ void WiFiConnect()
     delay(100);                 // Is this needed?
 
     // Wait for connection
-    if (debug)
+    if (DEBUG)
     {
         Serial.println("Connecting to WiFi...");
     }
     while (WiFi.status() != WL_CONNECTED)
     {
-        if (debug)
+        if (DEBUG)
         {
             Serial.print(".");
         }
@@ -382,43 +438,19 @@ void WiFiConnect()
 
     // Open TCP server
     server.begin();
-    if (debug)
+    if (DEBUG)
     { // Print network details
         Serial.print("\nConnected to ");
         Serial.println(ssid);
         Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
         Serial.print("on port ");
-        Serial.println(port);
+        Serial.println(PORT);
     }
     // TODO: LED blinking if connected to WiFi but not client. Currently is just on
     digitalWrite(LED_BUILTIN, HIGH);
 }
 
-// Select which driver to talk to
-
-// Initialize all available drivers
-
-// Test if passed cmd is valid
-bool validateCmd(char cmd)
-{
-    for (char letter : msgTypes)
-    {
-        if (letter == cmd)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Change the playback effect pattern of the DRV2605 drivers
-
-// Parse received packet
-
-// Process Message object as an eMessage
-
-// Process Message object as an aMessage
 void getAcceleration()
 {
     if (IMU.accelerationAvailable())
@@ -432,7 +464,7 @@ void getAcceleration()
 
         // Update message to send
         outMsg = String(accelX) + "," + String(accelY) + "," + String(accelZ) + "," + String(mag);
-        if (debug)
+        if (DEBUG)
         {
             Serial.println("\nAcceleration in G's");
             Serial.println("X\tY\tZ\tMag");
@@ -453,32 +485,9 @@ void getAcceleration()
     }
     else
     {
-        if (debug)
+        if (DEBUG)
         {
             Serial.println("ERROR: Failed to read acceleration");
-        }
-    }
-}
-
-// Stop all motor drivers
-void allDrvStop(MotorDriver *drvs[])
-{
-    for (int i = 0; i < max_motors; i++)
-    {
-        drvs[i]->effect = 0;
-        changeEffect(drvs[i], 0, 0);
-    }
-}
-
-// Play current effect on all drivers
-void allDrvPlay(MotorDriver *drvs[])
-{
-    for (int i = 0; i < max_motors; i++)
-    {
-        if (drvs[i]->effect != 0)
-        {
-            muxSelect(i);
-            drvs[i]->adaDrv->go();
         }
     }
 }
