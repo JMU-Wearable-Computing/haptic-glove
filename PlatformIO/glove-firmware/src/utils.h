@@ -13,7 +13,7 @@
 #define DEVICE_ID 21        // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true      // Toggle static or dynamic IP
 #define DEBUG true          // Toggle debug mode (Toggle program being verbose)
-#define PORT 8888           // Port number for WiFi server
+#define WIFI_PORT 8888           // Port number for WiFi server
 #define MAX_MOTORS 8        // Maximum motors supported 0 to 8 inclusive
 
 #define MUXRST 17           // Mux Reset pin is tied to Arduino pin D17 for on-demand resets

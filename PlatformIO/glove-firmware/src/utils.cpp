@@ -19,7 +19,7 @@ bool IMU_INITIALIZED = false;
 String outMsg;
 
 // Wifi settings
-WiFiServer server(PORT);
+WiFiServer server(WIFI_PORT);
 IPAddress local_IP(172, 16, 1, DEVICE_ID);
 
 IPAddress gateway(172, 16, 1, 1);
@@ -158,7 +158,7 @@ MotorDriverSet::MotorDriverSet(size_t numDrvs)
     if (numDrvs >= 0 && numDrvs <= 7)
     {
         drivers = new MotorDriver *[numDrvs];
-        for (size_t i = 0; i < numDrvs; i++)
+        for (int i = 0; i < (int)numDrvs; i++)
         {
             drivers[i] = new MotorDriver(i);
         }
@@ -182,7 +182,7 @@ void MotorDriverSet::processEMessage(CommandMessage msg)
     }
 
     // Assign effect numbers
-    for (size_t i = 0; i < numDrvs; i++)
+    for (int i = 0; i < (int)numDrvs; i++)
     {
         if (DEBUG)
         {
@@ -202,7 +202,7 @@ void MotorDriverSet::processEMessage(CommandMessage msg)
 
 void MotorDriverSet::go()
 {
-    for (int i = 0; i < numDrvs; i++)
+    for (int i = 0; i < (int)numDrvs; i++)
     {
         drivers[i]->go();
     }
@@ -210,7 +210,7 @@ void MotorDriverSet::go()
 
 void MotorDriverSet::stop()
 {
-    for (size_t i = 0; i < numDrvs; i++)
+    for (int i = 0; i < (int)numDrvs; i++)
     {
         drivers[i]->changeEffect(0);
     }
@@ -218,7 +218,7 @@ void MotorDriverSet::stop()
 
 void MotorDriverSet::cycle()
 {
-    for (int i = 0; i < numDrvs; i++) 
+    for (int i = 0; i < (int)numDrvs; i++) 
     {
         drivers[i]->changeEffect(64);
         drivers[i]->adaDrv->go();
@@ -320,7 +320,7 @@ void CommandMessage::processPacket()
         Serial.println(cmd);
     }
 
-    for (int i = 0; i < drivers->numDrvs; i++)
+    for (int i = 0; i < (int)drivers->numDrvs; i++)
     {
         data[i] = atoi(msgPieces[i + 1]);
         if (DEBUG)
@@ -416,7 +416,7 @@ void WiFiConnect()
         Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
         Serial.print("on port ");
-        Serial.println(PORT);
+        Serial.println(WIFI_PORT);
     }
     // TODO: LED blinking if connected to WiFi but not client. Currently is just on
     digitalWrite(LED_BUILTIN, HIGH);
