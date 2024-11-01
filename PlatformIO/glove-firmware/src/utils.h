@@ -25,6 +25,8 @@
 struct MotorDriver;
 struct MotorDriverSet;
 struct CommandMessage;
+struct WiFiObj;
+struct IMUObj;
 
 // Global variables
 extern MotorDriverSet* drvs;

@@ -80,7 +80,7 @@ void loop()
   if (WiFi.status() == WL_CONNECTED)
   {
     // Check if a client has connected
-    WiFiClient client = wifiObj->server.available();
+    WiFiClient client = wifiObj->server->available();
 
     // TODO: LED blinking if connected to WiFi but not client. Currently is just on
     if (client)
