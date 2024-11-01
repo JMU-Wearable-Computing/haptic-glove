@@ -8,6 +8,11 @@
 
 #include "utils.h"
 
+MotorDriverSet* drvs;
+CommandMessage* command;
+WiFiObj* wifiObj;
+IMUObj* imuObj;
+
 void setup()
 {
   Serial.begin(9600);
@@ -44,29 +49,21 @@ void setup()
     Serial.println("Drivers cycled\n");
   }
 
+  wifiObj = new WiFiObj(
+    WiFiServer(WIFI_PORT),              // server
+    IPAddress(172, 16, 1, DEVICE_ID),   // local_IP
+    IPAddress(172, 16, 1, 1),           // gateway
+    IPAddress(172, 16, 1, 1),           // dns
+    IPAddress(255, 255, 0, 0)           // subnet
+  );
+
   // Connect to WiFi
-  WiFiConnect();
+  wifiObj->connect();
+
+  imuObj = new IMUObj();
 
   // Initialize accelerometer
-  if (!IMU.begin())
-  {
-    IMU_INITIALIZED = false;
-    if (DEBUG)
-    {
-      Serial.println("Failed to initialize IMU! Continuing...");
-    }
-  }
-  else
-  {
-    IMU_INITIALIZED = true;
-    if (DEBUG)
-    {
-      Serial.println("\nAccelerometer initialized");
-      Serial.print("Sample rate = ");
-      Serial.print(IMU.accelerationSampleRate());
-      Serial.println(" Hz\n");
-    }
-  }
+  imuObj->initialize();
 
   if (DEBUG)
   {
@@ -83,7 +80,7 @@ void loop()
   if (WiFi.status() == WL_CONNECTED)
   {
     // Check if a client has connected
-    WiFiClient client = server.available();
+    WiFiClient client = wifiObj->server.available();
 
     // TODO: LED blinking if connected to WiFi but not client. Currently is just on
     if (client)
@@ -138,12 +135,12 @@ void loop()
 
           command->recievePacket(client);
         }
-        if (accelToggle)
+        if (imuObj->accelToggle)
         {
-          getAcceleration();
+          imuObj->getAcceleration();
 
           // Send acceleration data to client
-          client.println(outMsg); // Does this placement give the computer on the other end enough time to read the accel data before client.flush() is called below?
+          client.println(imuObj->outMsg); // Does this placement give the computer on the other end enough time to read the accel data before client.flush() is called below?
         }
         drvs->go();
         ; // Continuously play effects while client connected
@@ -156,7 +153,7 @@ void loop()
 
       // Stop client, accelerometer, and drivers on client disconnect
       client.stop();
-      accelToggle = false;
+      imuObj->accelToggle = false;
       if (DEBUG)
       {
         Serial.println("Accelerometer stopped\n");
@@ -177,7 +174,7 @@ void loop()
 
     // Restart WiFi connection
     WiFi.end();
-    WiFiConnect();
+    wifiObj->connect();
   }
 
   //********************************************* Control Via Serial *********************************************
@@ -185,9 +182,9 @@ void loop()
   {
     command->recievePacket();
   }
-  while (accelToggle)
+  while (imuObj->accelToggle)
   { // Continuously spit out accel data until another message is read over Serial
-    getAcceleration();
+    imuObj->getAcceleration();
 
     // TODO: Save accel data or maybe write it to a file to connected computer via Serial?
     if (Serial.available() > 0)

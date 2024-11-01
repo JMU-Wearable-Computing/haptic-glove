@@ -5,27 +5,6 @@
 
 #include "utils.h"
 
-
-// Global variables
-MotorDriverSet* drvs;
-CommandMessage* command;
-
-float accelX = 0;
-float accelY = 0;
-float accelZ = 0;
-float mag = 0;
-bool accelToggle = false;
-bool IMU_INITIALIZED = false;
-String outMsg;
-
-// Wifi settings
-WiFiServer server(WIFI_PORT);
-IPAddress local_IP(172, 16, 1, DEVICE_ID);
-
-IPAddress gateway(172, 16, 1, 1);
-IPAddress dns(172, 16, 1, 1);
-IPAddress subnet(255, 255, 0, 0);
-
 /*
   Motor Driver object for tracking motor state
 
@@ -353,7 +332,7 @@ void CommandMessage::runCommand()
     { // Process as acceleration message
         if (data[0] == 0)
         { // Stop polling accelerometer
-            accelToggle = false;
+            imuObj->accelToggle = false;
             if (DEBUG)
             {
                 Serial.println("\nAccelerometer stopped");
@@ -361,7 +340,7 @@ void CommandMessage::runCommand()
         }
         else if (data[0] == 1)
         {
-            accelToggle = true;
+            imuObj->accelToggle = true;
         }
     }
     else
@@ -374,23 +353,32 @@ void CommandMessage::runCommand()
     }
 }
 
+WiFiObj::WiFiObj(WiFiServer server, IPAddress local_IP, IPAddress gateway, IPAddress dns, IPAddress subnet) 
+{
+    this->server = new WiFiServer(server);
+    this->local_IP = new IPAddress(local_IP);
+    this->gateway = new IPAddress(gateway);
+    this->dns = new IPAddress(dns);
+    this->subnet = new IPAddress(subnet);
+}
+
 // Connect to WiFi
-void WiFiConnect()
+void WiFiObj::connect()
 {
     // Check if static IP address is needed and configure network
     if (STATIC_IP)
     {
-        WiFi.config(local_IP, dns, gateway, subnet);
+        WiFi.config(*local_IP, *dns, *gateway, *subnet);
         if (DEBUG)
         {
             Serial.print("Local IP address set to: ");
-            Serial.println(local_IP);
+            Serial.println(*local_IP);
             Serial.print("Gateway set to: ");
-            Serial.println(gateway);
+            Serial.println(*gateway);
             Serial.print("DNS set to: ");
-            Serial.println(dns);
+            Serial.println(*dns);
             Serial.print("Subnet set to: ");
-            Serial.println(subnet);
+            Serial.println(*subnet);
             Serial.println();
         }
     }
@@ -416,7 +404,7 @@ void WiFiConnect()
     // TODO: blink LED when connected to WiFi
 
     // Open TCP server
-    server.begin();
+    server->begin();
     if (DEBUG)
     { // Print network details
         Serial.print("\nConnected to ");
@@ -430,7 +418,42 @@ void WiFiConnect()
     digitalWrite(LED_BUILTIN, HIGH);
 }
 
-void getAcceleration()
+IMUObj::IMUObj()
+{
+    accelX = 0;
+    accelY = 0;
+    accelZ = 0;
+    mag = 0;
+    accelToggle = false;
+    IMU_INITIALIZED = false;
+    String outMsg;
+}
+
+void IMUObj::initialize()
+{
+    if (!IMU.begin())
+  {
+    IMU_INITIALIZED = false;
+    if (DEBUG)
+    {
+      Serial.println("Failed to initialize IMU! Continuing...");
+    }
+  }
+  else
+  {
+    IMU_INITIALIZED = true;
+    if (DEBUG)
+    {
+      Serial.println("\nAccelerometer initialized");
+      Serial.print("Sample rate = ");
+      Serial.print(IMU.accelerationSampleRate());
+      Serial.println(" Hz\n");
+    }
+  }
+}
+
+
+void IMUObj::getAcceleration()
 {
     if (IMU.accelerationAvailable())
     { // If there is new acceleration data available

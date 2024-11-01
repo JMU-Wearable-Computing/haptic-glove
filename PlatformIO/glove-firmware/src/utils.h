@@ -29,16 +29,8 @@ struct CommandMessage;
 // Global variables
 extern MotorDriverSet* drvs;
 extern CommandMessage* command;
-
-extern float accelX;
-extern float accelY;
-extern float accelZ;
-extern float mag;
-extern bool accelToggle;
-extern bool IMU_INITIALIZED;
-extern String outMsg;
-
-extern WiFiServer server;
+extern WiFiObj* wifiObj;
+extern IMUObj* imuObj;
 
 // MotorDriver struct for controlling motors
 struct MotorDriver {
@@ -71,7 +63,7 @@ struct CommandMessage {
     MotorDriverSet* drivers;
     String packet;
     char cmd;
-    int *data;
+    int* data;
 
     CommandMessage(size_t numDrvs, MotorDriverSet drivers);
     void recievePacket();
@@ -80,7 +72,30 @@ struct CommandMessage {
     void runCommand();
 };
 
-void WiFiConnect();
-void getAcceleration();
+struct WiFiObj {
+    WiFiServer* server;
+    IPAddress* local_IP;
+    IPAddress* gateway;
+    IPAddress* dns;
+    IPAddress* subnet;
+    WiFiClient* client;
+
+    WiFiObj(WiFiServer server, IPAddress local_IP, IPAddress gateway, IPAddress dns, IPAddress subnet);
+    void connect();
+};
+
+struct IMUObj {
+    float accelX;
+    float accelY;
+    float accelZ;
+    float mag;
+    bool accelToggle;
+    bool IMU_INITIALIZED;
+    String outMsg;
+
+    IMUObj();
+    void initialize();
+    void getAcceleration();
+};
 
 #endif
