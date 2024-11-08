@@ -10,7 +10,7 @@
 #include <Arduino_LSM6DS3.h>
 
 // Constants and definitions
-#define DEVICE_ID 21        // Set device ID used in static IP (Acceptable ranges are 10-100)
+#define DEVICE_ID 10        // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true      // Toggle static or dynamic IP
 #define DEBUG true          // Toggle debug mode (Toggle program being verbose)
 #define WIFI_PORT 8888           // Port number for WiFi server
@@ -67,7 +67,7 @@ struct CommandMessage {
     char cmd;
     int* data;
 
-    CommandMessage(size_t numDrvs, MotorDriverSet drivers);
+    CommandMessage(size_t numDrvs, MotorDriverSet* drivers);
     void recievePacket();
     void recievePacket(WiFiClient client);
     void processPacket();

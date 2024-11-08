@@ -15,6 +15,8 @@
 MotorDriver::MotorDriver(int8_t drvNum)
 {
     this->drvNum = drvNum;
+    effect = 0;
+    initialized = false;
     init();
 }
 
@@ -144,6 +146,7 @@ MotorDriverSet::MotorDriverSet(size_t numDrvs)
     if (numDrvs >= 0 && numDrvs <= 8)
     {
         this->numDrvs = numDrvs;
+
         drivers = new MotorDriver *[numDrvs];
         for (int i = 0; i < (int)numDrvs; i++)
         {
@@ -215,10 +218,10 @@ void MotorDriverSet::cycle()
     stop();
 }
 
-CommandMessage::CommandMessage(size_t numDrvs, MotorDriverSet drivers)
+CommandMessage::CommandMessage(size_t numDrvs, MotorDriverSet* drivers)
 {
     data = new int[numDrvs];
-    this->drivers = &drivers;
+    this->drivers = drivers;
 }
 
 void CommandMessage::recievePacket()
@@ -307,7 +310,7 @@ void CommandMessage::processPacket()
         Serial.println(cmd);
     }
 
-    for (int i = 0; i < (int)drivers->numDrvs; i++)
+    for (int i = 0; i < drvs->numDrvs; i++)
     {
         data[i] = atoi(msgPieces[i + 1]);
         if (DEBUG)

@@ -4,6 +4,8 @@
 
   Due to C++ magic, message parser behavior is weird when passing values for less than 8 motors. Pass values for
     all 8 to be safe
+
+  test messege: E,100,43,55,1,123,34,99,2
 */
 
 #include "utils.h"
@@ -20,18 +22,29 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
 
   // Start serial connection
-  while (!Serial)
-  {
-    delay(1);
+  if (DEBUG) {
+    while (!Serial) // This will cause an issue if you don't open the serial port on computer
+    {
+      delay(1);
+    }
+    Serial.println("Booting Up");
   }
-  Serial.println("Booting Up");
 
   // Tie mux RST high
   pinMode(MUXRST, OUTPUT);
   digitalWrite(MUXRST, HIGH);
 
+  // Initialize global variables
   drvs = new MotorDriverSet(MAX_MOTORS);
-  command = new CommandMessage(MAX_MOTORS, *drvs);
+  command = new CommandMessage(MAX_MOTORS, drvs);
+  wifiObj = new WiFiObj(
+    WiFiServer(WIFI_PORT),              // server
+    IPAddress(172, 16, 1, DEVICE_ID),   // local_IP
+    IPAddress(172, 16, 1, 1),           // gateway
+    IPAddress(172, 16, 1, 1),           // dns
+    IPAddress(255, 255, 0, 0)           // subnet
+  );
+  imuObj = new IMUObj();
 
   Serial.print("Num drivers: ");
   Serial.println(drvs->numDrvs);
@@ -49,18 +62,8 @@ void setup()
     Serial.println("Drivers cycled\n");
   }
 
-  wifiObj = new WiFiObj(
-    WiFiServer(WIFI_PORT),              // server
-    IPAddress(172, 16, 1, DEVICE_ID),   // local_IP
-    IPAddress(172, 16, 1, 1),           // gateway
-    IPAddress(172, 16, 1, 1),           // dns
-    IPAddress(255, 255, 0, 0)           // subnet
-  );
-
   // Connect to WiFi
   wifiObj->connect();
-
-  imuObj = new IMUObj();
 
   // Initialize accelerometer
   imuObj->initialize();
