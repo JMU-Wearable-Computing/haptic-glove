@@ -3,7 +3,7 @@
 Author: Will Bradford
 Version: 4/16/24
 """
-from glove import Glove
+from hapticdriver import HapticDriver
 import time
 
 print('Welcome to the multiple glove demo!\n'
@@ -12,8 +12,8 @@ print('Welcome to the multiple glove demo!\n'
 # Define glove
 # device_id will be different for every glove
 # verbose=True prints out the intensity values message that is sent to the glove
-glove = Glove(device_id=10, port=8888, acceleration=False, verbose=True)
-glove2 = Glove(device_id=11, port=8888, acceleration=False, verbose=True)
+glove = HapticDriver(device_id=10, port=8888, acceleration=False, verbose=True)
+glove2 = HapticDriver(device_id=11, port=8888, acceleration=False, verbose=True)
 # glove3 = Glove(device_id=12, port=8888, acceleration=False, verbose=True)
 
 # Connect to glove
@@ -39,7 +39,7 @@ glove2.set_motors(['E', 11, 0, -1, 1234, -1234, 46, 0, 64])
 # glove3.set_motors(['E', 11, 0, -1, 1234, -1234, 46, 0, 64])
 time.sleep(time_activated)
 
-# Kill the accelerometer loop so the program ends (Uncomment if glove.acceleration=True)
-# glove.accel_loop = False
-# glove2.accel_loop = False
-# glove3.accel_loop = False
+# disconnected from glove and stop accelerometer thread
+glove.disconnect()
+glove2.disconnect()
+

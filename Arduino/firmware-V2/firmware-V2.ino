@@ -15,7 +15,7 @@
 #include "network_cred.h"
 
 // User definable variables
-#define DEVICE_ID 10             // Set device ID used in static IP (Acceptable ranges are 10-100)
+#define DEVICE_ID 21             // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true           // Toggle static or dynamic IP
 const bool debug = true;         // Toggle debug mode (Toggle program being verbose)
 int port = 8888;                 // Port number for WiFi server
@@ -23,7 +23,7 @@ int port = 8888;                 // Port number for WiFi server
 // This toggles whether or not to activate the eighth driver for use. Only toggle this if:
 // (A) you want to only use transmit messages Serially, or
 // (B) you're a pro user and want to try to fix things
-const bool theDastardlyEighthDriver = false;
+const bool theDastardlyEighthDriver = true;
 
 // Do not change
 #define MUXRST 17                // Mux Reset pin is tied to Arudino pin D17 for on-demand resets
@@ -37,7 +37,7 @@ Adafruit_DRV2605 drv0;
 Adafruit_DRV2605 drv1;
 Adafruit_DRV2605 drv2;
 Adafruit_DRV2605 drv3;
-Adafruit_DRV2605 drv4;
+//Adafruit_DRV2605 drv4;
 Adafruit_DRV2605 drv5;
 Adafruit_DRV2605 drv6;
 Adafruit_DRV2605 drv7;
@@ -88,6 +88,11 @@ struct CommandMessage {
   int data6;
   int data7;
 };
+
+#define NUM_MOTORS 8
+
+bool motorInitialized[NUM_MOTORS];
+bool IMU_INITIALIZED = false;
 
 // Instantiate Message object
 CommandMessage msgObj;
@@ -144,17 +149,21 @@ void muxSelect(uint8_t i) {
 // Initialize a driver
 void drvInit(Adafruit_DRV2605* driver, int drvNum) {
   if (debug) {Serial.print("Initializing driver "); Serial.println(drvNum);}
+
+  motorInitialized[drvNum]=false;
   
-  muxSelect(drvNum);
+  // add 10ms delay to see if mux is the problem
+  muxSelect(drvNum); delay(10);
   if (!driver->begin()) {
     if (debug) {
       Serial.print("Could not find DRV2605 number ");
       Serial.println(drvNum);
     }
-    while (1) delay(10);
+    
   }
   driver->selectLibrary(1);  // Libraries 1-5 are for ERM motors, library 6 is for LRA motors
   driver->setMode(DRV2605_MODE_INTTRIG);
+   motorInitialized[drvNum]=true;
 
   if (debug) {Serial.print("Driver "); Serial.print(drvNum); Serial.println(" initialized.");}
 }
@@ -376,7 +385,7 @@ void serialDrvCtrl() {
       changeEffect(&drv1, val1, 1);
       changeEffect(&drv2, val2, 2);
       changeEffect(&drv3, val3, 3);
-      changeEffect(&drv4, val4, 4);
+      //changeEffect(&drv4, val4, 4);
       changeEffect(&drv5, val5, 5);
       changeEffect(&drv6, val6, 6);
       if (theDastardlyEighthDriver) {changeEffect(&drv7, val7, 7);}
@@ -404,7 +413,7 @@ void allDrvStop() {
   val3 = 0;
   changeEffect(&drv3, val3, 3);
   val4 = 0;
-  changeEffect(&drv4, val4, 4);
+  //changeEffect(&drv4, val4, 4);
   val5 = 0;
   changeEffect(&drv5, val5, 5);
   val6 = 0;
@@ -435,7 +444,7 @@ void allDrvPlay() {
   }
   if (val4 != 0) {
     muxSelect(4);
-    drv4.go();
+    //drv4.go();
   }
   if (val5 != 0) {
     muxSelect(5);
@@ -458,19 +467,30 @@ void setup() {
   Wire.begin();
   pinMode(LED_BUILTIN, OUTPUT);
 
+  
+  //leave this here so can see Serial Console messages
+  while(!Serial){}
+
+  Serial.println("Booting Up:");
+  for(int i=0;i<10;i++)
+  {
+    Serial.print("...");
+  }
+  //end serial messages
+
   // Tie mux RST high
   pinMode(MUXRST, OUTPUT);
   digitalWrite(MUXRST, HIGH);
 
   // Initialize drivers
-  drvInit(&drv0, 0);
-  drvInit(&drv1, 1);
-  drvInit(&drv2, 2);
-  drvInit(&drv3, 3);
-  drvInit(&drv4, 4);
-  drvInit(&drv5, 5);
-  drvInit(&drv6, 6);
-  if (theDastardlyEighthDriver) {drvInit(&drv7, 7);}
+  drvInit(&drv0, 0); delay(10);
+  drvInit(&drv1, 1); delay(10);
+  drvInit(&drv2, 2); delay(10);
+  drvInit(&drv3, 3); delay(10);
+ // drvInit(&drv4, 4); delay(10);
+  drvInit(&drv5, 5); delay(10);
+  drvInit(&drv6, 6); delay(10);
+  if (theDastardlyEighthDriver) {drvInit(&drv7, 7); delay(10);}
 
   // Sequentially activate/deactivate drivers
   if (debug) { Serial.println("Cycling drivers"); }
@@ -486,8 +506,8 @@ void setup() {
   changeEffect(&drv3, 64, 3);
   drv3.go();
   delay(500);
-  changeEffect(&drv4, 64, 4);
-  drv4.go();
+  //changeEffect(&drv4, 64, 4);
+  //drv4.go();
   delay(500);
   changeEffect(&drv5, 64, 5);
   drv5.go();
@@ -505,16 +525,23 @@ void setup() {
   WiFiConnect();
 
   // Initialize accelerometer
-  if (!IMU.begin()) {
-    if (debug) { Serial.println("Failed to initialize IMU!"); }
-
-    while (1)
-      ;
+  if (!IMU.begin()) 
+  {
+    IMU_INITIALIZED=false;
+    if (debug) 
+    { 
+      Serial.println("Failed to initialize IMU! Continuing..."); 
+    }
   }
-  if (debug) {
+  else
+  {
+    IMU_INITIALIZED=true;
+    if (debug) {
     Serial.println("\nAccelerometer initialized");
     Serial.print("Sample rate = "); Serial.print(IMU.accelerationSampleRate()); Serial.println(" Hz\n");
   }
+  }
+  
 
   if (debug) {Serial.println("System ready for use!");}
 }
@@ -581,7 +608,7 @@ void loop() {
             changeEffect(&drv1, val1, 1);
             changeEffect(&drv2, val2, 2);
             changeEffect(&drv3, val3, 3);
-            changeEffect(&drv4, val4, 4);
+            //changeEffect(&drv4, val4, 4);
             changeEffect(&drv5, val5, 5);
             changeEffect(&drv6, val6, 6);
             if (theDastardlyEighthDriver) {

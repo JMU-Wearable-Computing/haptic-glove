@@ -102,7 +102,7 @@ def find_intensity_array(current_pos, goal_pos, motor_positions, accel = np.arra
     intensity = np.array(I * mapped).astype(int)
     return intensity
 
-class Glove:
+class HapticDriver:
     """
     Glove object
     Supports versions with and without accelerometer
@@ -121,7 +121,7 @@ class Glove:
     motors_L = np.array([np.array([-pFactor, 0.0, 0.0]), np.array([pFactor, 0.0, 0.0]), np.array([0.0, -pFactor, 0.0]),
                          np.array([0.0, pFactor, 0.0])])  # rolled left
 
-    def __init__(self, device_id, port, acceleration=False, verbose=False) -> None:
+    def __init__(self, device_id, port, acceleration=False, verbose=True) -> None:
         # Initialize object variables
         self.connected = False
         self.device_id = device_id
@@ -144,10 +144,14 @@ class Glove:
         # Set default motors
         self.current_motors = self.motors
 
+        # create global flag to indicate glove shutdown
+        self.shutdown = False
+
     def connect(self):
         """Connect to the glove via TCP socket"""
         try:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.s.settimeout(10)
             self.s.connect((self.TCP_IP, self.TCP_PORT))
             self.connected = True
             # If using accelerometer, spawn thread and tell it to read constantly
@@ -157,12 +161,29 @@ class Glove:
         except:
             if self.verbose:
                 print(f'Failed to connect to ip {self.TCP_IP}')
+            return False
+
+        return True
+
+    def disconnect(self):
+
+        # set shutdown flag to True
+        self.shutdown = True
+
+        # close socket
+        self.s.close()
 
     # Send a message to the glove and retrieve response containing accelerometer reading
     def __get_acceleration(self): # TODO: Edit to where the user can turn this on/off within their Python script based on their application
+
+        # this is a one time send
         self.s.send('A,1\n'.encode('ascii'))
         while self.accel_loop:
+
+            # if correct socket available
             if self.connected:
+
+                # if acceleration has been enabled
                 if self.acceleration:
                     # Receive accelerometer reading
                     # TODO: adjust recv to recv_into so buffer is not allocated each time  https://docs.python.org/3/library/socket.html
@@ -179,18 +200,33 @@ class Glove:
                             '''x_dat = self.accel_data[0]
                             y_dat = self.accel_data[1]
                             z_dat = self.accel_data[2]'''
-                            # print(self.accel_data) # Print out accel data to ensure that the thread is functioning
-                        # TODO: investigate why this SLEEP is here
+                            #print(self.accel_data) # Print out accel data to ensure that the thread is functioning
+                        # TODO: investigate why this SLEEP is here. Cause you don't want to hammer the socket with
+                        # data requests - JF
                         time.sleep(0.1)
                     except Exception as e:
                         if self.verbose:
                             print(f'Error communicating with glove. {e}')
+
+                # warning if acceleration not enabled
                 else:
                     if self.verbose:
-                        print(f'Glove {self.device_id} not setup for acceleration.')
+                        print(f'Glove {self.device_id} not setup for acceleration. Accel thread shutting down.')
+
+            # warning if no socket is present
             else:
                 if self.verbose:
-                    print(f'Glove {self.device_id} not connected. Please run Glove.connect() method.')
+                    print(f'Glove {self.device_id} not connected. Please run Glove.connect() method. Accel thread shutting down.')
+                    return
+
+            # if global shut down initiated
+            if self.shutdown:
+                if self.verbose:
+                    print(f'Shutting down acceleration thread')
+                return
+
+            # default yield at end of thread: https://docs.python.org/3/library/time.html#time.sleep
+            time.sleep(0)
 
     def __make_message(self, vect, magic_byte):
         """Format message for transfer over TCP socket. Message can be variable length, up to a length of 8
