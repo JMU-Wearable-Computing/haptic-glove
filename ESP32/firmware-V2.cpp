@@ -204,18 +204,18 @@ void loop()
   {
     command->recievePacket();
   }
-  while (imuObj->accelToggle)
-  { // Continuously spit out accel data until another message is read over Serial
-    imuObj->getAcceleration();
+  // while (imuObj->accelToggle)
+  // { // Continuously spit out accel data until another message is read over Serial
+  //   imuObj->getAcceleration();
 
-    // TODO: Save accel data or maybe write it to a file to connected computer via Serial?
-    if (Serial.available() > 0)
-    {
-      command->recievePacket();
-    }
-    drvs->go();
-  }
-  Serial.flush(); // Is this needed? "Waits for the transmission of outgoing serial data to complete"
+  //   // TODO: Save accel data or maybe write it to a file to connected computer via Serial?
+  //   if (Serial.available() > 0)
+  //   {
+  //     command->recievePacket();
+  //   }
+  //   drvs->go();
+  // }
+  // Serial.flush(); // Is this needed? "Waits for the transmission of outgoing serial data to complete"
 
   // Continuously play effects after message receival 
   // E,47,47,47,47,47,47,47,47
