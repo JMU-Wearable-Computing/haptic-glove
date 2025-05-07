@@ -14,13 +14,15 @@ MotorDriverSet* drvs;
 CommandMessage* command;
 WiFiObj* wifiObj;
 IMUObj* imuObj;
+WiFiServer* server = new WiFiServer(WIFI_PORT);
 
 void setup()
 {
   Serial.begin(9600);
   Wire.begin(SDA_PIN, SCL_PIN);
   pinMode(LED_BUILTIN, OUTPUT);
-
+  pinMode(CLIENT_CONNECTED_PIN, OUTPUT);
+  pinMode(MESSAGE_RECEIVED_PIN, OUTPUT);
   delay(2000);
 
   // Start serial connection
@@ -50,10 +52,9 @@ void setup()
   // Initialize global variables
   drvs = new MotorDriverSet(MAX_MOTORS);
   command = new CommandMessage(MAX_MOTORS, drvs);
-  WiFiServer server(WIFI_PORT);
 
   wifiObj = new WiFiObj(
-    server,                             // server
+    *server,                             // server
     IPAddress(172, 16, 1, DEVICE_ID),   // local_IP
     IPAddress(172, 16, 1, 1),           // gateway
     IPAddress(172, 16, 1, 1),           // dns
@@ -114,6 +115,7 @@ void loop()
       // While client is connected, keep reading messages from client
       while (client.connected())
       {
+        digitalWrite(CLIENT_CONNECTED_PIN, HIGH);
         // If a message exists, read it
         if (client.available() > 0)
         {
@@ -150,19 +152,21 @@ void loop()
           }
                                 End of rudimentary draft of checksum implementation
           */
-
+          digitalWrite(MESSAGE_RECEIVED_PIN, HIGH);
           command->recievePacket(client);
+          digitalWrite(MESSAGE_RECEIVED_PIN, LOW);
         }
-        if (imuObj->accelToggle)
-        {
-          imuObj->getAcceleration();
+        // if (imuObj->accelToggle)
+        // {
+        //   imuObj->getAcceleration();
 
-          // Send acceleration data to client
-          client.println(imuObj->outMsg); // Does this placement give the computer on the other end enough time to read the accel data before client.flush() is called below?
-        }
+        //   // Send acceleration data to client
+        //   client.println(imuObj->outMsg); // Does this placement give the computer on the other end enough time to read the accel data before client.flush() is called below?
+        // }
         drvs->go(); // Continuously play effects while client connected
-        client.flush();
       }
+      // Replace 5 with your pin number
+      digitalWrite(CLIENT_CONNECTED_PIN, LOW);
       if (DEBUG)
       {
         Serial.println("Client disconnected\n");
@@ -213,6 +217,10 @@ void loop()
   }
   Serial.flush(); // Is this needed? "Waits for the transmission of outgoing serial data to complete"
 
-  // Continuously play effects after message receival E,100,100,100,100,100,100,100,100
+  // Continuously play effects after message receival 
+  // E,47,47,47,47,47,47,47,47
+  // E,100,43,55,1,123,34,99,2
+  // E,0,0,0,0,0,0,0,0 
+  // E,0,0,0,0,0,0,0,0
   drvs->go();
 }

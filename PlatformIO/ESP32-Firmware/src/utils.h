@@ -27,6 +27,9 @@
 // SCL: GPIO9 on board
 #define SDA_PIN 8
 #define SCL_PIN 9
+#define CLIENT_CONNECTED_PIN 5
+#define MESSAGE_RECEIVED_PIN 4
+
 
 // Forward declarations
 struct MotorDriver;

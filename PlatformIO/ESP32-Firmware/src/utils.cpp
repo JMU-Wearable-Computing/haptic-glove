@@ -143,7 +143,7 @@ void MotorDriver::muxSelect(uint8_t i)
 
 MotorDriverSet::MotorDriverSet(size_t numDrvs)
 {
-    if (numDrvs >= 0 && numDrvs <= 8)
+    if (numDrvs >= 1 && numDrvs <= 8)
     {
         this->numDrvs = numDrvs;
 
@@ -310,7 +310,7 @@ void CommandMessage::processPacket()
         Serial.println(cmd);
     }
 
-    for (int i = 0; i < drvs->numDrvs; i++)
+    for (int i = 0; i < index - 1; i++)
     {
         data[i] = atoi(msgPieces[i + 1]);
         if (DEBUG)
@@ -372,7 +372,9 @@ void WiFiObj::connect()
     // Check if static IP address is needed and configure network
     if (STATIC_IP)
     {
-        WiFi.config(*local_IP, *dns, *gateway, *subnet);
+        if (!WiFi.config(*local_IP, *dns, *gateway, *subnet)) {
+            Serial.println("WIFI Config failed");
+        }
         if (DEBUG)
         {
             Serial.print("Local IP address set to: ");
@@ -404,11 +406,8 @@ void WiFiObj::connect()
         }
         delay(500);
     }
-
-    // TODO: blink LED when connected to WiFi
-
-    // Open TCP server
     server->begin();
+    
     if (DEBUG)
     { // Print network details
         Serial.print("\nConnected to ");
