@@ -187,7 +187,7 @@ class HapticDriver:
                 if self.acceleration:
                     # Receive accelerometer reading
                     # TODO: adjust recv to recv_into so buffer is not allocated each time  https://docs.python.org/3/library/socket.html
-                    msg = self.s.recv(4096).decode("ascii").split('\r')[0].split('\n')[0]
+                    msg = "" #self.s.recv(4096).decode("ascii").split('\r')[0].split('\n')[0]
                     try:
                         # Check if message exists
                         if len(msg) > 0:

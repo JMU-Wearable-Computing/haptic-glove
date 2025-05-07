@@ -31,6 +31,7 @@ glove.set_motors(['E'])
 time.sleep(time_activated)
 
 glove.set_motors(['E', 9, 9, 9, 9, 9, 9, 9, 9])
+time.sleep(time_activated)
 
 glove.set_motors(['E', 64, 0, 0, 64, 0, 0, 0, 64])
 time.sleep(time_activated)
