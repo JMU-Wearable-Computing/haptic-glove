@@ -15,7 +15,7 @@ print('Welcome to the single glove demo!\n'
 # acceleration=True activates the accelerometer for the entire time that the Python script is running
 # verbose=True prints out the message that is sent to the glove
 # glove = Glove(device_id=10, port=8888, acceleration=False, verbose=True)
-glove = HapticDriver(device_id=10, port=8888, acceleration=True, verbose=True)
+glove = HapticDriver(device_id=10, port=8888, acceleration=False, verbose=True)
 
 # Connect to glove (Arduino does not register a connection until a message is sent.
 # Meaning, Arduino doesn't register a connection until glove.set_motors() or glove.communicate_message() is called)
@@ -35,6 +35,9 @@ time.sleep(time_activated)
 
 glove.set_motors(['E', 64, 0, 0, 64, 0, 0, 0, 64])
 time.sleep(time_activated)
+
+glove.set_motors(['E', 47, 47, 47, 47, 47, 47, 47, 47])
+time.sleep(30)
 
 # disconnected from glove and stop accelerometer thread
 glove.disconnect()
