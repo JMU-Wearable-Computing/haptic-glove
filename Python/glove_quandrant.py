@@ -3,16 +3,16 @@ from hapticdriver import HapticDriver
 import time
 
 # reading file
-skeleton_data = pd.read_csv('quadrant_skeleton.csv')
+skeleton_data = pd.read_csv('julia-skeleton-walking(1).csv')
 
 # defining variables
-time = skeleton_data.iloc[:, [0]]
+mocap_time = skeleton_data.iloc[:, [0]]
 x = skeleton_data.iloc[:, [1]]
 y = skeleton_data.iloc[:, [2]]
 z = skeleton_data.iloc[:, [3]]
 
 # converting variable lists into numpy
-time_np = time.to_numpy()
+time_np = mocap_time.to_numpy()
 x_np = x.to_numpy()
 y_np = y.to_numpy()
 z_np = z.to_numpy()
@@ -38,4 +38,4 @@ for i in range(len(x_np)):
         time.sleep(1)
 
 # disconnect from glove
-glove.disconnect
+glove.disconnect()
