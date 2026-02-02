@@ -147,7 +147,7 @@ def motors_off():
     return
 
 # connect to glove
-glove = HapticDriver(device_id=21, port=8888, acceleration=False, verbose=True)
+glove = HapticDriver(device_id=10, port=8888, acceleration=False, verbose=True)
 
 success = glove.connect()
 if success is False:
