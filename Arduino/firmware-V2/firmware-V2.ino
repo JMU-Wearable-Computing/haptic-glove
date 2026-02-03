@@ -15,7 +15,7 @@
 #include "network_cred.h"
 
 // User definable variables
-#define DEVICE_ID 21             // Set device ID used in static IP (Acceptable ranges are 10-100)
+#define DEVICE_ID 10             // Set device ID used in static IP (Acceptable ranges are 10-100)
 #define STATIC_IP true           // Toggle static or dynamic IP
 const bool debug = true;         // Toggle debug mode (Toggle program being verbose)
 int port = 8888;                 // Port number for WiFi server
@@ -23,7 +23,7 @@ int port = 8888;                 // Port number for WiFi server
 // This toggles whether or not to activate the eighth driver for use. Only toggle this if:
 // (A) you want to only use transmit messages Serially, or
 // (B) you're a pro user and want to try to fix things
-const bool theDastardlyEighthDriver = true;
+const bool theDastardlyEighthDriver = false;
 
 // Do not change
 #define MUXRST 17                // Mux Reset pin is tied to Arudino pin D17 for on-demand resets
@@ -37,7 +37,7 @@ Adafruit_DRV2605 drv0;
 Adafruit_DRV2605 drv1;
 Adafruit_DRV2605 drv2;
 Adafruit_DRV2605 drv3;
-//Adafruit_DRV2605 drv4;
+Adafruit_DRV2605 drv4;
 Adafruit_DRV2605 drv5;
 Adafruit_DRV2605 drv6;
 Adafruit_DRV2605 drv7;
