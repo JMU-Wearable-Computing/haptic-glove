@@ -23,7 +23,7 @@ int port = 8888;                 // Port number for WiFi server
 // This toggles whether or not to activate the eighth driver for use. Only toggle this if:
 // (A) you want to only use transmit messages Serially, or
 // (B) you're a pro user and want to try to fix things
-const bool theDastardlyEighthDriver = false;
+const bool theDastardlyEighthDriver = true;
 
 // Do not change
 #define MUXRST 17                // Mux Reset pin is tied to Arudino pin D17 for on-demand resets
